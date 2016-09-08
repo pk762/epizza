@@ -4,8 +4,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-import static org.springframework.restdocs.RestDocumentation.document;
-import static org.springframework.restdocs.RestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,12 +18,14 @@ import java.net.URISyntaxException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -42,6 +44,9 @@ public class DeliveryOrderControllerTest {
     @Autowired
     private WebApplicationContext context;
 
+    @Rule
+    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("build/generated-snippets");
+
     private DeliveryOrder deliveryOrder;
 
     private MockMvc mockMvc;
@@ -53,7 +58,7 @@ public class DeliveryOrderControllerTest {
     @Before
     public void setupContext() {
         mockMvc = webAppContextSetup(context)
-                .apply(documentationConfiguration().uris().withPort(80))
+                .apply(documentationConfiguration(this.restDocumentation).uris().withPort(80))
                 .build();
 
         ordersUri = entityLinks.linkToCollectionResource(DeliveryOrder.class).expand().getHref();

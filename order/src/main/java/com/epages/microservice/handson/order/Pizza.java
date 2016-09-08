@@ -1,8 +1,7 @@
 package com.epages.microservice.handson.order;
 
+import javax.money.MonetaryAmount;
 import javax.validation.constraints.NotNull;
-
-import org.javamoney.moneta.Money;
 
 public class Pizza {
 
@@ -10,7 +9,7 @@ public class Pizza {
     private String name;
 
     @NotNull
-    private Money price;
+    private MonetaryAmount price;
 
     public String getName() {
         return name;
@@ -20,11 +19,11 @@ public class Pizza {
         this.name = name;
     }
 
-    public Money getPrice() {
+    public MonetaryAmount getPrice() {
         return price;
     }
 
-    public void setPrice(Money price) {
+    public void setPrice(MonetaryAmount price) {
         this.price = price;
     }
 }

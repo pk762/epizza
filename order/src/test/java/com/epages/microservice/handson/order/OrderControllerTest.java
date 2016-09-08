@@ -9,8 +9,8 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-import static org.springframework.restdocs.RestDocumentation.document;
-import static org.springframework.restdocs.RestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -27,6 +27,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
@@ -52,6 +54,9 @@ import com.google.common.collect.ImmutableMap;
 @RunWith(SpringJUnit4ClassRunner.class)
 @OrderApplicationTest(activeProfiles = {"test", "OrderControllerTest"})
 public class OrderControllerTest {
+
+    @Rule
+    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("build/generated-snippets");
 
     @Autowired
     private OrderService orderService;
@@ -88,7 +93,7 @@ public class OrderControllerTest {
             "  \"name\": \"Pizza Salami\",\n" +
             "  \"description\": \"The classic - Pizza Salami\",\n" +
             "  \"imageUrl\": \"http://www.sardegna-rustica.de/images/pizza.jpg\",\n" +
-            "  \"price\": \"EUR 8.90\"}";
+            "  \"price\": {\"amount\": 8.90, \"currency\": \"EUR\"}}";
 
     private Order order;
 
@@ -105,7 +110,7 @@ public class OrderControllerTest {
     @Before
     public void setupContext(){
         mockMvc = webAppContextSetup(context)
-                .apply(documentationConfiguration().uris().withPort(80))
+                .apply(documentationConfiguration(this.restDocumentation).uris().withPort(80))
                 .build();
 
         //mock the rest call made b< OrderServiceImpl to PizzaServiceClient
@@ -168,6 +173,8 @@ public class OrderControllerTest {
                                 fieldWithPath("status").description("order status"),
                                 fieldWithPath("created").description("creation timestamp"),
                                 fieldWithPath("totalPrice").description("Total order amount"),
+                                fieldWithPath("estimatedTimeOfDelivery").description("Estimated time of delivery"),
+                                fieldWithPath("comment").description("Customer's comment"),
                                 fieldWithPath("orderItems[].pizza").description("ordered pizza"),
                                 fieldWithPath("orderItems[].amount").description("Amount of pizzas"),
                                 fieldWithPath("orderItems[].price").description("Price (Currency symbol and numeric value)"),

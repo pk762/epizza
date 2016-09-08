@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -66,7 +67,7 @@ public class ApiDocumentation {
 
     @Test
     public void indexExample() throws Exception {
-        this.mockMvc.perform(get("/"))
+        this.mockMvc.perform(get("/").accept(MediaTypes.HAL_JSON))
         .andExpect(status().isOk())
         .andDo(document("index-example",
                 links(

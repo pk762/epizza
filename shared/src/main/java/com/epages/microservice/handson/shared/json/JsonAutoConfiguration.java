@@ -1,40 +1,45 @@
 package com.epages.microservice.handson.shared.json;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
-import static java.util.Locale.ENGLISH;
 
-import java.util.Map;
+import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.geo.GeoModule;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.zalando.jackson.datatype.money.MoneyModule;
 
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 @Configuration
-public class JsonAutoConfiguration {
+public class JsonAutoConfiguration implements Jackson2ObjectMapperBuilderCustomizer {
+
+    @Autowired
+    private ParameterNamesModule parameterNamesModule;
 
     @Bean
-    public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder(GeoModule geoModule) {
-        return Jackson2ObjectMapperBuilder //
-                .json() //
-                .locale(ENGLISH) //
-                .timeZone("UTC") //
-                .indentOutput(true) //
-                .serializationInclusion(NON_NULL) //
-                .featuresToDisable(WRITE_DATES_AS_TIMESTAMPS, FAIL_ON_UNKNOWN_PROPERTIES) //
-                .modulesToInstall(geoModule) //
-                ;
+    @ConditionalOnMissingBean(MoneyModule.class)
+    public MoneyModule moneyModule() {
+        return new MoneyModule();
     }
 
-    @Bean
-    public Module moneyModule(Map<String, ObjectMapper> objectMappers) {
-        MoneyModule moneyModule = new MoneyModule();
-        objectMappers.forEach((beanName, objectMapper) -> objectMapper.registerModule(moneyModule));
-        return moneyModule;
+    @Override
+    public void customize(Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {
+        jacksonObjectMapperBuilder //
+        .locale(Locale.ENGLISH) //
+        .timeZone("UTC") //
+        .indentOutput(true) //
+        .serializationInclusion(ALWAYS) //
+        .featuresToDisable(WRITE_DATES_AS_TIMESTAMPS, FAIL_ON_UNKNOWN_PROPERTIES);
+
+        jacksonObjectMapperBuilder.modulesToInstall(moneyModule(), parameterNamesModule);
     }
+
+
 }

@@ -1,19 +1,21 @@
 package com.epages.microservice.handson.catalog;
 
-import static org.springframework.restdocs.RestDocumentation.document;
-import static org.springframework.restdocs.RestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
+import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -26,6 +28,9 @@ public class PizzaResourceTest {
 
     @Autowired
     private WebApplicationContext context;
+
+    @Rule
+    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("build/generated-snippets");
 
     private MockMvc mockMvc;
 
@@ -41,7 +46,8 @@ public class PizzaResourceTest {
     @Before
     public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
-                .apply(documentationConfiguration().uris().withPort(80)).build();
+                .apply(documentationConfiguration(this.restDocumentation).uris().withPort(80))
+                .build();
         collectionUri = entityLinks.linkToCollectionResource(Pizza.class).expand().getHref();
         singleItemUri = entityLinks.linkToSingleResource(Pizza.class, "1").getHref();
     }
@@ -56,12 +62,13 @@ public class PizzaResourceTest {
                 .andDo(document("pizzas-list",
                         responseFields(
                                 fieldWithPath("_embedded").description("Embedded list of <<resources-pizza-get, pizzas>>."),
+                                fieldWithPath("page").description("Paging information"),
                                 fieldWithPath("_links").description("<<links, Links>> to other resources.")
                         )));
     }
 
     @Test
-    public void should_get_one_pizzas() throws Exception {
+    public void should_get_one_pizza() throws Exception {
         givenExistingPizzas();
         whenPizzaRetrieved();
 

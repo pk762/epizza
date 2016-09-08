@@ -36,7 +36,7 @@ public class PizzaClientServiceTest {
             "  \"name\": \"Pizza Salami\",\n" +
             "  \"description\": \"The classic - Pizza Salami\",\n" +
             "  \"imageUrl\": \"http://www.sardegna-rustica.de/images/pizza.jpg\",\n" +
-            "  \"price\": \"EUR 8.90\"}";
+            "  \"price\": {\"amount\":8.90, \"currency\":\"EUR\"}}";
 
     private String emptyResponse = "{}";
 
