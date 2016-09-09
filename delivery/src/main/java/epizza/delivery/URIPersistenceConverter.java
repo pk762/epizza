@@ -1,4 +1,4 @@
-package epizza.shared.jpa.converter;
+package epizza.delivery;
 
 import java.net.URI;
 

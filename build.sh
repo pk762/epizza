@@ -6,19 +6,19 @@ echo
 echo "#############################################"
 echo "# building 'gradle-plugins'                 #"
 echo "#############################################"
-./gradle-plugins/gradlew -p gradle-plugins clean build pTML
+./gradle-plugins/gradlew -p gradle-plugins build pTML
 
 echo
 echo "#############################################"
 echo "# building 'shared'                         #"
 echo "#############################################"
-./shared/gradlew -p shared clean build pTML
+./shared/gradlew -p shared build pTML
 
 echo
 echo "#############################################"
 echo "# building 'config-server'                  #"
 echo "#############################################"
-./shared/gradlew -p config-server clean check bootRepackage
+./shared/gradlew -p config-server check bootRepackage
 
 #echo
 #echo "#############################################"
@@ -31,26 +31,26 @@ echo
 echo "#############################################"
 echo "# building 'order'                          #"
 echo "#############################################"
-./order/gradlew -p order clean check bootRepackage
+./order/gradlew -p order check bootRepackage
 #docker-compose build --no-cache order
 
 echo
 echo "#############################################"
 echo "# building 'bakery'                         #"
 echo "#############################################"
-./bakery/gradlew -p bakery clean check bootRepackage
+./bakery/gradlew -p bakery check bootRepackage
 #docker-compose build --no-cache bakery
 
 echo
 echo "#############################################"
 echo "# building 'delivery'                       #"
 echo "#############################################"
-./delivery/gradlew -p delivery clean check bootRepackage
+./delivery/gradlew -p delivery check bootRepackage
 #docker-compose build --no-cache delivery
 
 echo
 echo "#############################################"
 echo "# building 'order-ui'                       #"
 echo "#############################################"
-./order-ui/gradlew -p order-ui clean check bootRepackage
+./order-ui/gradlew -p order-ui check bootRepackage
 #docker-compose build --no-cache orderui

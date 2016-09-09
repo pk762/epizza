@@ -13,8 +13,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import epizza.shared.json.JsonMapTypeReference;
-
 public abstract class AbstractEventSubscriber {
 
     protected final ObjectMapper objectMapper;

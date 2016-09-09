@@ -6,9 +6,9 @@
 [ ] provide /openOrders resource on order service
 [ ] rewrite delivery to use rest calls 
 [x] create gradle convention plugin 
+  [ ] gradle convention for restdocs-wiremock stubs
 [x] new service: config-server 
-[ ] config-repo
+[x] config-repo
 [x] integrate travis
 [ ] docker-compose polishing
 [ ] angular client polishing
-

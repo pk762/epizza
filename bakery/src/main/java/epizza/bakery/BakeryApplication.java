@@ -5,17 +5,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import epizza.shared.jpa.converter.JpaConverter;
-
 @SpringBootApplication
-@ComponentScan(basePackages="epizza") // TODO should not be necessary once we finalized the shared spring-boot-starter.
 @EnableSpringDataWebSupport
-@EntityScan(basePackageClasses={BakeryApplication.class, JpaConverter.class })
+@EntityScan
 @EnableRabbit
 @EnableAsync
 public class BakeryApplication {

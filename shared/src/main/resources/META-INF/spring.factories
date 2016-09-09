@@ -1,4 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 epizza.shared.event.EventAutoConfiguration,\
-epizza.shared.json.JsonAutoConfiguration,\
 epizza.shared.web.WebAutoConfiguration

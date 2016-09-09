@@ -1,4 +1,4 @@
-package epizza.shared.json;
+package epizza.shared.event;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 

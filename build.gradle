@@ -4,6 +4,7 @@ import org.gradle.tooling.connection.GradleConnection
 private openCompositeConnection() {
     def plugins  = file("gradle-plugins")
     def shared   = file("shared")
+    def order    = file("order")
     def bakery   = file("bakery")
     def delivery = file("delivery")
 
@@ -12,6 +13,7 @@ private openCompositeConnection() {
     def builder = GradleConnector.newGradleConnection()
     builder.addParticipant(plugins).useInstallation(gradleHome)
     builder.addParticipant(shared).useInstallation(gradleHome)
+    builder.addParticipant(order).useInstallation(gradleHome)
     builder.addParticipant(bakery).useInstallation(gradleHome)
     builder.addParticipant(delivery).useInstallation(gradleHome)
     builder.useInstallation(gradleHome)
@@ -23,11 +25,26 @@ private openCompositeConnection() {
     return builder.build()
 }
 
+task clean << {
+    def connection = openCompositeConnection()
+    try {
+        executeTask(connection, "gradle-plugins", ":clean")
+        executeTask(connection, "shared", ":clean")
+        executeTask(connection, "order", ":clean")
+        executeTask(connection, "bakery", ":clean")
+        executeTask(connection, "delivery", ":clean")
+    } finally {
+        connection.close()
+    }
+}
+
+
 task build << {
     def connection = openCompositeConnection()
     try {
         executeTask(connection, "gradle-plugins", ":build")
         executeTask(connection, "shared", ":build")
+        executeTask(connection, "order", ":build")
         executeTask(connection, "bakery", ":build")
         executeTask(connection, "delivery", ":build")
     } finally {

@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 
-import epizza.shared.json.JsonMapTypeReference;
-
 public class EventPublisher {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventPublisher.class);

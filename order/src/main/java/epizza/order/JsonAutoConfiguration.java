@@ -1,4 +1,4 @@
-package epizza.shared.json;
+package epizza.order;
 
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
