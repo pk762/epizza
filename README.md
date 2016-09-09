@@ -2,7 +2,7 @@
 
 # rnd-microservices-handson
 
-RnD Day: Microservices Hands-On
+ePizza - A Microservices Hands-On Tutorial
 
 # Goals
 
