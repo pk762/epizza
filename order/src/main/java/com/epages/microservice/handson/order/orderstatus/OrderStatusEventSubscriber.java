@@ -1,10 +1,9 @@
 package com.epages.microservice.handson.order.orderstatus;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.net.URI;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.epages.microservice.handson.order.Order;
 import com.epages.microservice.handson.order.OrderService;
@@ -13,12 +12,11 @@ import com.epages.microservice.handson.shared.event.AbstractEventSubscriber;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 
+@Slf4j
 public abstract class OrderStatusEventSubscriber extends AbstractEventSubscriber {
 
     private final OrderService orderService;
     private final OrderStatus orderStatus;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderStatusEventSubscriber.class);
 
     protected OrderStatusEventSubscriber(OrderService orderService,
                                          ObjectMapper objectMapper,
@@ -39,8 +37,7 @@ public abstract class OrderStatusEventSubscriber extends AbstractEventSubscriber
 
         order.setStatus(orderStatus);
         orderService.update(order);
-        LOGGER.info("Consumed {} event with payload '{}'", super.type, payload);
-
+        log.info("Consumed {} event with payload '{}'", super.type, payload);
     }
 
     protected void enhanceOrder(Order order, Map<String, Object> payload) {
@@ -50,7 +47,7 @@ public abstract class OrderStatusEventSubscriber extends AbstractEventSubscriber
     private Long getOrderIdFromPayload(Map<String, Object> payload, Map<String, Object> event) {
         String orderUriString = (String) payload.get("orderLink");
         if (Strings.isNullOrEmpty(orderUriString)) {
-            LOGGER.error("Event {} does not contain an orderLink", event);
+            log.error("Event {} does not contain an orderLink", event);
             throw new IllegalArgumentException(String.format("Event %s does not contain an orderLink", event));
         }
         URI orderUri = URI.create(orderUriString);

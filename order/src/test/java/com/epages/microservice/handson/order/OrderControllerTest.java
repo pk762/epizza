@@ -116,7 +116,7 @@ public class OrderControllerTest {
         //mock the rest call made b< OrderServiceImpl to PizzaServiceClient
         mockServer = MockRestServiceServer.createServer(restTemplate);
         mockServer.expect(
-                requestTo("http://localhost/catalog/1")).
+                requestTo("http://localhost/com.epages.microservice.handson.catalog/1")).
                 andRespond(withSuccess(pizzaSampleResponse, MediaType.APPLICATION_JSON));
 
         ordersUri = linkTo(methodOn(OrderController.class).getAll(null, null)).toUri().toString();
@@ -163,7 +163,7 @@ public class OrderControllerTest {
                 .andExpect(status().is(HttpStatus.OK.value()))
                 .andExpect(jsonPath("$.status", is(order.getStatus().name())))
                 .andExpect(jsonPath("$.totalPrice", notNullValue()))
-                .andExpect(jsonPath("$.orderItems", hasSize(order.getItems().size())))
+                .andExpect(jsonPath("$.orderItems", hasSize(order.getOrderItems().size())))
                 .andExpect(jsonPath("$.deliveryAddress.firstname", is(order.getDeliveryAddress().getFirstname())))
                 .andExpect(jsonPath("$._links.self.href",
                         is(entityLinks.linkForSingleResource(Order.class, order.getId()).toUri().toString())))
@@ -215,20 +215,21 @@ public class OrderControllerTest {
     private void givenExistingOrder() throws URISyntaxException {
         Order orderTmp = new Order();
         orderTmp.setComment("some comment");
-        Address address = new Address();
-        address.setCity("Hamburg");
-        address.setFirstname("Mathias");
-        address.setLastname("Dpunkt");
-        address.setPostalCode("22222");
-        address.setStreet("Pilatuspool 2");
-        address.setTelephone("+4908154711");
+        Address address = Address.builder()
+                .city("Hamburg")
+                .firstname("Mathias")
+                .lastname("Dpunkt")
+                .postalCode("22222")
+                .street("Pilatuspool 2")
+                .telephone("+4908154711")
+                .build();
         orderTmp.setDeliveryAddress(address);
 
         LineItem lineItem = new LineItem();
         lineItem.setAmount(2);
-        lineItem.setPizza(new URI("http://localhost/catalog/1"));
+        lineItem.setPizza(Pizza.builder().id(1L).build());
 
-        orderTmp.addItem(lineItem);
+        orderTmp.addOrderItem(lineItem);
 
         order = orderService.create(orderTmp);
     }
@@ -257,7 +258,7 @@ public class OrderControllerTest {
                 "deliveryAddress", address,
                 "orderItems", ImmutableList.of(ImmutableMap.of(
                                 "amount", 1,
-                                "pizza", "http://localhost/catalog/1"
+                                "pizza", "http://localhost/com.epages.microservice.handson.catalog/1"
                         )
                 )
         ));

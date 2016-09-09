@@ -16,9 +16,8 @@ import org.springframework.hateoas.RelProvider;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+//@RestController
 @RequestMapping(path = "/", produces = { "application/hal+json", "application/json" })
 public class IndexController {
 
@@ -30,10 +29,10 @@ public class IndexController {
     public IndexController(ListableBeanFactory beanFactory, EntityLinks entityLinks, RelProvider relProvider) {
         this.entityLinks = entityLinks;
         this.relProvider = relProvider;
-        Map<String, Object> beansWithExposesResourceForAnnotation = beanFactory
-                .getBeansWithAnnotation(ExposesResourceFor.class);
+        Map<String, Object> beansWithExposesResourceForAnnotation = beanFactory.getBeansWithAnnotation(ExposesResourceFor.class);
         entitiesWithController = beansWithExposesResourceForAnnotation.values().stream()
-                .map(o -> o.getClass().getAnnotation(ExposesResourceFor.class).value()).collect(Collectors.toSet());
+                .map(o -> o.getClass().getAnnotation(ExposesResourceFor.class).value())
+                .collect(Collectors.toSet());
     }
 
     public static class ControllerLinksResource extends ResourceSupport {
