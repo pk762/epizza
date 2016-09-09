@@ -5,7 +5,7 @@
 [ ] remove rest customizations
 [ ] provide /openOrders resource on order service
 [ ] rewrite delivery to use rest calls 
-[ ] create gradle convention plugin 
+[x] create gradle convention plugin 
 [x] new service: config-server 
 [ ] config-repo
 [x] integrate travis
