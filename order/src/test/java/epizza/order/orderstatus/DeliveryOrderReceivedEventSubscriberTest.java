@@ -1,7 +1,6 @@
 package epizza.order.orderstatus;
 
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -9,9 +8,7 @@ import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import epizza.order.Order;
@@ -23,7 +20,7 @@ import epizza.order.OrderStatus;
 @OrderApplicationTest(activeProfiles = {"test", "DeliveryOrderReceivedEventSubscriberTest"})
 public class DeliveryOrderReceivedEventSubscriberTest {
 
-    @Autowired
+    @MockBean
     private OrderService orderService;
 
     @Autowired
@@ -39,15 +36,6 @@ public class DeliveryOrderReceivedEventSubscriberTest {
             "}";
 
     private Order order;
-
-    @Configuration
-    @Profile("DeliveryOrderReceivedEventSubscriberTest")
-    public static class MockConfiguration {
-        @Bean
-        public OrderService orderService() {
-            return mock(OrderService.class);
-        }
-    }
 
     @Test
     public void should_set_status_and_date_on_order() {

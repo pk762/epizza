@@ -6,3 +6,4 @@ logging:
     com.epages: INFO
     org.springframework: INFO
     org.springframework.amqp.rabbit: OFF
+
