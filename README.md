@@ -1,3 +1,5 @@
+[ ![Build Status](https://travis-ci.org/ePages-de/rnd-microservices-handson.svg)](https://travis-ci.org/ePages-de/rnd-microservices-handson)
+
 # rnd-microservices-handson
 
 RnD Day: Microservices Hands-On
