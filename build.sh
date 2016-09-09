@@ -2,9 +2,15 @@
 
 echo
 echo "#############################################"
+echo "# building 'gradle-plugins'                 #"
+echo "#############################################"
+./gradle-plugins/gradlew -p gradle-plugins clean build pTML
+
+echo
+echo "#############################################"
 echo "# building 'shared'                         #"
 echo "#############################################"
-./shared/gradlew -p shared clean pTML
+./shared/gradlew -p shared clean build pTML
 
 echo
 echo "#############################################"
