@@ -1,4 +1,0 @@
-[[overview]]
-== Overview
-
-This is the REST API for the pizza catalog.
