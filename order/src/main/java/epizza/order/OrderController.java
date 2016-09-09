@@ -8,13 +8,17 @@ import java.util.function.Function;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.rest.webmvc.PersistentEntityResource;
+import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,18 +40,21 @@ public class OrderController {
     private final OrderService orderService;
     private final EntityLinks entityLinks;
     private final PizzaRepository pizzaRepository;
+    private final PagedResourcesAssembler<Order> pagingResourceAssembler;
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Order> get(@PathVariable Long id) {
-        return orderService.getOrder(id).map(ResponseEntity::ok)
+    public ResponseEntity<PersistentEntityResource> get(@PathVariable Long id, PersistentEntityResourceAssembler assembler) {
+        return orderService.getOrder(id)
+                .map(assembler::toResource)
+                .map(ResponseEntity::ok)
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
     @ResponseBody
-    public Page<Order> getAll(Pageable pageable) {
-        return orderService.getAll(pageable);
+    public PagedResources<Resource<Order>> getAll(Pageable pageable) {
+        return pagingResourceAssembler.toResource(orderService.getAll(pageable));
     }
 
     @RequestMapping(method = RequestMethod.POST)

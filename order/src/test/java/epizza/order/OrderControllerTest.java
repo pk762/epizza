@@ -105,7 +105,7 @@ public class OrderControllerTest {
         //mock the rest call made b< OrderServiceImpl to PizzaServiceClient
         mockServer = MockRestServiceServer.createServer(restTemplate);
         mockServer.expect(
-                requestTo("http://localhost/com.epages.microservice.handson.catalog/1")).
+                requestTo("http://localhost/catalog/1")).
                 andRespond(withSuccess(pizzaSampleResponse, MediaType.APPLICATION_JSON));
 
         ordersUri = linkTo(methodOn(OrderController.class).getAll(null)).toUri().toString();
@@ -154,21 +154,20 @@ public class OrderControllerTest {
                 .andExpect(jsonPath("$.totalPrice", notNullValue()))
                 .andExpect(jsonPath("$.orderItems", hasSize(order.getOrderItems().size())))
                 .andExpect(jsonPath("$.deliveryAddress.firstname", is(order.getDeliveryAddress().getFirstname())))
-// TODO: Fix links.
-//                .andExpect(jsonPath("$._links.self.href",
-//                        is(entityLinks.linkForSingleResource(Order.class, order.getId()).toUri().toString())))
+                .andExpect(jsonPath("$._links.self.href",
+                        is(entityLinks.linkForSingleResource(Order.class, order.getId()).toUri().toString())))
 
                 .andDo(document("order-get",
                         responseFields(
-                                fieldWithPath("status").description("order status"),
-                                fieldWithPath("created").description("creation timestamp"),
+                                fieldWithPath("status").description("Order status"),
+                                fieldWithPath("orderedAt").description("Order creation timestamp"),
                                 fieldWithPath("totalPrice").description("Total order amount"),
                                 fieldWithPath("estimatedTimeOfDelivery").description("Estimated time of delivery"),
                                 fieldWithPath("comment").description("Customer's comment"),
-                                fieldWithPath("orderItems[].pizza").description("ordered pizza"),
+                                fieldWithPath("orderItems[]._links.pizza").description("Link to ordered pizza"),
                                 fieldWithPath("orderItems[].amount").description("Amount of pizzas"),
                                 fieldWithPath("orderItems[].price").description("Price (Currency symbol and numeric value)"),
-                                fieldWithPath("deliveryAddress").description("delivery address as POSTed when <<resources-order-create,creating an Order>>"),
+                                fieldWithPath("deliveryAddress").description("Delivery address as POSTed when <<resources-order-create,creating an Order>>"),
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
                         ))) //
         ;
