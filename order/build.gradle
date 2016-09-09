@@ -4,10 +4,11 @@ buildscript {
     }
     repositories {
         mavenCentral()
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
+        mavenLocal()
     }
     dependencies {
+        classpath "epizza:gradle-plugins:0.1.0"
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
@@ -15,19 +16,12 @@ buildscript {
 plugins {
     id "org.asciidoctor.convert" version "1.5.2"
 }
-
 ext {
-    snippetsDir = file("build/generated-snippets")
+    snippetsDir = file('build/generated-snippets')
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+apply plugin: 'epizza-java'
 apply plugin: 'spring-boot'
-
-ext {
-    snippetsDir = file("build/generated-snippets")
-}
 
 version = '0.0.1-SNAPSHOT'
 
@@ -57,8 +51,6 @@ targetCompatibility = 1.8
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url "https://repo.spring.io/snapshot" }
-    maven { url "https://repo.spring.io/milestone" }
 }
 
 configurations {
@@ -70,7 +62,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-actuator")
 
-    compile("com.epages.microservice.handson:shared:0.+")
+    compile("epizza:shared:0.+")
     compile("org.projectlombok:lombok")
     runtime("com.h2database:h2")
     runtime("javax.el:javax.el-api:2.2.4")
@@ -95,8 +87,4 @@ eclipse {
         containers.remove("org.eclipse.jdt.launching.JRE_CONTAINER")
         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
     }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.6'
 }
