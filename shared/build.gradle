@@ -47,7 +47,6 @@ dependencies {
     compile("org.atteo:evo-inflector:1.2.1")
 
     compile('org.zalando:jackson-datatype-money:0.9.0')
-    // TODO: requires javac -parameters -> gradle convention plugin.
     compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
     runtime('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
 

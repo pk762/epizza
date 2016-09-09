@@ -4,8 +4,10 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        mavenLocal()
     }
     dependencies {
+        classpath "epizza:gradle-plugins:0.1.0"
         classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
@@ -19,9 +21,7 @@ ext {
     snippetsDir = file('build/generated-snippets')
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+apply plugin: 'epizza-java'
 apply plugin: 'spring-boot' 
 
 version = '0.0.1-SNAPSHOT'
