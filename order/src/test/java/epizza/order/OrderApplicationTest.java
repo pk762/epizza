@@ -1,4 +1,4 @@
-package com.epages.microservice.handson.catalog;
+package epizza.order;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -15,6 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 @Inherited
 @SpringBootTest
 @ActiveProfiles
-public @interface CatalogApplicationTest {
+public @interface OrderApplicationTest {
     @AliasFor(annotation = ActiveProfiles.class, attribute = "profiles") String[] activeProfiles() default "test";
 }
