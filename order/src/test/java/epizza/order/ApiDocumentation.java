@@ -74,11 +74,13 @@ public class ApiDocumentation {
     @Test
     public void indexExample() throws Exception {
         this.mockMvc.perform(get("/").accept(MediaTypes.HAL_JSON))
+        .andDo(print())
         .andExpect(status().isOk())
         .andDo(document("index-example",
                 links(
                         linkWithRel("orders").description("The <<resources-orders,Orders resource>>"),
-                        linkWithRel("self").description("The Index resource")
+                        linkWithRel("pizzas").description("The <<resources-pizzas,Pizzas resource>>"),
+                        linkWithRel("profile").ignored()
                 )));
     }
 
