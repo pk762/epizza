@@ -1,6 +1,4 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.epages.microservice.handson.shared.jpa.JpaAutoConfiguration,\
-com.epages.microservice.handson.shared.event.EventAutoConfiguration,\
-com.epages.microservice.handson.shared.json.JsonAutoConfiguration,\
-com.epages.microservice.handson.shared.web.WebAutoConfiguration,\
-org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=
+epizza.shared.event.EventAutoConfiguration,\
+epizza.shared.json.JsonAutoConfiguration,\
+epizza.shared.web.WebAutoConfiguration

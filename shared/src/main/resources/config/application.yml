@@ -1,10 +1,4 @@
 spring:
-  main:
-    show-banner: true
-
-  profiles:
-    active: ${profile:default}
-
   rabbitmq:
     host: ${rabbitmq.host:rabbitmq}
     port: ${rabbitmq.port:5672}
