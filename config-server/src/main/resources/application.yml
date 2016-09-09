@@ -1,0 +1,12 @@
+server:
+  port: 8888
+
+management:
+  context-path: /system
+
+info:
+  build:
+    artifact: "@project.artifactId@"
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"

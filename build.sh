@@ -8,6 +8,12 @@ echo "#############################################"
 
 echo
 echo "#############################################"
+echo "# building 'config-server'                  #"
+echo "#############################################"
+./shared/gradlew -p config-server clean check bootRepackage
+
+echo
+echo "#############################################"
 echo "# building 'catalog'                        #"
 echo "#############################################"
 ./catalog/gradlew -p catalog clean check bootRepackage
