@@ -80,7 +80,7 @@ public class Order {
 
     public MonetaryAmount getTotalPrice() {
         return orderItems.stream()
-                .map(lineItem -> lineItem.getPrice().multiply(lineItem.getAmount()))
+                .map(LineItem::getPrice)
                 .reduce(MonetaryAmount::add)
                 .orElse(Money.of(0.0, "EUR"));
     }
