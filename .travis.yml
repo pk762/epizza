@@ -6,8 +6,7 @@ cache:
   directories:
   - "$HOME/.gradle"
 install: true
-script: "./shared/gradlew clean build install && ./order/gradlew clean build && ./catalog/gradlew clean build && ./delivery/gradlew clean build && ./bakery/gradlew clean build"
-after_success: "./publish.sh"
+script: ./build.sh
 env:
   global:
   - CI_NAME=travis-ci
