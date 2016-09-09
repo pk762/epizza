@@ -1,4 +1,4 @@
-[ ![Build Status](https://travis-ci.org/ePages-de/rnd-microservices-handson.svg)](https://travis-ci.org/ePages-de/rnd-microservices-handson)
+[ ![Build Status](https://travis-ci.org/ePages-de/epizza.svg)](https://travis-ci.org/ePages-de/epizza)
 
 # rnd-microservices-handson
 
