@@ -1,13 +1,14 @@
 [ ] merge order and catalog
-[ ] upgrade to spring boot 1.4
+[x] upgrade to spring boot 1.4
 [ ] clean up shared to provide a spring-boot-starter for messaging
-[ ] remove moneymodule / rest customizations
+[x] remove moneymodule 
+[ ] remove rest customizations
 [ ] provide /openOrders resource on order service
 [ ] rewrite delivery to use rest calls 
 [ ] create gradle convention plugin 
 [ ] new service: config-server 
 [ ] config-repo
-[ ] integrate travis
+[x] integrate travis
 [ ] docker-compose polishing
 [ ] angular client polishing
 
