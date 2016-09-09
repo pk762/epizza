@@ -3,7 +3,6 @@ package epizza.order;
 import static java.util.stream.Collectors.toList;
 
 import java.net.URI;
-import java.util.Optional;
 import java.util.function.Function;
 
 import javax.validation.Valid;
@@ -13,9 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,15 +37,16 @@ public class OrderController {
     private final EntityLinks entityLinks;
     private final PizzaRepository pizzaRepository;
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
     @ResponseBody
-    public Optional<Order> get(@PathVariable Long id) {
-        return orderService.getOrder(id);
+    public ResponseEntity<Order> get(@PathVariable Long id) {
+        return orderService.getOrder(id).map(ResponseEntity::ok)
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
     @ResponseBody
-    public Page<Order> getAll(Pageable pageable, PagedResourcesAssembler<Order> pagedResourcesAssembler) {
+    public Page<Order> getAll(Pageable pageable) {
         return orderService.getAll(pageable);
     }
 

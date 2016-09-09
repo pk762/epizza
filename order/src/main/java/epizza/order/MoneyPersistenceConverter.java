@@ -17,11 +17,11 @@ public class MoneyPersistenceConverter implements AttributeConverter<MonetaryAmo
 
     @Override
     public String convertToDatabaseColumn(MonetaryAmount attribute) {
-        return FORMAT.format(attribute);
+        return attribute == null ? null : FORMAT.format(attribute);
     }
 
     @Override
     public MonetaryAmount convertToEntityAttribute(String dbData) {
-        return Money.parse(dbData, FORMAT);
+        return dbData == null ? null : Money.parse(dbData, FORMAT);
     }
 }

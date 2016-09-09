@@ -2,12 +2,6 @@ package epizza.order;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,21 +9,26 @@ import javax.money.MonetaryAmount;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.javamoney.moneta.Money;
+import org.springframework.hateoas.Identifiable;
 
 import com.google.common.collect.Lists;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Access(AccessType.FIELD)
@@ -39,7 +38,7 @@ import com.google.common.collect.Lists;
 @NoArgsConstructor
 @EqualsAndHashCode(of = { "id" })
 @ToString(of = { "id", "orderItems" })
-public class Order {
+public class Order implements Identifiable<Long> {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -58,7 +57,8 @@ public class Order {
     @Column(name = "ETD", nullable = true)
     private LocalDateTime estimatedTimeOfDelivery;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonIgnore
+    @ElementCollection
     private List<LineItem> orderItems = Lists.newArrayList();
 
     @Basic
@@ -74,7 +74,6 @@ public class Order {
     }
 
     public void addOrderItem(LineItem item) {
-        item.setOrder(this);
         this.orderItems.add(item);
     }
 

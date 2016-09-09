@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    private final PizzaRepository pizzaRepository;
     private final OrderEventPublisher orderEventPublisher;
 
     @Override

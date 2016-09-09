@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Inherited
-@SpringBootTest
+@SpringBootTest(classes=OrderApplication.class)
 @ActiveProfiles
 public @interface OrderApplicationTest {
     @AliasFor(annotation = ActiveProfiles.class, attribute = "profiles") String[] activeProfiles() default "test";

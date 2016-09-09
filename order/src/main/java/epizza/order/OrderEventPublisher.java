@@ -20,7 +20,6 @@ public class OrderEventPublisher {
     private final EventPublisher eventPublisher;
     private final EntityLinks entityLinks;
 
-
     public void sendOrderCreatedEvent(final Order order) {
         Map<String, Object> payloadMap = ImmutableMap.of(
                 "orderLink", entityLinks.linkForSingleResource(Order.class, order.getId()).toUri().toString());
