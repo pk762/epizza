@@ -1,8 +1,11 @@
-package com.epages.microservice.handson.orderui;
+package epizza.orderui;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import epizza.orderui.OrderUiApplication;
+
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

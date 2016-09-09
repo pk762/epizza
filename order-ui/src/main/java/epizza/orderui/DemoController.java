@@ -1,4 +1,4 @@
-package com.epages.microservice.handson.orderui;
+package epizza.orderui;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
