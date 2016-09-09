@@ -21,8 +21,9 @@ ext {
     snippetsDir = file('build/generated-snippets')
 }
 
-apply plugin: 'epizza-java'
 apply plugin: 'spring-boot'
+apply plugin: 'epizza-java'
+apply plugin: 'epizza-docker'
 
 version = '0.0.1-SNAPSHOT'
 

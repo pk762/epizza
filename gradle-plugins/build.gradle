@@ -3,10 +3,6 @@ buildscript {
         jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
     }
-
-    dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
-    }
 }
 
 apply plugin: 'java'
@@ -24,6 +20,9 @@ repositories {
 dependencies {
     compile localGroovy()
     compile gradleApi()
+
+    compile 'com.bmuschko:gradle-docker-plugin:3.0.1'
+    compileOnly('org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE')
 
     testCompile gradleTestKit()
     testCompile("org.spockframework:spock-core:1.0-groovy-2.4") {
