@@ -1,6 +1,6 @@
 [ ![Build Status](https://travis-ci.org/ePages-de/epizza.svg)](https://travis-ci.org/ePages-de/epizza)
 
-# rnd-microservices-handson
+# ePizza
 
 ePizza - A Microservices Hands-On Tutorial
 
