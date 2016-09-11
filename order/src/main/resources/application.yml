@@ -6,3 +6,16 @@ logging:
     com.epages: INFO
     org.springframework: INFO
     org.springframework.amqp.rabbit: OFF
+
+spring:
+  jmx:
+    enabled: false
+
+#  jpa:
+#    generate-ddl: true
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#        use_sql_comments: true

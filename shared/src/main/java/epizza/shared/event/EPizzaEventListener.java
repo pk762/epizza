@@ -28,5 +28,5 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
                         durable = "true",
                         autoDelete = "false"),
                 key = "#"))
-public @interface RnDEventListener {
+public @interface EPizzaEventListener {
 }

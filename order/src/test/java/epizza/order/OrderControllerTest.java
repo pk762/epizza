@@ -214,10 +214,11 @@ public class OrderControllerTest {
                 .build();
         orderTmp.setDeliveryAddress(address);
 
-        LineItem lineItem = new LineItem();
-        lineItem.setAmount(2);
-        lineItem.setPizza(Pizza.builder().id(1L).build());
-        lineItem.setPrice(Money.parse("EUR 1.23"));
+        LineItem lineItem = LineItem.builder()
+                .amount(2)
+                .pizza(Pizza.builder().id(1L).build())
+                .price(Money.parse("EUR 1.23"))
+                .build();
 
         orderTmp.addOrderItem(lineItem);
 

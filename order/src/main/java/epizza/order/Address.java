@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
+import javax.persistence.Basic;
 import javax.persistence.Embeddable;
 
 @Access(AccessType.FIELD)
@@ -19,24 +19,24 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Address {
 
-    @Column(name = "FIRSTNAME", length = 255, nullable = false)
+    @Basic(optional = false)
     private String firstname;
 
-    @Column(name = "LASTNAME", length = 255, nullable = false)
+    @Basic(optional = false)
     private String lastname;
 
-    @Column(name = "STREET", length = 255, nullable = false)
+    @Basic(optional = false)
     private String street;
 
-    @Column(name = "CITY", length = 255, nullable = false)
+    @Basic(optional = false)
     private String city;
 
-    @Column(name = "POSTALCODE", length = 255, nullable = false)
+    @Basic(optional = false)
     private String postalCode;
 
-    @Column(name = "TELEPHONE", length = 255, nullable = false)
+    @Basic(optional = false)
     private String telephone;
 
-    @Column(name = "EMAIL", length = 255, nullable = true)
+    @Basic(optional = true)
     private String email;
 }

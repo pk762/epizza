@@ -1,14 +1,14 @@
 package epizza.order.orderstatus;
 
+import epizza.order.Order;
+import epizza.order.OrderService;
+import epizza.order.OrderStatus;
 import epizza.shared.event.AbstractEventSubscriber;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.util.Map;
 
-import epizza.order.Order;
-import epizza.order.OrderService;
-import epizza.order.OrderStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 
@@ -53,7 +53,7 @@ public abstract class OrderStatusEventSubscriber extends AbstractEventSubscriber
         URI orderUri = URI.create(orderUriString);
 
         String[] pathItems = orderUri.getPath().split("/");
-        if (pathItems != null && pathItems.length > 1) {
+        if (pathItems.length > 1) {
             String idPart = pathItems[pathItems.length - 1];
             return Long.valueOf(idPart);
         } else {

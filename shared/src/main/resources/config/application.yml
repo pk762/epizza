@@ -19,3 +19,6 @@ spring:
 logging:
   level:
     root: INFO
+
+management:
+  context-path: /system

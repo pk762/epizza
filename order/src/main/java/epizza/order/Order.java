@@ -2,6 +2,12 @@ package epizza.order;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,6 +15,7 @@ import javax.money.MonetaryAmount;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
@@ -24,12 +31,6 @@ import org.springframework.hateoas.Identifiable;
 
 import com.google.common.collect.Lists;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA_ORDER")
@@ -42,27 +43,24 @@ public class Order implements Identifiable<Long> {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Basic
-    @Column(name = "ORDERED_AT", nullable = false)
+    @Basic(optional = false)
     private LocalDateTime orderedAt;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "STATUS", length = 30, nullable = false)
+    @Basic(optional = false)
     private OrderStatus status = OrderStatus.NEW;
 
-    @Basic
-    @Column(name = "ETD", nullable = true)
+    @Column(name = "ETD")
     private LocalDateTime estimatedTimeOfDelivery;
 
 //    @JsonIgnore
     @ElementCollection
+    @CollectionTable(name = "PIZZA_ORDER_ITEM")
     private List<LineItem> orderItems = Lists.newArrayList();
 
-    @Basic
-    @Column(name = "COMMENT", length = 255)
+    @Basic(optional = true)
     private String comment;
 
     @Embedded

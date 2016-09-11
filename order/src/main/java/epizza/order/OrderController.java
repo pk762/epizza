@@ -22,6 +22,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RepositoryRestController
-@RequestMapping(value = "/orders", produces = MediaTypes.HAL_JSON_VALUE)
+@RequestMapping(value = "/orders")
 @ExposesResourceFor(Order.class)
 @CrossOrigin(exposedHeaders = "Location", value = "*")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -53,13 +54,13 @@ public class OrderController {
         return ResponseEntity.created(location).build();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
     @ResponseBody
     public PagedResources<Resource<Order>> getAll(Pageable pageable) {
         return pagingResourceAssembler.toResource(orderService.getAll(pageable));
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<PersistentEntityResource> get(@PathVariable Long id, PersistentEntityResourceAssembler assembler) {
         return orderService.getOrder(id)
@@ -73,7 +74,10 @@ public class OrderController {
             URI pizzaUri = lineItemResource.getPizza();
             Pizza pizza = pizzaRepository.findByUri(pizzaUri)
                     .orElseThrow(() -> new ResourceNotFoundException(String.format("Unknown pizza %s", pizzaUri.toString())));
-            return new LineItem(pizza, lineItemResource.getAmount());
+            return LineItem.builder()
+                    .pizza(pizza)
+                    .amount(lineItemResource.getAmount())
+                    .build();
         };
     }
 }

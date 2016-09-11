@@ -32,7 +32,7 @@ public abstract class AbstractEventSubscriber {
         }
     }
 
-    @RnDEventListener
+    @EPizzaEventListener
     public void consume(@Payload String jsonEvent) {
         final Map<String, Object> event = extractEvent(jsonEvent);
         if (isOwnType(event)) {
