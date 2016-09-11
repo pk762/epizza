@@ -34,7 +34,7 @@ public class Address {
     @Basic(optional = false)
     private String postalCode;
 
-    @Basic(optional = false)
+    @Basic(optional = true)
     private String telephone;
 
     @Basic(optional = true)

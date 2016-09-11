@@ -64,7 +64,7 @@ public class PizzaInitializer implements InitializingBean {
                 .description("Tuna - no dolphins - promise!")
                 .topping(Topping.CHEESE)
                 .topping(Topping.TUNA)
-                .imageUrl("/img/tonno.jpg")
+                .imageUrl("/img/tonno.png")
                 .price(Money.of(8.90, "EUR"))
                 .build();
     }

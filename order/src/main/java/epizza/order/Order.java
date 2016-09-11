@@ -45,7 +45,7 @@ public class Order implements Identifiable<Long> {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Basic(optional = false)
+    @Column(nullable = false)
     private LocalDateTime orderedAt;
 
     @Enumerated(value = EnumType.STRING)
