@@ -25,3 +25,6 @@ _ajdump
 
 **/build/
 **/build.tar.gz
+*.ipr
+*.iws
+out/
