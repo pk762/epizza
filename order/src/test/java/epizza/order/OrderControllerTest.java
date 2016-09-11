@@ -102,7 +102,7 @@ public class OrderControllerTest {
                 .apply(documentationConfiguration(this.restDocumentation).uris().withPort(80))
                 .build();
 
-        //mock the rest call made b< OrderServiceImpl to PizzaServiceClient
+        //mock the rest call made b< OrderService to PizzaServiceClient
         mockServer = MockRestServiceServer.createServer(restTemplate);
         mockServer.expect(
                 requestTo("http://localhost/catalog/1")).

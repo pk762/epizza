@@ -33,6 +33,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.springframework.hateoas.Identifiable;
 
+import com.google.common.collect.Sets;
+
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA")
@@ -71,5 +73,5 @@ public class Pizza implements Identifiable<Long> {
     @Enumerated(EnumType.STRING)
     @Column(name = "TOPPING", length = 30, nullable = false)
     @Singular
-    private Set<Topping> toppings;
+    private Set<Topping> toppings = Sets.newHashSet();
 }

@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
@@ -19,9 +17,7 @@ import javax.persistence.Embeddable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Address implements Serializable {
-
-    private static final long serialVersionUID = 2667019347732732455L;
+public class Address {
 
     @Column(name = "FIRSTNAME", length = 255, nullable = false)
     private String firstname;

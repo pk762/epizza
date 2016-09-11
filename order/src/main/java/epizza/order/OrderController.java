@@ -2,6 +2,8 @@ package epizza.order;
 
 import static java.util.stream.Collectors.toList;
 
+import lombok.AllArgsConstructor;
+
 import java.net.URI;
 import java.util.function.Function;
 
@@ -28,10 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import lombok.AllArgsConstructor;
-
 @RepositoryRestController
-@RequestMapping("/orders")
+@RequestMapping(value = "/orders", produces = MediaTypes.HAL_JSON_VALUE)
 @ExposesResourceFor(Order.class)
 @CrossOrigin(exposedHeaders = "Location", value = "*")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -41,21 +41,6 @@ public class OrderController {
     private final EntityLinks entityLinks;
     private final PizzaRepository pizzaRepository;
     private final PagedResourcesAssembler<Order> pagingResourceAssembler;
-
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<PersistentEntityResource> get(@PathVariable Long id, PersistentEntityResourceAssembler assembler) {
-        return orderService.getOrder(id)
-                .map(assembler::toResource)
-                .map(ResponseEntity::ok)
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @RequestMapping(method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
-    @ResponseBody
-    public PagedResources<Resource<Order>> getAll(Pageable pageable) {
-        return pagingResourceAssembler.toResource(orderService.getAll(pageable));
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> create(@RequestBody @Valid OrderResource orderResource) {
@@ -68,11 +53,27 @@ public class OrderController {
         return ResponseEntity.created(location).build();
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public PagedResources<Resource<Order>> getAll(Pageable pageable) {
+        return pagingResourceAssembler.toResource(orderService.getAll(pageable));
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<PersistentEntityResource> get(@PathVariable Long id, PersistentEntityResourceAssembler assembler) {
+        return orderService.getOrder(id)
+                .map(assembler::toResource)
+                .map(ResponseEntity::ok)
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     private Function<LineItemResource, LineItem> toLineItem() {
         return lineItemResource -> {
-            epizza.order.Pizza pizza = pizzaRepository.findByUri(lineItemResource.getPizza())
-                    .orElseThrow(() -> new ResourceNotFoundException("Unknown pizza " + lineItemResource.getPizza().toString()));
-            return new epizza.order.LineItem(pizza, lineItemResource.getAmount());
+            URI pizzaUri = lineItemResource.getPizza();
+            Pizza pizza = pizzaRepository.findByUri(pizzaUri)
+                    .orElseThrow(() -> new ResourceNotFoundException(String.format("Unknown pizza %s", pizzaUri.toString())));
+            return new LineItem(pizza, lineItemResource.getAmount());
         };
     }
 }
