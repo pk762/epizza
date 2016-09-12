@@ -20,29 +20,33 @@
   app.controller("MainCtrl",["Restangular","$scope", "$interval",function(Restangular,$scope, $interval){
     Restangular.setBaseUrl(apiHost);
     Restangular.setFullResponse(true);
-    var orderResource = Restangular.allUrl("orders", "orders");
-    var pizzaResource = Restangular.allUrl("pizzas", "pizzas");
 
-    var currentOrderResource;
+    Restangular.allUrl("pizzas", "pizzas").getList().then(function(pizzas) {
+      $scope.pizzas = pizzas.data._embedded.pizzas;
+    });
 
     $scope.cart = {};
+    $scope.totalPrice = {
+      amount: 0.0,
+      currency: "EUR"
+    };
 
     $scope.newCart = {};
     $scope.newCart.lineItems = [];
     $scope.newCart.deliveryAddress = {};
 
-    pizzaResource.getList().then(function(pizzas) {
-      $scope.pizzas = pizzas.data._embedded.pizzas;
-    });
+    var calculateTotalPrice = function(cart) {
+      var totalPrice = 0;
+      for (var pizzaUri in cart) {
+        totalPrice += cart[pizzaUri].price.amount;
+      }
+      return totalPrice;
+    };
 
     $scope.addToCart = function(pizza) {
       var pizzaUri = pizza._links.self.href;
 
       var lineItem = {};
-      lineItem.price = {
-        amount: 0.0,
-        currency: "EUR"
-      };
 
       if (pizzaUri in $scope.cart) {
         lineItem          = $scope.cart[pizzaUri];
@@ -50,12 +54,18 @@
       } else {
         lineItem.pizza    = pizza;
         lineItem.quantity = 1;
-
-        $scope.cart[pizzaUri] = lineItem;
       }
 
-      lineItem.price.amount = lineItem.pizza.price.amount * lineItem.quantity;
+      lineItem.price = {
+        amount:   pizza.price.amount * lineItem.quantity,
+        currency: "EUR"
+      };
+
+      $scope.cart[pizzaUri] = lineItem;
+      $scope.totalPrice.amount = calculateTotalPrice($scope.cart);
     };
+
+    var currentOrderResource;
 
     $scope.postOrder = function() {
         $scope.newCart.lineItems = [];
@@ -66,7 +76,7 @@
           newLineItem.pizza  = pizzaUri;
           $scope.newCart.lineItems.push(newLineItem);
         }
-        orderResource.post($scope.newCart).then(function(response) {
+        Restangular.allUrl("orders", "orders").post($scope.newCart).then(function(response) {
           var location = response.headers("Location");
           currentOrderResource = Restangular.oneUrl("order", location);
           $scope.currentOrder = currentOrderResource.get().then(function(order) {
@@ -133,19 +143,24 @@
       <div id="cart" class="panel panel-default col-xs-4 col-md-offset-1">
 
           <div class="alert alert-info"  style="margin-top: 10px;" role="alert" ng-show="currentOrder">
-            <b>Order Status: {{currentOrder.status}}</b> <br/>Estimated time of delivery: {{currentOrder.estimatedTimeOfDelivery}}
+            <b>Order Status: {{currentOrder.status}}</b> <br/>Estimated delivery: {{currentOrder.estimatedTimeOfDelivery}}
           </div>
           <div class="panel panel-default" style="margin-top: 10px;">
             <div class="panel-heading">Cart</div>
             <table class="table table-striped">
-                <thead><th>Pizza</th><th>Amount</th><th>Price</th></thead>
+                <thead><th>Pizza</th><th>Quantity</th><th>Price</th></thead>
                 <tbody ng-repeat="lineItem in cart">
                 <tr>
                     <td class="col-md-4">{{lineItem.pizza.name}}</td>
-                    <td class="col-md-2">{{lineItem.count}}</td>
+                    <td class="col-md-2">{{lineItem.quantity}}</td>
                     <td class="col-md-2" nowrap="nowrap">{{lineItem.price.amount | number : 2}} {{lineItem.price.currency}}</td>
                 </tr>
                 </tbody>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>Total</td>
+                    <td>{{totalPrice.amount | number : 2}} {{totalPrice.currency}}</td>
+                </tr>
             </table>
           </div>
           <div class="panel panel-default" style="margin-top: 10px;">
