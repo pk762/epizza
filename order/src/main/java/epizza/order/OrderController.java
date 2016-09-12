@@ -75,7 +75,7 @@ public class OrderController {
                     .orElseThrow(() -> new ResourceNotFoundException(String.format("Unknown pizza %s", pizzaUri.toString())));
             return OrderItem.builder()
                     .pizza(pizza)
-                    .amount(lineItemPayload.getAmount())
+                    .quantity(lineItemPayload.getQuantity())
                     .build();
         };
     }

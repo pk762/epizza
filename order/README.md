@@ -188,11 +188,11 @@ echo '{
     "lineItems": [
         {
             "pizza": "http://localhost:8082/pizzas/1",
-            "amount": 2
+            "quantity": 2
         },
         {
             "pizza": "http://localhost:8082/pizzas/2",
-            "amount": 1
+            "quantity": 1
         }
     ],
     "deliveryAddress": {
@@ -214,21 +214,60 @@ echo '{
 $ http :8082/orders
 HTTP/1.1 200 OK
 Content-Type: application/hal+json;charset=UTF-8
-Date: Fri, 09 Sep 2016 13:49:21 GMT
+Date: Mon, 12 Sep 2016 09:08:21 GMT
 Transfer-Encoding: chunked
-X-Application-Context: order:default:8082
+X-Application-Context: application:8082
 
 {
     "_embedded": {
-        "orderResources": [
+        "orders": [
             {
-                "_links": {
-                    "self": {
-                        "href": "http://localhost:8082/orders/1"
-                    }
+                "comment": "C",
+                "deliveryAddress": {
+                    "city": "C",
+                    "email": null,
+                    "firstname": "F",
+                    "lastname": "L",
+                    "postalCode": "P",
+                    "street": "S",
+                    "telephone": "T"
                 },
-                "comment": null,
-                "created": "2016-09-09T15:48:58.15",
+                "estimatedTimeOfDelivery": null,
+                "orderItems": [
+                    {
+                        "_links": {
+                            "pizza": {
+                                "href": "http://localhost:8082/pizzas/1"
+                            }
+                        },
+                        "price": {
+                            "amount": 26.7,
+                            "currency": "EUR"
+                        },
+                        "quantity": 3
+                    },
+                    {
+                        "_links": {
+                            "pizza": {
+                                "href": "http://localhost:8082/pizzas/3"
+                            }
+                        },
+                        "price": {
+                            "amount": 10.9,
+                            "currency": "EUR"
+                        },
+                        "quantity": 1
+                    }
+                ],
+                "orderedAt": "2016-09-12T11:05:12.519",
+                "status": "NEW",
+                "totalPrice": {
+                    "amount": 37.6,
+                    "currency": "EUR"
+                }
+            },
+            {
+                "comment": "Slice it!",
                 "deliveryAddress": {
                     "city": "Hamburg",
                     "email": null,
@@ -241,25 +280,34 @@ X-Application-Context: order:default:8082
                 "estimatedTimeOfDelivery": null,
                 "orderItems": [
                     {
-                        "amount": 2,
-                        "pizza": "http://localhost:8082/pizzas/1",
+                        "_links": {
+                            "pizza": {
+                                "href": "http://localhost:8082/pizzas/1"
+                            }
+                        },
                         "price": {
                             "amount": 17.8,
                             "currency": "EUR"
-                        }
+                        },
+                        "quantity": 2
                     },
                     {
-                        "amount": 1,
-                        "pizza": "http://localhost:8082/pizzas/2",
+                        "_links": {
+                            "pizza": {
+                                "href": "http://localhost:8082/pizzas/2"
+                            }
+                        },
                         "price": {
                             "amount": 9.9,
                             "currency": "EUR"
-                        }
+                        },
+                        "quantity": 1
                     }
                 ],
+                "orderedAt": "2016-09-12T11:08:13.379",
                 "status": "NEW",
                 "totalPrice": {
-                    "amount": 45.5,
+                    "amount": 27.7,
                     "currency": "EUR"
                 }
             }
@@ -273,7 +321,7 @@ X-Application-Context: order:default:8082
     "page": {
         "number": 0,
         "size": 20,
-        "totalElements": 1,
+        "totalElements": 2,
         "totalPages": 1
     }
 }
@@ -286,73 +334,60 @@ X-Application-Context: order:default:8082
 $ http :8082/orders/1
 HTTP/1.1 200 OK
 Content-Type: application/hal+json;charset=UTF-8
-Date: Fri, 09 Sep 2016 13:54:02 GMT
+Date: Mon, 12 Sep 2016 09:09:17 GMT
 Transfer-Encoding: chunked
-X-Application-Context: order:default:8082
+X-Application-Context: application:8082
 
 {
     "_links": {
+        "order": {
+            "href": "http://localhost:8082/orders/1"
+        },
         "self": {
             "href": "http://localhost:8082/orders/1"
         }
     },
-    "comment": null,
-    "created": "2016-09-09T15:51:56.817",
+    "comment": "C",
     "deliveryAddress": {
-        "city": "Hamburg",
+        "city": "C",
         "email": null,
-        "firstname": "Mathias",
-        "lastname": "Dpunkt",
-        "postalCode": "22222",
-        "street": "Some street 99",
-        "telephone": "+4940111111"
+        "firstname": "F",
+        "lastname": "L",
+        "postalCode": "P",
+        "street": "S",
+        "telephone": "T"
     },
     "estimatedTimeOfDelivery": null,
     "orderItems": [
         {
-            "amount": 2,
-            "pizza": "http://localhost:8082/pizzas/1",
+            "_links": {
+                "pizza": {
+                    "href": "http://localhost:8082/pizzas/1"
+                }
+            },
             "price": {
-                "amount": 17.8,
+                "amount": 26.7,
                 "currency": "EUR"
-            }
+            },
+            "quantity": 3
         },
         {
-            "amount": 2,
-            "pizza": "http://localhost:8082/pizzas/1",
+            "_links": {
+                "pizza": {
+                    "href": "http://localhost:8082/pizzas/3"
+                }
+            },
             "price": {
-                "amount": 17.8,
+                "amount": 10.9,
                 "currency": "EUR"
-            }
-        },
-        {
-            "amount": 1,
-            "pizza": "http://localhost:8082/pizzas/2",
-            "price": {
-                "amount": 9.9,
-                "currency": "EUR"
-            }
-        },
-        {
-            "amount": 1,
-            "pizza": "http://localhost:8082/pizzas/2",
-            "price": {
-                "amount": 9.9,
-                "currency": "EUR"
-            }
-        },
-        {
-            "amount": 1,
-            "pizza": "http://localhost:8082/pizzas/2",
-            "price": {
-                "amount": 9.9,
-                "currency": "EUR"
-            }
+            },
+            "quantity": 1
         }
     ],
+    "orderedAt": "2016-09-12T11:05:12.519",
     "status": "NEW",
     "totalPrice": {
-        "amount": 65.3,
+        "amount": 37.6,
         "currency": "EUR"
     }
 }

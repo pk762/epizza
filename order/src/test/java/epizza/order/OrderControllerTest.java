@@ -127,7 +127,7 @@ public class OrderControllerTest {
                 .andDo(document("order-create", //
                         requestFields( //
                                 fieldWithPath("comment").description("delivery comment"), //
-                                fieldWithPath("lineItems[].amount").description("how many pizzas do you eat today?"), //
+                                fieldWithPath("lineItems[].quantity").description("how many pizzas do you eat today?"), //
                                 fieldWithPath("lineItems[].pizza").description("which pizza do you want?"), //
                                 fieldWithPath("deliveryAddress.firstname").description("Your first name"), //
                                 fieldWithPath("deliveryAddress.lastname").description("Your last name"), //
@@ -165,7 +165,7 @@ public class OrderControllerTest {
                                 fieldWithPath("estimatedTimeOfDelivery").description("Estimated time of delivery"),
                                 fieldWithPath("comment").description("Customer's comment"),
                                 fieldWithPath("orderItems[]._links.pizza").description("Link to ordered pizza"),
-                                fieldWithPath("orderItems[].amount").description("Amount of pizzas"),
+                                fieldWithPath("orderItems[].quantity").description("Number of pizzas"),
                                 fieldWithPath("orderItems[].price").description("Price (Currency symbol and numeric value)"),
                                 fieldWithPath("deliveryAddress").description("Delivery address as POSTed when <<resources-order-create,creating an Order>>"),
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
@@ -216,7 +216,7 @@ public class OrderControllerTest {
 
         OrderItem orderItem = OrderItem.builder()
                 .pizza(Pizza.builder().id(1L).price(Money.parse("EUR 1.23")).build())
-                .amount(2)
+                .quantity(2)
                 .build();
 
         newOrder.addOrderItem(orderItem);
@@ -247,7 +247,7 @@ public class OrderControllerTest {
                 "comment", "Some comment",
                 "deliveryAddress", address,
                 "lineItems", ImmutableList.of(ImmutableMap.of(
-                                "amount", 1,
+                                "quantity", 1,
                                 "pizza", "http://localhost/pizzas/1"
                         )
                 )

@@ -45,17 +45,16 @@
       };
 
       if (pizzaUri in $scope.cart) {
-        lineItem       = $scope.cart[pizzaUri];
-        lineItem.count = lineItem.count + 1;
+        lineItem          = $scope.cart[pizzaUri];
+        lineItem.quantity = lineItem.quantity + 1;
       } else {
-        lineItem.pizza = pizza;
-        lineItem.count = 1;
+        lineItem.pizza    = pizza;
+        lineItem.quantity = 1;
 
         $scope.cart[pizzaUri] = lineItem;
       }
 
-      var amount = lineItem.pizza.price.amount;
-      lineItem.price.amount = amount * lineItem.count;
+      lineItem.price.amount = lineItem.pizza.price.amount * lineItem.quantity;
     };
 
     $scope.postOrder = function() {
@@ -63,7 +62,7 @@
         for (var pizzaUri in $scope.cart) {
           var lineItem = $scope.cart[pizzaUri];
           var newLineItem = {};
-          newLineItem.amount = lineItem.count;
+          newLineItem.quantity = lineItem.quantity;
           newLineItem.pizza  = pizzaUri;
           $scope.newCart.lineItems.push(newLineItem);
         }

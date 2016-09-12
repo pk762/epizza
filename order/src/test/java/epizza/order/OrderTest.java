@@ -18,7 +18,7 @@ public class OrderTest {
         Order order = new Order();
         OrderItem orderItem = OrderItem.builder()
                 .pizza(salami)
-                .amount(2)
+                .quantity(2)
                 .build();
 
         // WHEN

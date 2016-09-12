@@ -19,5 +19,5 @@ public class LineItemPayload {
 
     @NotNull
     @Min(1)
-    private Integer amount;
+    private Integer quantity;
 }
