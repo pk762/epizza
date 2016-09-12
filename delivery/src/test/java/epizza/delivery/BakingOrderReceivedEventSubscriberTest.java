@@ -1,35 +1,26 @@
 package epizza.delivery;
 
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import epizza.delivery.BakingOrderReceivedEventSubscriber;
-import epizza.delivery.DeliveryEventPublisher;
-import epizza.delivery.DeliveryOrderReceivedEvent;
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@DeliveryApplicationTest(activeProfiles = {"test", "BakingOrderReceivedEventSubscriberTest"})
+@RunWith(SpringRunner.class)
+@DeliveryApplicationTest
 public class BakingOrderReceivedEventSubscriberTest {
 
     @Autowired
     private BakingOrderReceivedEventSubscriber bakingOrderReceivedEventSubscriber;
 
-    @Autowired
+    @MockBean
     private DeliveryEventPublisher deliveryEventPublisher;
 
     @Captor
@@ -44,23 +35,9 @@ public class BakingOrderReceivedEventSubscriberTest {
             "  }\n" +
             "}";
 
-    @Configuration
-    @Profile("BakingOrderReceivedEventSubscriberTest")
-    public static class MockConfiguration {
-        @Bean
-        public DeliveryEventPublisher deliveryEventPublisher() {
-            return mock(DeliveryEventPublisher.class);
-        }
-    }
-
     @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
-    }
-
-    @After
-    public void resetMocks() {
-        Mockito.reset(deliveryEventPublisher);
     }
 
     @Test

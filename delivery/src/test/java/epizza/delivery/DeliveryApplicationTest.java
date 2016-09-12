@@ -6,19 +6,18 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import epizza.delivery.DeliveryApplication;
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Inherited
-@SpringApplicationConfiguration(classes = DeliveryApplication.class)
+@SpringBootTest(classes = DeliveryApplication.class)
 @WebAppConfiguration
 @ActiveProfiles
 public @interface DeliveryApplicationTest {
-    @AliasFor(annotation = ActiveProfiles.class, attribute = "profiles") String[] activeProfiles() default "test";
+    @AliasFor(annotation = ActiveProfiles.class, attribute = "profiles") String[] activeProfiles() default {"test", "local"};
+    @AliasFor(annotation = SpringBootTest.class, attribute = "properties") String[] properties() default {};
 }

@@ -3,7 +3,6 @@ package epizza.delivery;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -28,30 +27,19 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-import epizza.delivery.BakingOrderReceivedEvent;
-import epizza.delivery.DeliveryEventPublisher;
-import epizza.delivery.DeliveryOrder;
-import epizza.delivery.DeliveryOrderReceivedEvent;
-import epizza.delivery.DeliveryOrderRepository;
-import epizza.delivery.DeliveryOrderState;
-import epizza.delivery.DeliveryService;
 import epizza.delivery.order.Order;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@DeliveryApplicationTest(activeProfiles = { "test", "DeliveryServiceTest" })
-@IntegrationTest({ "delivery.timeToPrepareDeliveryInMillis:1", "delivery.timeToDeliverInMillis:1" })
+@RunWith(SpringRunner.class)
+@DeliveryApplicationTest(properties = { "delivery.timeToPrepareDeliveryInMillis:1", "delivery.timeToDeliverInMillis:1" })
 public class DeliveryServiceTest {
 
-    @Autowired
+    @MockBean
     private DeliveryEventPublisher deliveryEventPublisher;
 
     @Autowired
@@ -98,19 +86,9 @@ public class DeliveryServiceTest {
     private DeliveryOrder deliveryOrder;
     private CompletableFuture<Boolean> asyncInteractionFuture;
 
-    @Configuration
-    @Profile("DeliveryServiceTest")
-    public static class MockConfiguration {
-        @Bean
-        public DeliveryEventPublisher deliveryEventPublisher() {
-            return mock(DeliveryEventPublisher.class);
-        }
-    }
-
     @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
-
         mockServer = MockRestServiceServer.createServer(restTemplate);
     }
 
