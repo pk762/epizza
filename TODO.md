@@ -1,6 +1,6 @@
 [x] merge order and catalog
 [x] upgrade to spring boot 1.4
-[ ] clean up shared to provide a spring-boot-starter for messaging
+[x] clean up shared to provide a spring-boot-starter for messaging only
 [x] remove moneymodule
 [x] remove rest customizations
 [x] provide /openOrders resource on order service
