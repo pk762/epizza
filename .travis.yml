@@ -6,7 +6,7 @@ cache:
   directories:
   - "$HOME/.gradle"
 install: true
-script: ./order/gradlew build
+script: ./build.sh
 env:
   global:
   - CI_NAME=travis-ci
