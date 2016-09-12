@@ -1,0 +1,11 @@
+server:
+  port: 8082
+
+logging:
+  level:
+    org.springframework.amqp.rabbit: 'OFF'
+    org.springframework.beans.factory.support: 'WARN'
+
+spring:
+  jmx:
+    enabled: false

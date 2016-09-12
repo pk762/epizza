@@ -10,7 +10,7 @@
 [x] new service: config-server
 [x] config-repo
 [x] integrate travis
-[ ] docker-compose polishing
+[x] docker-compose polishing
 [x] angular client polishing
 [ ] fix validation
 [ ] fix CORS cfg

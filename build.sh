@@ -25,19 +25,19 @@ echo
 echo "#############################################"
 echo "# building 'order'                          #"
 echo "#############################################"
-./order/gradlew -p order build
+./order/gradlew -p order build buildDockerImage
 
 echo
 echo "#############################################"
 echo "# building 'bakery'                         #"
 echo "#############################################"
-./bakery/gradlew -p bakery build
+./bakery/gradlew -p bakery build buildDockerImage
 
 echo
 echo "#############################################"
 echo "# building 'delivery'                       #"
 echo "#############################################"
-./delivery/gradlew -p delivery build
+./delivery/gradlew -p delivery build buildDockerImage
 
 echo
 echo "#############################################"

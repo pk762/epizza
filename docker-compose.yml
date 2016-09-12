@@ -15,8 +15,7 @@ rabbitmq:
 # ==============================================================================
 configserver:
   image: epizza/config-server
-  volumes:
-    - "${EPIZZA_CONFIG_SERVER_REPO}:/repo"
+  # mount /repo as volume from docker-compose.override.yml
   ports:
     - "8888:8888"
   environment:
@@ -25,6 +24,7 @@ configserver:
     - SPRING_CLOUD_CONFIG_SERVER_BOOTSTRAP=true
     - SPRING_CLOUD_CONFIG_LABEL=master
     - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:///repo
+    - DOCKER_IP=${DOCKER_IP}
 # ==============================================================================
 order:
   image: epizza/order
@@ -35,7 +35,6 @@ order:
     - "8082:8082"
   environment:
     - _JAVA_OPTIONS=-Xmx256m
-    - SPRING_CLOUD_CONFIG_ENABLED=true
     - SPRING_CLOUD_CONFIG_URI=http://configserver:8888
     - SPRING_CLOUD_CONFIG_LABEL=dev
 # ==============================================================================
@@ -48,7 +47,6 @@ bakery:
     - "8083:8083"
   environment:
     - _JAVA_OPTIONS=-Xmx256m
-    - SPRING_CLOUD_CONFIG_ENABLED=true
     - SPRING_CLOUD_CONFIG_URI=http://configserver:8888
     - SPRING_CLOUD_CONFIG_LABEL=dev
 # ==============================================================================
