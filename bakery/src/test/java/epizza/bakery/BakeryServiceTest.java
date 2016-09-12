@@ -2,7 +2,6 @@ package epizza.bakery;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -24,29 +23,19 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-import epizza.bakery.BakeryEventPublisher;
-import epizza.bakery.BakeryOrder;
-import epizza.bakery.BakeryOrderReceivedEvent;
-import epizza.bakery.BakeryOrderRepository;
-import epizza.bakery.BakeryOrderState;
-import epizza.bakery.BakeryService;
 import epizza.bakery.order.Order;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@BakeryApplicationTest(activeProfiles = {"test", "BakeryServiceTest"})
-@IntegrationTest("bakery.timeToBakePizzaInMillis:1")
+@RunWith(SpringRunner.class)
+@BakeryApplicationTest(properties={"bakery.timeToBakePizzaInMillis:1"})
 public class BakeryServiceTest {
 
-    @Autowired
+    @MockBean
     private BakeryEventPublisher bakeryEventPublisher;
 
     @Autowired
@@ -92,15 +81,6 @@ public class BakeryServiceTest {
     private BakeryOrder bakeryOrder;
     private CompletableFuture<Boolean> asyncInteractionFuture;
     private URI orderUri;
-
-    @Configuration
-    @Profile("BakeryServiceTest")
-    public static class MockConfiguration {
-        @Bean
-        public BakeryEventPublisher bakeryEventPublisher() {
-            return mock(BakeryEventPublisher.class);
-        }
-    }
 
     @Before
     public void initMocks() {
