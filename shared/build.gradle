@@ -41,6 +41,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-amqp")
     compile("org.atteo:evo-inflector:1.2.1")
     compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
+    compile('net.logstash.logback:logstash-logback-encoder:4.7')
 
     runtime('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
     testCompile("org.springframework.boot:spring-boot-starter-test")

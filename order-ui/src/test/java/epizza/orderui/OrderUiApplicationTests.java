@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = OrderUiApplication.class)
-@ActiveProfiles({"test","local"})
+@ActiveProfiles({ "test", "local" })
 public class OrderUiApplicationTests {
 
     @Test
