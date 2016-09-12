@@ -23,8 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import lombok.SneakyThrows;
+
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.javamoney.moneta.Money;
 import org.junit.Before;
@@ -46,7 +47,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -102,7 +102,6 @@ public class OrderControllerTest {
                 .apply(documentationConfiguration(this.restDocumentation).uris().withPort(80))
                 .build();
 
-        //mock the rest call made b< OrderService to PizzaServiceClient
         mockServer = MockRestServiceServer.createServer(restTemplate);
         mockServer.expect(
                 requestTo("http://localhost/pizzas/1")).
@@ -116,7 +115,8 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void should_create_order() throws Exception {
+    @SneakyThrows
+    public void should_create_order() {
         givenInputData();
 
         whenOrderCreated();
@@ -127,8 +127,8 @@ public class OrderControllerTest {
                 .andDo(document("order-create", //
                         requestFields( //
                                 fieldWithPath("comment").description("delivery comment"), //
-                                fieldWithPath("lineItems[].quantity").description("how many pizzas do you eat today?"), //
                                 fieldWithPath("lineItems[].pizza").description("which pizza do you want?"), //
+                                fieldWithPath("lineItems[].quantity").description("how many pizzas do you eat today?"), //
                                 fieldWithPath("deliveryAddress.firstname").description("Your first name"), //
                                 fieldWithPath("deliveryAddress.lastname").description("Your last name"), //
                                 fieldWithPath("deliveryAddress.street").description("Your stree"), //
@@ -143,7 +143,8 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void should_get_order() throws Exception {
+    @SneakyThrows
+    public void should_get_order() {
         givenExistingOrder();
 
         whenOrderRetrieved();
@@ -174,7 +175,8 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void should_get_all_orders() throws Exception {
+    @SneakyThrows
+    public void should_get_all_orders() {
         givenExistingOrder();
 
         whenAllOrdersRetrieved();
@@ -189,11 +191,14 @@ public class OrderControllerTest {
                         ))) //
         ;
     }
-    private void whenAllOrdersRetrieved() throws Exception {
+
+    @SneakyThrows
+    private void whenAllOrdersRetrieved() {
         ordersResultAction = mockMvc.perform(get(ordersUri).accept(MediaTypes.HAL_JSON));
     }
 
-    private void whenOrderRetrieved() throws Exception {
+    @SneakyThrows
+    private void whenOrderRetrieved() {
         URI orderUri = entityLinks.linkForSingleResource(Order.class, order.getId()).toUri();
 
         ordersResultAction = mockMvc.perform(get(orderUri)
@@ -201,7 +206,7 @@ public class OrderControllerTest {
                 .andDo(print());
     }
 
-    private void givenExistingOrder() throws URISyntaxException {
+    private void givenExistingOrder() {
         Order newOrder = new Order();
         newOrder.setComment("some comment");
         Address address = Address.builder()
@@ -224,7 +229,8 @@ public class OrderControllerTest {
         order = orderService.create(newOrder);
     }
 
-    private void whenOrderCreated() throws Exception {
+    @SneakyThrows
+    private void whenOrderCreated() {
         ordersResultAction = mockMvc.perform(post(ordersUri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonInput));
@@ -232,7 +238,8 @@ public class OrderControllerTest {
         order = orderService.getAll(null).iterator().next();
     }
 
-    private void givenInputData() throws JsonProcessingException {
+    @SneakyThrows
+    private void givenInputData() {
         ImmutableMap<String, String> address = ImmutableMap.<String, String>builder()
                 .put("firstname", "Mathias")
                 .put("lastname", "Dpunkt")

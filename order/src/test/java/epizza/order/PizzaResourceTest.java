@@ -7,6 +7,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import lombok.SneakyThrows;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,7 +55,8 @@ public class PizzaResourceTest {
     }
 
     @Test
-    public void should_get_all_pizzas() throws Exception {
+    @SneakyThrows
+    public void should_get_all_pizzas() {
         givenExistingPizzas();
         whenAllPizzasRetrieved();
 
@@ -68,7 +71,8 @@ public class PizzaResourceTest {
     }
 
     @Test
-    public void should_get_one_pizza() throws Exception {
+    @SneakyThrows
+    public void should_get_one_pizza() {
         givenExistingPizzas();
         whenPizzaRetrieved();
 
@@ -85,12 +89,14 @@ public class PizzaResourceTest {
                         )));
     }
 
-    private void whenAllPizzasRetrieved() throws Exception {
+    @SneakyThrows
+    private void whenAllPizzasRetrieved() {
         resultAction = mockMvc.perform(get(collectionUri)
                 .accept(MediaTypes.HAL_JSON));
     }
 
-    private void whenPizzaRetrieved() throws Exception {
+    @SneakyThrows
+    private void whenPizzaRetrieved() {
         resultAction = mockMvc.perform(get(singleItemUri)
                 .accept(MediaTypes.HAL_JSON));
     }

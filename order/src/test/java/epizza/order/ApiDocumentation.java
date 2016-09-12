@@ -1,6 +1,5 @@
 package epizza.order;
 
-
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
@@ -13,6 +12,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import lombok.SneakyThrows;
 
 import javax.servlet.RequestDispatcher;
 
@@ -49,15 +50,15 @@ public class ApiDocumentation {
     }
 
     @Test
-    public void errorExample() throws Exception {
+    @SneakyThrows
+    public void errorExample() {
         this.mockMvc
                 .perform(get("/error")
                         .requestAttr(RequestDispatcher.ERROR_STATUS_CODE, 400)
-                        .requestAttr(RequestDispatcher.ERROR_REQUEST_URI,
-                                "/orders")
-                        .requestAttr(RequestDispatcher.ERROR_MESSAGE,
-                                "The order 'http://localhost/orders/doesnotexist' does not exist"))
-                .andDo(print()).andExpect(status().isBadRequest())
+                        .requestAttr(RequestDispatcher.ERROR_REQUEST_URI, "/orders")
+                        .requestAttr(RequestDispatcher.ERROR_MESSAGE, "The order 'http://localhost/orders/doesnotexist' does not exist"))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("error", is("Bad Request")))
                 .andExpect(jsonPath("timestamp", is(notNullValue())))
                 .andExpect(jsonPath("status", is(400)))
@@ -72,7 +73,8 @@ public class ApiDocumentation {
     }
 
     @Test
-    public void indexExample() throws Exception {
+    @SneakyThrows
+    public void indexExample() {
         this.mockMvc.perform(get("/").accept(MediaTypes.HAL_JSON))
         .andDo(print())
         .andExpect(status().isOk())

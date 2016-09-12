@@ -3,20 +3,20 @@ package epizza.order.orderstatus;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.Mockito.when;
 
+import epizza.order.Order;
+import epizza.order.OrderApplicationTest;
+import epizza.order.OrderService;
+import epizza.order.OrderStatus;
+
 import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import epizza.order.Order;
-import epizza.order.OrderApplicationTest;
-import epizza.order.OrderService;
-import epizza.order.OrderStatus;
-
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @OrderApplicationTest(activeProfiles = {"test", "DeliveryOrderReceivedEventSubscriberTest"})
 public class DeliveryOrderReceivedEventSubscriberTest {
 
@@ -55,9 +55,9 @@ public class DeliveryOrderReceivedEventSubscriberTest {
 
     private void givenOrder() {
         order = new Order();
-        order.setId(1l);
+        order.setId(1L);
         order.setStatus(OrderStatus.NEW);
 
-        when(orderService.getOrder(1l)).thenReturn(Optional.of(order));
+        when(orderService.getOrder(1L)).thenReturn(Optional.of(order));
     }
 }
