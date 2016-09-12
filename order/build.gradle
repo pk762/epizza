@@ -68,6 +68,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.javamoney:moneta:1.1")
+    compile("com.google.guava:guava:19.0")
 
     runtime('org.springframework.cloud:spring-cloud-starter-config')
 

@@ -1,6 +1,5 @@
 package epizza.shared.event;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static epizza.shared.event.EventPublisher.EVENT_PAYLOAD;
 import static epizza.shared.event.EventPublisher.EVENT_TYPE;
 
@@ -10,6 +9,7 @@ import java.util.Map;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,8 +20,11 @@ public abstract class AbstractEventSubscriber {
     protected final String type;
 
     protected AbstractEventSubscriber(@NotNull ObjectMapper objectMapper, @NotNull String type) {
-        this.objectMapper = checkNotNull(objectMapper);
-        this.type = checkNotNull(type);
+        Assert.notNull(objectMapper, "ObjectMapper must not be null.");
+        Assert.notNull(type, "Type must not be null.");
+
+        this.objectMapper = objectMapper;
+        this.type = type;
     }
 
     protected Map<String, Object> extractEvent(String jsonEvent) {

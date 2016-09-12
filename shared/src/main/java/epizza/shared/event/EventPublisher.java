@@ -1,18 +1,17 @@
 package epizza.shared.event;
 
 import java.io.IOException;
-
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableMap;
 
 public class EventPublisher {
 
@@ -48,13 +47,18 @@ public class EventPublisher {
 
     protected String createEvent(String type, String jsonPayload) {
         try {
-            return objectMapper.writeValueAsString(ImmutableMap.of( //
-                    EVENT_TYPE, type, //
-                    EVENT_TIMESTAMP, LocalDateTime.now().toString(), //
-                    EVENT_PAYLOAD, objectMapper.readValue(jsonPayload, new JsonMapTypeReference()) //
-            ));
+            return objectMapper.writeValueAsString(eventPayload(type, jsonPayload));
         } catch (IOException e) {
             throw new RuntimeException(String.format("Could not serialize event from payload '%s'", jsonPayload), e);
         }
+    }
+
+    private Map<String, String> eventPayload(String type, String jsonPayload) throws IOException {
+        Map<String, String> payload = new HashMap<>();
+        payload.put(EVENT_TYPE, type); //
+        payload.put(EVENT_TIMESTAMP, LocalDateTime.now().toString());
+        payload.put(EVENT_PAYLOAD, objectMapper.readValue(jsonPayload, new JsonMapTypeReference()));
+
+        return payload;
     }
 }

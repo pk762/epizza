@@ -26,15 +26,12 @@ class DeliveryServiceImpl implements DeliveryService {
     @Value("${delivery.timeToPrepareDeliveryInMillis:1}")
     private Long timeToPrepareDeliveryInMillis;
 
-    private DeliveryEventPublisher deliveryEventPublisher;
     private OrderServiceClient orderServiceClient;
     private DeliveryOrderRepository deliveryOrderRepository;
 
     @Autowired
-    public DeliveryServiceImpl(DeliveryEventPublisher deliveryEventPublisher,
-                               OrderServiceClient orderServiceClient,
+    public DeliveryServiceImpl(OrderServiceClient orderServiceClient,
                                DeliveryOrderRepository deliveryOrderRepository) {
-        this.deliveryEventPublisher = deliveryEventPublisher;
         this.orderServiceClient = orderServiceClient;
         this.deliveryOrderRepository = deliveryOrderRepository;
     }
@@ -66,40 +63,39 @@ class DeliveryServiceImpl implements DeliveryService {
         doTheDeliveryWork(order);
 
         updateOrderState(deliveryOrder, DeliveryOrderState.DONE);
-        deliveryEventPublisher.sendDeliveredEvent(order);
+//        deliveryEventPublisher.sendDeliveredEvent(order);
     }
 
-    @Override
-    public void scheduleDelivery(BakingOrderReceivedEvent event) {
-        saveDeliveryOrder(event);
-
-        sendDeliveryOrderReceivedEvent(event);
-    }
+//    @Override
+//    public void scheduleDelivery(BakingOrderReceivedEvent event) {
+//        saveDeliveryOrder(event);
+//
+//        sendDeliveryOrderReceivedEvent(event);
+//    }
 
     private void updateOrderState(DeliveryOrder deliveryOrder, DeliveryOrderState state) {
         deliveryOrder.setDeliveryOrderState(state);
         deliveryOrderRepository.save(deliveryOrder);
     }
 
+//    private void saveDeliveryOrder(BakingOrderReceivedEvent event) {
+//        DeliveryOrder deliveryOrder = new DeliveryOrder();
+//        deliveryOrder.setOrderLink(event.getOrderLink());
+//        deliveryOrder.setDeliveryOrderState(DeliveryOrderState.QUEUED);
+//
+//        deliveryOrderRepository.save(deliveryOrder);
+//    }
 
-    private void saveDeliveryOrder(BakingOrderReceivedEvent event) {
-        DeliveryOrder deliveryOrder = new DeliveryOrder();
-        deliveryOrder.setOrderLink(event.getOrderLink());
-        deliveryOrder.setDeliveryOrderState(DeliveryOrderState.QUEUED);
-
-        deliveryOrderRepository.save(deliveryOrder);
-    }
-
-    private void sendDeliveryOrderReceivedEvent(BakingOrderReceivedEvent event) {
-        Long deliveryTime = timeToPrepareDeliveryInMillis + timeToDeliverInMillis;
-
-        DeliveryOrderReceivedEvent deliveryOrderReceivedEvent = new DeliveryOrderReceivedEvent();
-        deliveryOrderReceivedEvent.setOrderLink(event.getOrderLink());
-        deliveryOrderReceivedEvent.setEstimatedTimeOfDelivery(
-                event.getEstimatedTimeOfCompletion().plusNanos(deliveryTime * 1_000_000));
-
-        deliveryEventPublisher.sendDeliveryOrderReceivedEvent(deliveryOrderReceivedEvent);
-    }
+//    private void sendDeliveryOrderReceivedEvent(BakingOrderReceivedEvent event) {
+//        Long deliveryTime = timeToPrepareDeliveryInMillis + timeToDeliverInMillis;
+//
+//        DeliveryOrderReceivedEvent deliveryOrderReceivedEvent = new DeliveryOrderReceivedEvent();
+//        deliveryOrderReceivedEvent.setOrderLink(event.getOrderLink());
+//        deliveryOrderReceivedEvent.setEstimatedTimeOfDelivery(
+//                event.getEstimatedTimeOfCompletion().plusNanos(deliveryTime * 1_000_000));
+//
+//        deliveryEventPublisher.sendDeliveryOrderReceivedEvent(deliveryOrderReceivedEvent);
+//    }
 
     private void doTheDeliveryWork(Order order) {
         LOGGER.info("Working hard to deliver order {} to address {}", order.getOrderLink(), order.getDeliveryAddress());
@@ -108,5 +104,10 @@ class DeliveryServiceImpl implements DeliveryService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void scheduleDelivery(URI orderUri) {
+        // TODO
     }
 }

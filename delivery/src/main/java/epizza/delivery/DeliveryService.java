@@ -11,8 +11,6 @@ public interface DeliveryService {
     Page<DeliveryOrder> getAll(Pageable pageable);
     Optional<DeliveryOrder> get(Long id);
     Optional<DeliveryOrder> getByOrderLink(URI orderLink);
-
     void startDelivery(URI orderUri);
-
-    void scheduleDelivery(BakingOrderReceivedEvent event);
+    void scheduleDelivery(URI orderUri);
 }

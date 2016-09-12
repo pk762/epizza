@@ -1,6 +1,5 @@
 package epizza.delivery;
 
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -12,7 +11,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @SpringBootApplication
 @EntityScan
 @EnableSpringDataWebSupport
-@EnableRabbit
 @EnableAsync
 public class DeliveryApplication {
 
