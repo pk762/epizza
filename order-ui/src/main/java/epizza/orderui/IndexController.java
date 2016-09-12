@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class IndexController {
 
-    @Value("${api.baseUrl}")
+    @Value("${api.baseUri}")
     private String apiHost;
 
     @ModelAttribute("apiHost")
