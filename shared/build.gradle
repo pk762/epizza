@@ -39,9 +39,6 @@ dependencies {
     //event bus
     compile('org.springframework.boot:spring-boot-autoconfigure')
     compile("org.springframework.boot:spring-boot-starter-amqp")
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("org.springframework.boot:spring-boot-starter-hateoas")
-    compile("com.h2database:h2")
     compile("org.atteo:evo-inflector:1.2.1")
     compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
     runtime('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')

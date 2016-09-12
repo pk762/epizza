@@ -1,4 +1,4 @@
-package epizza.shared.web;
+package epizza.bakery;
 
 import java.util.List;
 

@@ -71,6 +71,7 @@ dependencies {
     compile("com.google.guava:guava:19.0")
 
     runtime('org.springframework.cloud:spring-cloud-starter-config')
+    runtime("com.h2database:h2")
 
     compile("epizza:shared:0.+")
     compile("org.hibernate:hibernate-java8")
