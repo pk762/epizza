@@ -1,7 +1,11 @@
 spring:
   application:
     name: config-server
+  main:
+    banner-mode: 'OFF'
 
 logging:
   level:
-    root: INFO
+    root: WARN
+    epizza: INFO
+    org.springframework.cloud.config.server: DEBUG

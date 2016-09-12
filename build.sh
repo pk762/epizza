@@ -18,32 +18,30 @@ echo
 echo "#############################################"
 echo "# building 'config-server'                  #"
 echo "#############################################"
-./shared/gradlew -p config-server check bootRepackage
+./config-server/gradlew -p config-server build
+docker build --no-cache -t epizza/config-server:latest config-server
 
 echo
 echo "#############################################"
 echo "# building 'order'                          #"
 echo "#############################################"
-./order/gradlew -p order check bootRepackage
-#docker-compose build --no-cache order
+./order/gradlew -p order build
 
 echo
 echo "#############################################"
 echo "# building 'bakery'                         #"
 echo "#############################################"
-./bakery/gradlew -p bakery check bootRepackage
-#docker-compose build --no-cache bakery
+./bakery/gradlew -p bakery build
 
 echo
 echo "#############################################"
 echo "# building 'delivery'                       #"
 echo "#############################################"
-./delivery/gradlew -p delivery check bootRepackage
-#docker-compose build --no-cache delivery
+./delivery/gradlew -p delivery build
 
 echo
 echo "#############################################"
 echo "# building 'order-ui'                       #"
 echo "#############################################"
-./order-ui/gradlew -p order-ui check bootRepackage
-#docker-compose build --no-cache orderui
+./order-ui/gradlew -p order-ui build
+docker build --no-cache -t epizza/order-ui:latest order-ui

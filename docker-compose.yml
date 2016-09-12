@@ -1,71 +1,71 @@
-catalog:
-  build: catalog
+# ==============================================================================
+data:
+  image: busybox
+  command: /bin/true
   volumes:
-    - "./catalog/build/libs:/app"
-  external_links:
-    - infrastructure_rabbitmq_1:rabbitmq
-  environment:
-    - PROFILE=prod
-    - RABBITMQ_HOST=rabbitmq
-    - RABBITMQ_PORT=5672
-    - PORT=8081
+    - /var/lib/rabbitmq
+# ==============================================================================
+rabbitmq:
+  image: rabbitmq:management
+  volumes_from:
+    - data
   ports:
-   - "8081:8081"
-
+    - "5672:5672"
+    - "15672:15672"
+# ==============================================================================
+configserver:
+  image: epizza/config-server
+  volumes:
+    - "${EPIZZA_CONFIG_SERVER_REPO}:/repo"
+  ports:
+    - "8888:8888"
+  environment:
+    - _JAVA_OPTIONS=-Xmx256m
+    - SPRING_PROFILES_ACTIVE=native
+    - SPRING_CLOUD_CONFIG_SERVER_BOOTSTRAP=true
+    - SPRING_CLOUD_CONFIG_LABEL=master
+    - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:///repo
+# ==============================================================================
 order:
-  build: order
-  volumes:
-    - "./order/build/libs:/app"
-  external_links:
-    - infrastructure_rabbitmq_1:rabbitmq
-  environment:
-    - PROFILE=prod
-    - RABBITMQ_HOST=rabbitmq
-    - RABBITMQ_PORT=5672
-    - PORT=8082
+  image: epizza/order
+  links:
+    - rabbitmq
+    - configserver
   ports:
-   - "8082:8082"
-
-bakery:
-  build: bakery
-  volumes:
-    - "./bakery/build/libs:/app"
-  external_links:
-    - infrastructure_rabbitmq_1:rabbitmq
+    - "8082:8082"
   environment:
-    - PROFILE=prod
-    - RABBITMQ_HOST=rabbitmq
-    - RABBITMQ_PORT=5672
-    - PORT=8083
+    - _JAVA_OPTIONS=-Xmx256m
+    - SPRING_CLOUD_CONFIG_ENABLED=true
+    - SPRING_CLOUD_CONFIG_URI=http://configserver:8888
+    - SPRING_CLOUD_CONFIG_LABEL=dev
+# ==============================================================================
+bakery:
+  image: epizza/bakery
+  links:
+    - rabbitmq
+    - configserver
   ports:
     - "8083:8083"
-
-delivery:
-  build: delivery
-  volumes:
-    - "./delivery/build/libs:/app"
-  external_links:
-    - infrastructure_rabbitmq_1:rabbitmq
   environment:
-    - PROFILE=prod
-    - RABBITMQ_HOST=rabbitmq
-    - RABBITMQ_PORT=5672
-    - PORT=8084
-  ports:
-    - "8084:8084"
-
+    - _JAVA_OPTIONS=-Xmx256m
+    - SPRING_CLOUD_CONFIG_ENABLED=true
+    - SPRING_CLOUD_CONFIG_URI=http://configserver:8888
+    - SPRING_CLOUD_CONFIG_LABEL=dev
+# ==============================================================================
+#delivery:
+#  image: epizza/delivery
+#  links:
+#    - rabbitmq
+#    - configserver
+#  ports:
+#    - "8084:8084"
+#  environment:
+#    - _JAVA_OPTIONS=-Xmx256m
+# ==============================================================================
 orderui:
-  build: order-ui
-  volumes:
-    - "./order-ui/build/libs:/app"
-  external_links:
-    - infrastructure_rabbitmq_1:rabbitmq
-  environment:
-    - PROFILE=prod
-    - RABBITMQ_HOST=rabbitmq
-    - RABBITMQ_PORT=5672
-    - PORT=8082
-    - CATALOG_API_BACKEND_HOST=http://172.17.42.1:8081
-    - ORDER_API_BACKEND_HOST=http://172.17.42.1:8082
+  image: epizza/order-ui
   ports:
-   - "8085:8085"
+    - "8085:8085"
+  environment:
+    - _JAVA_OPTIONS=-Xmx256m
+    - API_HOST=http://${DOCKER_IP}:8082

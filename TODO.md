@@ -13,3 +13,4 @@
 [ ] docker-compose polishing
 [x] angular client polishing
 [ ] fix validation
+[ ] fix CORS cfg

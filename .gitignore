@@ -28,3 +28,4 @@ _ajdump
 *.ipr
 *.iws
 out/
+docker-compose.override.yml
