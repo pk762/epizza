@@ -2,12 +2,6 @@ package epizza.order;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,6 +26,12 @@ import org.springframework.hateoas.Identifiable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA_ORDER")
@@ -54,9 +54,6 @@ public class Order implements Identifiable<Long> {
     @Basic(optional = false)
     private OrderStatus status = OrderStatus.NEW;
 
-    @Column(name = "ETD")
-    private LocalDateTime estimatedTimeOfDelivery;
-
     @ElementCollection
     @CollectionTable(name = "PIZZA_ORDER_ITEM")
     private List<OrderItem> orderItems = Lists.newArrayList();
@@ -68,6 +65,11 @@ public class Order implements Identifiable<Long> {
 
     @Embedded
     private Address deliveryAddress;
+
+    private String deliveryBoy;
+
+    @Column(name = "ETD")
+    private LocalDateTime estimatedTimeOfDelivery;
 
     public List<OrderItem> getOrderItems() {
         return ImmutableList.copyOf(orderItems);

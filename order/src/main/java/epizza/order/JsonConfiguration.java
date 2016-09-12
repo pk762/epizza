@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.zalando.jackson.datatype.money.FastMoneyFactory;
 import org.zalando.jackson.datatype.money.MoneyModule;
 
 @Configuration
@@ -23,7 +24,7 @@ public class JsonConfiguration implements Jackson2ObjectMapperBuilderCustomizer,
 
     @Bean
     public MoneyModule moneyModule() {
-        return new MoneyModule();
+        return new MoneyModule(new FastMoneyFactory());
     }
 
     @Override
