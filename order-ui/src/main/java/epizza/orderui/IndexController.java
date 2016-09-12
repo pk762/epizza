@@ -1,6 +1,5 @@
 package epizza.orderui;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class IndexController {
 
-    @Value("${api.host}")
-    private String apiHost;
+    private ApiProperties apiProperties;
+
+    public IndexController(ApiProperties apiProperties) {
+        this.apiProperties = apiProperties;
+    }
 
     @ModelAttribute("apiHost")
     public String apiHost() {
-        return apiHost;
+        return String.valueOf(apiProperties.getBaseUri());
     }
 
     @RequestMapping(method = RequestMethod.GET)
