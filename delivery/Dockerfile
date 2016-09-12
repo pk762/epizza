@@ -1,7 +1,7 @@
-# inspired by https://spring.io/guides/gs/spring-boot-docker/
-FROM jensfischerhh/docker-java:8u45-jre
+FROM azul/zulu-openjdk:8
 
-ENTRYPOINT ["java","-cp","/app","org.springframework.boot.loader.JarLauncher"]
+WORKDIR /app
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-cp","/app","org.springframework.boot.loader.JarLauncher"]
 
 # dependencies
 ADD app/BOOT-INF/lib /app/BOOT-INF/lib

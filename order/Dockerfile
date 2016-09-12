@@ -1,7 +1,7 @@
 FROM azul/zulu-openjdk:8
 
 WORKDIR /app
-ENTRYPOINT ["java","-cp","/app","org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-cp","/app","org.springframework.boot.loader.JarLauncher"]
 
 # dependencies
 ADD app/BOOT-INF/lib /app/BOOT-INF/lib

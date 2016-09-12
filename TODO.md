@@ -12,3 +12,4 @@
 [x] integrate travis
 [ ] docker-compose polishing
 [x] angular client polishing
+[ ] fix validation

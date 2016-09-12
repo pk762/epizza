@@ -4,6 +4,4 @@ bakery:
   timeToBakePizzaInMillis: 15000
 logging:
   level:
-    epizza: INFO
     feign: DEBUG
-    org.springframework: INFO

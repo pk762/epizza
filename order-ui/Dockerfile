@@ -1,9 +1,6 @@
-# inspired by https://spring.io/guides/gs/spring-boot-docker/
-FROM jensfischerhh/docker-java:8u45-jre
-
-RUN mkdir /app
-ADD build/libs/order-ui-0.0.1-SNAPSHOT.jar /app/
+FROM azul/zulu-openjdk:8
 
 WORKDIR /app
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/order-ui-0.0.1-SNAPSHOT.jar"]
 
-ENTRYPOINT ["java","-jar","/app/order-ui-0.0.1-SNAPSHOT.jar"]
+ADD build/libs/order-ui-0.0.1-SNAPSHOT.jar /app/

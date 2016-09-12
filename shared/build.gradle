@@ -32,7 +32,6 @@ repositories {
 }
 
 configurations {
-    all*.exclude module: 'spring-boot-starter-tomcat'
     all*.exclude module: 'aspectjrt'            // included in org.aspectj:aspectjweaver
 }
 
@@ -42,7 +41,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-amqp")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-hateoas")
-	compile ("org.springframework.boot:spring-boot-starter-jetty")
     compile("com.h2database:h2")
     compile("org.atteo:evo-inflector:1.2.1")
 
