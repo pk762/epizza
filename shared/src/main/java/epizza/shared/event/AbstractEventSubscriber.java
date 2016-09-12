@@ -6,8 +6,6 @@ import static epizza.shared.event.EventPublisher.EVENT_TYPE;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.util.Assert;
 
@@ -19,7 +17,7 @@ public abstract class AbstractEventSubscriber {
 
     protected final String type;
 
-    protected AbstractEventSubscriber(@NotNull ObjectMapper objectMapper, @NotNull String type) {
+    protected AbstractEventSubscriber(ObjectMapper objectMapper, String type) {
         Assert.notNull(objectMapper, "ObjectMapper must not be null.");
         Assert.notNull(type, "Type must not be null.");
 
