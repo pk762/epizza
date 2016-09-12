@@ -6,16 +6,13 @@ import lombok.Setter;
 
 import java.net.URI;
 
-import javax.money.MonetaryAmount;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.hateoas.ResourceSupport;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class LineItemResource extends ResourceSupport {
+public class LineItemPayload {
 
     @NotNull
     private URI pizza;
@@ -23,6 +20,4 @@ public class LineItemResource extends ResourceSupport {
     @NotNull
     @Min(1)
     private Integer amount;
-
-    private MonetaryAmount price;
 }

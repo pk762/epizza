@@ -22,7 +22,7 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(of={"pizza", "amount"})
-public class LineItem {
+public class OrderItem {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Pizza pizza;
@@ -33,8 +33,8 @@ public class LineItem {
     @Basic(optional = false)
     private MonetaryAmount price;
 
-    public static class LineItemBuilder {
-        public LineItemBuilder amount(Integer amount) {
+    public static class OrderItemBuilder {
+        public OrderItemBuilder amount(Integer amount) {
             this.amount = amount;
             return price(pizza.getPrice().multiply(amount));
         }

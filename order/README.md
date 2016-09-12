@@ -185,7 +185,7 @@ X-Application-Context: application:8082
 
 ```
 echo '{
-    "orderItems": [
+    "lineItems": [
         {
             "pizza": "http://localhost:8082/pizzas/1",
             "amount": 2

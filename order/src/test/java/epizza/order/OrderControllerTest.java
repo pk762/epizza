@@ -39,7 +39,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.JUnitRestDocumentation;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -50,7 +50,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @OrderApplicationTest(activeProfiles = {"test", "OrderControllerTest"})
 public class OrderControllerTest {
 
@@ -105,7 +105,7 @@ public class OrderControllerTest {
         //mock the rest call made b< OrderService to PizzaServiceClient
         mockServer = MockRestServiceServer.createServer(restTemplate);
         mockServer.expect(
-                requestTo("http://localhost/catalog/1")).
+                requestTo("http://localhost/pizzas/1")).
                 andRespond(withSuccess(pizzaSampleResponse, MediaType.APPLICATION_JSON));
 
         ordersUri = linkTo(methodOn(OrderController.class).getAll(null)).toUri().toString();
@@ -127,8 +127,8 @@ public class OrderControllerTest {
                 .andDo(document("order-create", //
                         requestFields( //
                                 fieldWithPath("comment").description("delivery comment"), //
-                                fieldWithPath("orderItems[].amount").description("how many pizzas do you eat today?"), //
-                                fieldWithPath("orderItems[].pizza").description("which pizza do you want?"), //
+                                fieldWithPath("lineItems[].amount").description("how many pizzas do you eat today?"), //
+                                fieldWithPath("lineItems[].pizza").description("which pizza do you want?"), //
                                 fieldWithPath("deliveryAddress.firstname").description("Your first name"), //
                                 fieldWithPath("deliveryAddress.lastname").description("Your last name"), //
                                 fieldWithPath("deliveryAddress.street").description("Your stree"), //
@@ -202,8 +202,8 @@ public class OrderControllerTest {
     }
 
     private void givenExistingOrder() throws URISyntaxException {
-        Order orderTmp = new Order();
-        orderTmp.setComment("some comment");
+        Order newOrder = new Order();
+        newOrder.setComment("some comment");
         Address address = Address.builder()
                 .city("Hamburg")
                 .firstname("Mathias")
@@ -212,17 +212,16 @@ public class OrderControllerTest {
                 .street("Pilatuspool 2")
                 .telephone("+4908154711")
                 .build();
-        orderTmp.setDeliveryAddress(address);
+        newOrder.setDeliveryAddress(address);
 
-        LineItem lineItem = LineItem.builder()
+        OrderItem orderItem = OrderItem.builder()
+                .pizza(Pizza.builder().id(1L).price(Money.parse("EUR 1.23")).build())
                 .amount(2)
-                .pizza(Pizza.builder().id(1L).build())
-                .price(Money.parse("EUR 1.23"))
                 .build();
 
-        orderTmp.addOrderItem(lineItem);
+        newOrder.addOrderItem(orderItem);
 
-        order = orderService.create(orderTmp);
+        order = orderService.create(newOrder);
     }
 
     private void whenOrderCreated() throws Exception {
@@ -234,22 +233,22 @@ public class OrderControllerTest {
     }
 
     private void givenInputData() throws JsonProcessingException {
-        ImmutableMap<Object, Object> address = ImmutableMap.builder().putAll(ImmutableMap.of(
-                "firstname", "Mathias",
-                "lastname", "Dpunkt",
-                "street", "Somestreet 1",
-                "city", "Hamburg",
-                "telephone", "+49404321343"
-        )).put("postalCode", "22305") //
-          .put("email", "your@email.address") //
-        .build();
+        ImmutableMap<String, String> address = ImmutableMap.<String, String>builder()
+                .put("firstname", "Mathias")
+                .put("lastname", "Dpunkt")
+                .put("street", "Somestreet 1")
+                .put("city", "Hamburg")
+                .put("telephone", "+49404321343")
+                .put("postalCode", "22305") //
+                .put("email", "your@email.address") //
+                .build();
 
         jsonInput = objectMapper.writeValueAsString(ImmutableMap.of(
                 "comment", "Some comment",
                 "deliveryAddress", address,
-                "orderItems", ImmutableList.of(ImmutableMap.of(
+                "lineItems", ImmutableList.of(ImmutableMap.of(
                                 "amount", 1,
-                                "pizza", "http://localhost/com.epages.microservice.handson.catalog/1"
+                                "pizza", "http://localhost/pizzas/1"
                         )
                 )
         ));

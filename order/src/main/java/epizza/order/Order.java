@@ -29,6 +29,7 @@ import javax.persistence.Table;
 import org.javamoney.moneta.Money;
 import org.springframework.hateoas.Identifiable;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 @Entity
@@ -41,11 +42,12 @@ import com.google.common.collect.Lists;
 @ToString(of = { "id", "orderItems" })
 public class Order implements Identifiable<Long> {
 
+    public static final Money DEFAULT_PRICE = Money.of(0.0, "EUR");
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Basic(optional = false)
     private LocalDateTime orderedAt;
 
     @Enumerated(value = EnumType.STRING)
@@ -55,30 +57,30 @@ public class Order implements Identifiable<Long> {
     @Column(name = "ETD")
     private LocalDateTime estimatedTimeOfDelivery;
 
-//    @JsonIgnore
     @ElementCollection
     @CollectionTable(name = "PIZZA_ORDER_ITEM")
-    private List<LineItem> orderItems = Lists.newArrayList();
+    private List<OrderItem> orderItems = Lists.newArrayList();
 
-    @Basic(optional = true)
     private String comment;
+
+    @Basic(optional = false)
+    private MonetaryAmount totalPrice = DEFAULT_PRICE;
 
     @Embedded
     private Address deliveryAddress;
 
-    public void setOrderItems(List<LineItem> items) {
+    public List<OrderItem> getOrderItems() {
+        return ImmutableList.copyOf(orderItems);
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems.clear();
-        items.forEach(this::addOrderItem);
+        this.totalPrice = DEFAULT_PRICE;
+        orderItems.forEach(this::addOrderItem);
     }
 
-    public void addOrderItem(LineItem item) {
-        this.orderItems.add(item);
-    }
-
-    public MonetaryAmount getTotalPrice() {
-        return orderItems.stream()
-                .map(LineItem::getPrice)
-                .reduce(MonetaryAmount::add)
-                .orElse(Money.of(0.0, "EUR"));
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        this.totalPrice = this.totalPrice.add(orderItem.getPrice());
     }
 }

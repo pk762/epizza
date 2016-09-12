@@ -10,7 +10,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.google.common.collect.Iterables;
 
 public interface PizzaRepository extends JpaRepository<Pizza, Long> {
-    Optional<Pizza> findByName(String name);
 
     default Optional<Pizza> findByUri(URI uri) {
         UriComponents uriComponents = UriComponentsBuilder.fromUri(uri).build();
