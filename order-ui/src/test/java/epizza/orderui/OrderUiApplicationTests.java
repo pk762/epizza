@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = OrderUiApplication.class)
+@SpringBootTest(classes = OrderUiApplication.class, properties = {"api.baseUri=http://localhost:8082/"})
 @ActiveProfiles({"test","local"})
 public class OrderUiApplicationTests {
 

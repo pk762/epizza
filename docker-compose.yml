@@ -22,7 +22,7 @@ configserver:
     - _JAVA_OPTIONS=-Xmx256m
     - SPRING_PROFILES_ACTIVE=native
     - SPRING_CLOUD_CONFIG_SERVER_BOOTSTRAP=true
-    - SPRING_CLOUD_CONFIG_LABEL=master
+    - SPRING_CLOUD_CONFIG_LABEL=dev
     - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:///repo
     - DOCKER_IP=${DOCKER_IP}
 # ==============================================================================
@@ -62,8 +62,11 @@ bakery:
 # ==============================================================================
 orderui:
   image: epizza/order-ui
+  links:
+    - configserver
   ports:
     - "8085:8085"
   environment:
     - _JAVA_OPTIONS=-Xmx256m
-    - API_HOST=http://${DOCKER_IP}:8082
+    - SPRING_CLOUD_CONFIG_URI=http://configserver:8888
+    - SPRING_CLOUD_CONFIG_LABEL=dev

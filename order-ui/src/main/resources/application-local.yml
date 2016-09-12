@@ -1,0 +1,14 @@
+server:
+  port: 8085
+
+logging:
+  level:
+    root: 'WARN'
+    epizza: 'INFO'
+
+spring:
+  main:
+    banner-mode: 'off'
+
+api:
+  baseUri: http://localhost:8082/
