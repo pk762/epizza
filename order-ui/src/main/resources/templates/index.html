@@ -14,22 +14,22 @@
     <script src="/webjars/underscorejs/1.5.1/underscore.min.js"></script>
     <script type="text/javascript" th:inline="javascript">
   var apiHost = /*[[${apiHost}]]*/ 'http://localhost:8082';
-  var ang = angular.module('epizza',["restangular"]);
+  var app = angular.module('epizza',["restangular"]);
 
   // Inject Restangular into your controller
-  ang.controller("MainCtrl",["Restangular","$scope", "$interval",function(Restangular,$scope, $interval){
-    //Restangular.setBaseUrl(api);
+  app.controller("MainCtrl",["Restangular","$scope", "$interval",function(Restangular,$scope, $interval){
+    Restangular.setBaseUrl(apiHost);
     Restangular.setFullResponse(true);
-    var orderResource = Restangular.allUrl("orders", apiHost + "/orders");
-    var pizzaResource = Restangular.allUrl("pizzas", apiHost + "/pizzas");
+    var orderResource = Restangular.allUrl("orders", "orders");
+    var pizzaResource = Restangular.allUrl("pizzas", "pizzas");
 
     var currentOrderResource;
 
     $scope.cart = {};
 
-    $scope.newOrder = new Object();
-    $scope.newOrder.orderItems = new Array();
-    $scope.newOrder.deliveryAddress = new Object();
+    $scope.newCart = {};
+    $scope.newCart.lineItems = [];
+    $scope.newCart.deliveryAddress = {};
 
     pizzaResource.getList().then(function(pizzas) {
       $scope.pizzas = pizzas.data._embedded.pizzas;
@@ -38,37 +38,36 @@
     $scope.addToCart = function(pizza) {
       var pizzaUri = pizza._links.self.href;
 
-      var cartItem = new Object();
-      cartItem.price = {
+      var lineItem = {};
+      lineItem.price = {
         amount: 0.0,
         currency: "EUR"
       };
 
       if (pizzaUri in $scope.cart) {
-        cartItem = $scope.cart[pizzaUri];
-        cartItem.count = cartItem.count + 1;
+        lineItem       = $scope.cart[pizzaUri];
+        lineItem.count = lineItem.count + 1;
       } else {
-        cartItem.count = 1;
-        cartItem.pizza = pizza;
+        lineItem.pizza = pizza;
+        lineItem.count = 1;
 
-        $scope.cart[pizzaUri] = cartItem;
+        $scope.cart[pizzaUri] = lineItem;
       }
 
-      var amount = cartItem.pizza.price.amount;
-      cartItem.price.amount = amount * cartItem.count;
+      var amount = lineItem.pizza.price.amount;
+      lineItem.price.amount = amount * lineItem.count;
     };
 
     $scope.postOrder = function() {
-        $scope.newOrder.orderItems = new Array();
-        for (var item in $scope.cart) {
-          var cartItem = $scope.cart[item];
-          var orderItem = new Object();
-          orderItem.amount = cartItem.count;
-          orderItem.pizza = item;
-          $scope.newOrder.orderItems.push(orderItem);
+        $scope.newCart.lineItems = [];
+        for (var pizzaUri in $scope.cart) {
+          var lineItem = $scope.cart[pizzaUri];
+          var newLineItem = {};
+          newLineItem.amount = lineItem.count;
+          newLineItem.pizza  = pizzaUri;
+          $scope.newCart.lineItems.push(newLineItem);
         }
-        Restangular.setFullResponse(true);
-        orderResource.post($scope.newOrder).then(function(response) {
+        orderResource.post($scope.newCart).then(function(response) {
           var location = response.headers("Location");
           currentOrderResource = Restangular.oneUrl("order", location);
           $scope.currentOrder = currentOrderResource.get().then(function(order) {
@@ -140,12 +139,12 @@
           <div class="panel panel-default" style="margin-top: 10px;">
             <div class="panel-heading">Cart</div>
             <table class="table table-striped">
-                <thead><th>Pizza</th><th>Amount</th><th>Price</th><th></th></thead>
-                <tbody ng-repeat="item in cart">
+                <thead><th>Pizza</th><th>Amount</th><th>Price</th></thead>
+                <tbody ng-repeat="lineItem in cart">
                 <tr>
-                    <td class="col-md-4">{{item.pizza.name}}</td>
-                    <td class="col-md-2">{{item.count}}</td>
-                    <td class="col-md-2" nowrap="nowrap">{{item.price.amount | number : 2}} {{item.price.currency}}</td>
+                    <td class="col-md-4">{{lineItem.pizza.name}}</td>
+                    <td class="col-md-2">{{lineItem.count}}</td>
+                    <td class="col-md-2" nowrap="nowrap">{{lineItem.price.amount | number : 2}} {{lineItem.price.currency}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -154,22 +153,22 @@
             <div class="panel-heading">Delivery Address</div>
             <div class="panel-body">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Firstname" ng-model="newOrder.deliveryAddress.firstname" />
+                  <input type="text" class="form-control" placeholder="First name" ng-model="newCart.deliveryAddress.firstname" />
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Lastname" ng-model="newOrder.deliveryAddress.lastname" />
+                  <input type="text" class="form-control" placeholder="Last name" ng-model="newCart.deliveryAddress.lastname" />
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Street" ng-model="newOrder.deliveryAddress.street" />
+                  <input type="text" class="form-control" placeholder="Street" ng-model="newCart.deliveryAddress.street" />
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="City" ng-model="newOrder.deliveryAddress.city" />
+                  <input type="text" class="form-control" placeholder="City" ng-model="newCart.deliveryAddress.city" />
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Postal Code" ng-model="newOrder.deliveryAddress.postalCode" />
+                  <input type="text" class="form-control" placeholder="Postal Code" ng-model="newCart.deliveryAddress.postalCode" />
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Telephone" ng-model="newOrder.deliveryAddress.telephone" />
+                  <input type="text" class="form-control" placeholder="Telephone" ng-model="newCart.deliveryAddress.telephone" />
                 </div>
             </div>
           </div>
@@ -177,14 +176,13 @@
             <div class="panel-heading">Comment</div>
             <div class="panel-body">
                 <div class="form-group">
-                  <textarea class="form-control" rows="3" ng-model="newOrder.comment"></textarea>
+                  <textarea class="form-control" rows="3" ng-model="newCart.comment"></textarea>
                 </div>
             </div>
           </div>
           <button type="submit" ng-click="postOrder()">Place Order</button>
       </div>
     </div>
-
 
 </div>
 
