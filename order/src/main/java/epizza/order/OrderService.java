@@ -42,6 +42,19 @@ public class OrderService {
         return Optional.ofNullable(orderRepository.findOne(id));
     }
 
+    public Page<Order> findUnassigned(Pageable pageable) {
+        return orderRepository.findOrdersByDeliveryBoyIsNull(pageable);
+    }
+
+    public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
+        if(order.getDeliveryBoy() != null) {
+            throw new OrderAssignedException();
+        }
+        order.setDeliveryBoy(deliveryJob.getDeliveryBoy());
+        order.setEstimatedTimeOfDelivery(deliveryJob.getEstimatedTimeOfDelivery());
+        return update(order);
+    }
+
     public Page<Order> getAll(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }

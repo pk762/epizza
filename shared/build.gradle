@@ -43,13 +43,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-hateoas")
     compile("com.h2database:h2")
     compile("org.atteo:evo-inflector:1.2.1")
-
+    compile("com.google.guava:guava:19.0")
     compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
     runtime('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
-
-    compile("com.google.guava:guava:19.0")
-    compile("org.javamoney:moneta:1.0")
-
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.assertj:assertj-core:3.1.0")
     testRuntime("com.jayway.jsonpath:json-path:2.0.0")

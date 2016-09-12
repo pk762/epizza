@@ -1,13 +1,11 @@
 package epizza.order;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -23,9 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import lombok.SneakyThrows;
-
 import java.net.URI;
+import java.util.ArrayList;
 
 import org.javamoney.moneta.Money;
 import org.junit.Before;
@@ -50,8 +47,10 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+
+import lombok.SneakyThrows;
 @RunWith(SpringRunner.class)
-@OrderApplicationTest(activeProfiles = {"test", "OrderControllerTest"})
+@OrderApplicationTest
 public class OrderControllerTest {
 
     @Rule
@@ -84,8 +83,6 @@ public class OrderControllerTest {
 
     private ResultActions ordersResultAction;
 
-    private String ordersUri;
-
     private String jsonInput;
 
     private String pizzaSampleResponse = "{\n" +
@@ -107,8 +104,6 @@ public class OrderControllerTest {
                 requestTo("http://localhost/pizzas/1")).
                 andRespond(withSuccess(pizzaSampleResponse, MediaType.APPLICATION_JSON));
 
-        ordersUri = linkTo(methodOn(OrderController.class).getAll(null)).toUri().toString();
-
         orderRepository.deleteAll();
 
         reset(orderEventPublisher);
@@ -123,7 +118,7 @@ public class OrderControllerTest {
 
         ordersResultAction
                 .andExpect(status().is(HttpStatus.CREATED.value()))
-                .andExpect(header().string(HttpHeaders.LOCATION, startsWith(ordersUri)))
+                .andExpect(header().string(HttpHeaders.LOCATION, containsString("/orders")))
                 .andDo(document("order-create", //
                         requestFields( //
                                 fieldWithPath("comment").description("delivery comment"), //
@@ -164,6 +159,7 @@ public class OrderControllerTest {
                                 fieldWithPath("orderedAt").description("Order creation timestamp"),
                                 fieldWithPath("totalPrice").description("Total order amount"),
                                 fieldWithPath("estimatedTimeOfDelivery").description("Estimated time of delivery"),
+                                fieldWithPath("deliveryBoy").description("Delivery boy"),
                                 fieldWithPath("comment").description("Customer's comment"),
                                 fieldWithPath("orderItems[]._links.pizza").description("Link to ordered pizza"),
                                 fieldWithPath("orderItems[].quantity").description("Number of pizzas"),
@@ -194,7 +190,7 @@ public class OrderControllerTest {
 
     @SneakyThrows
     private void whenAllOrdersRetrieved() {
-        ordersResultAction = mockMvc.perform(get(ordersUri).accept(MediaTypes.HAL_JSON));
+        ordersResultAction = mockMvc.perform(get("/orders").accept(MediaTypes.HAL_JSON));
     }
 
     @SneakyThrows
@@ -231,7 +227,7 @@ public class OrderControllerTest {
 
     @SneakyThrows
     private void whenOrderCreated() {
-        ordersResultAction = mockMvc.perform(post(ordersUri)
+        ordersResultAction = mockMvc.perform(post("/orders")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonInput));
 
