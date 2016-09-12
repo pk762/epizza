@@ -23,7 +23,7 @@ class DockerConventionPlugin implements Plugin<Project> {
         project.apply(plugin: JavaPlugin)
 
         def dockerImageTag = "latest"
-        def dockerImageName = "epages/" + project.name
+        def dockerImageName = "epizza/" + project.name
 
         project.extensions.docker.with {
             if (System.env.DOCKER_HOST) {
@@ -84,13 +84,13 @@ class DockerConventionPlugin implements Plugin<Project> {
 
         project.tasks.publish.dependsOn(project.tasks.pushDockerImage)
 
-        if(project.plugins.hasPlugin('spring-boot')) {
+        //if(project.plugins.hasPlugin('spring-boot')) {
 
             project.task('explodeFatJarToDocker', type:Sync, dependsOn:['bootRepackage']) {
                 // TODO avoid duplicating repackaged jar name here.
                 // see https://github.com/spring-projects/spring-boot/issues/5861
                 def fatJar = project.zipTree('build/libs/app.jar')
-
+                from(fatJar)
                 into('build/docker/app')
                 doLast {
                     project.fileTree('build/docker/app/BOOT-INF/lib').files.each { File file ->
@@ -136,6 +136,6 @@ class DockerConventionPlugin implements Plugin<Project> {
                     filesMatching('/banner.txt', replaceAction)
                 }
             }
-        }
+        //}
     }
 }
