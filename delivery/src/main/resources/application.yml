@@ -15,3 +15,6 @@ logging:
     com.epages: INFO
     feign: DEBUG
     org.springframework: INFO
+
+orders:
+  baseUri: "http://localhost:8082/orders"

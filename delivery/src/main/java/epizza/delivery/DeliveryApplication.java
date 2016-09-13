@@ -1,11 +1,16 @@
 package epizza.delivery;
 
+import java.net.URI;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.client.Traverson;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -39,5 +44,11 @@ public class DeliveryApplication {
         RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
         restTemplate.setMessageConverters(messageConverters);
         return restTemplate;
+    }
+
+    @Bean
+    @Qualifier("order")
+    public Traverson orderRestClient(@Value("${orders.baseUri}") URI ordersUri) {
+        return  new Traverson(ordersUri, MediaTypes.HAL_JSON);
     }
 }
