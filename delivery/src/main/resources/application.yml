@@ -13,7 +13,7 @@ logging:
     com.epages: INFO
     feign: DEBUG
     org.springframework: INFO
-    http.wire: DEBUG
+#    http.wire: DEBUG
 
 orders:
   baseUri: "http://localhost:8082/"
