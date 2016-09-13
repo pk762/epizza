@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.catalog;
 
 import java.net.URI;
 import java.util.Optional;

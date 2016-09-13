@@ -5,5 +5,5 @@ public enum OrderStatus {
     BAKING,
     READY_FOR_DELIVERY,
     IN_DELIVERY,
-    DELIVERED;
+    DELIVERED
 }

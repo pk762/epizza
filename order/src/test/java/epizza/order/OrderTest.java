@@ -2,6 +2,8 @@ package epizza.order;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
+import epizza.order.catalog.Pizza;
+
 import org.javamoney.moneta.Money;
 import org.junit.Test;
 

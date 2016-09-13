@@ -65,6 +65,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-hateoas")
     compile("epizza:shared:0.+")
     compile("com.google.guava:guava:19.0")
+    ["compileOnly", "testCompile"].each { "$it"("org.projectlombok:lombok") }
 
     runtime("com.h2database:h2")
     runtime('org.springframework.cloud:spring-cloud-starter-config')

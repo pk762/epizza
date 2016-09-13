@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.catalog;
 
 public enum Topping {
     SALAMI,

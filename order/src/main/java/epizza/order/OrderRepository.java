@@ -10,4 +10,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @RestResource(exported = false)
     Page<Order> findOrdersByDeliveryBoyIsNull(Pageable pageable);
 
+    @RestResource(exported = false)
+    Page<Order> findOrdersByStatus(OrderStatus status, Pageable pageable);
 }

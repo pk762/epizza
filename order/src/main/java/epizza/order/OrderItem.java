@@ -1,5 +1,6 @@
 package epizza.order;
 
+import epizza.order.catalog.Pizza;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

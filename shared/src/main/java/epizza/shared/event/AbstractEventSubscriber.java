@@ -5,6 +5,7 @@ import static epizza.shared.event.EventPublisher.EVENT_TYPE;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Slf4j
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractEventSubscriber {
 
@@ -32,6 +34,7 @@ public abstract class AbstractEventSubscriber {
     public void consume(@Payload String jsonEvent) {
         Map<String, Object> event = extractEvent(jsonEvent);
         if (isOwnType(event)) {
+            log.info("Consuming event '{}'", event);
             handleOwnType(event);
         } else {
             handleForeignType(event);

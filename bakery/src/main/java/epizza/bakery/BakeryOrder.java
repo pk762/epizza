@@ -2,7 +2,9 @@ package epizza.bakery;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.net.URI;
 
 import javax.persistence.Basic;
@@ -18,45 +20,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "BAKERY_ORDER")
-public class BakeryOrder implements Serializable {
-
-    private static final long serialVersionUID = 4644694270160240621L;
+@Getter
+@Setter
+public class BakeryOrder {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "ID", nullable = false)
     @JsonIgnore
     private Long id;
 
     @Basic
-    @Column(name = "ORDER_LINK", length = 255, unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private URI orderLink;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "BAKERY_ORDER_STATE", length = 30, nullable = false)
+    @Column(nullable = false)
     private BakeryOrderState bakeryOrderState;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public URI getOrderLink() {
-        return orderLink;
-    }
-
-    public void setOrderLink(URI orderLink) {
-        this.orderLink = orderLink;
-    }
-
-    public BakeryOrderState getBakeryOrderState() {
-        return bakeryOrderState;
-    }
-
-    public void setBakeryOrderState(BakeryOrderState bakeryOrderState) {
-        this.bakeryOrderState = bakeryOrderState;
-    }
 }

@@ -11,8 +11,6 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -21,8 +19,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import epizza.order.catalog.Pizza;
+import lombok.SneakyThrows;
+
 import java.net.URI;
-import java.util.ArrayList;
 
 import org.javamoney.moneta.Money;
 import org.junit.Before;
@@ -41,14 +41,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-
-import lombok.SneakyThrows;
 @RunWith(SpringRunner.class)
 @OrderApplicationTest
 public class OrderControllerTest {
@@ -70,9 +67,6 @@ public class OrderControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private RestTemplate restTemplate;
 
     @MockBean
     private OrderEventPublisher orderEventPublisher;
@@ -98,11 +92,6 @@ public class OrderControllerTest {
         mockMvc = webAppContextSetup(context)
                 .apply(documentationConfiguration(this.restDocumentation).uris().withPort(80))
                 .build();
-
-        mockServer = MockRestServiceServer.createServer(restTemplate);
-        mockServer.expect(
-                requestTo("http://localhost/pizzas/1")).
-                andRespond(withSuccess(pizzaSampleResponse, MediaType.APPLICATION_JSON));
 
         orderRepository.deleteAll();
 

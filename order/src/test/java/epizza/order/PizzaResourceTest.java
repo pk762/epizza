@@ -7,6 +7,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import epizza.order.catalog.Pizza;
 import lombok.SneakyThrows;
 
 import org.junit.Before;

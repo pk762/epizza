@@ -1,5 +1,6 @@
 package epizza.order;
 
+import epizza.order.delivery.DeliveryJob;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,7 +44,7 @@ public class OrderService {
     }
 
     public Page<Order> findUnassigned(Pageable pageable) {
-        return orderRepository.findOrdersByDeliveryBoyIsNull(pageable);
+        return orderRepository.findOrdersByStatus(OrderStatus.READY_FOR_DELIVERY, pageable);
     }
 
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {

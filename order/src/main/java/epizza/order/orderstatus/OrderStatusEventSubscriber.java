@@ -37,7 +37,6 @@ public abstract class OrderStatusEventSubscriber extends AbstractEventSubscriber
 
         order.setStatus(orderStatus);
         orderService.update(order);
-        log.info("Consumed {} event with payload '{}'", super.type, payload);
     }
 
     protected void enhanceOrder(Order order, Map<String, Object> payload) {

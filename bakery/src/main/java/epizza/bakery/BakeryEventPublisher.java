@@ -1,12 +1,14 @@
 package epizza.bakery;
 
 import epizza.shared.event.EventPublisher;
-import com.google.common.collect.ImmutableMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.google.common.collect.ImmutableMap;
 
 @Component
 public class BakeryEventPublisher {
@@ -33,6 +35,4 @@ public class BakeryEventPublisher {
                 "orderLink", orderLink);
         eventPublisher.publish(BAKING_FINISHED_EVENT_TYPE, payloadMap);
     }
-
-
 }

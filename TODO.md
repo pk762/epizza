@@ -14,3 +14,4 @@
 [x] angular client polishing
 [ ] fix validation
 [ ] fix CORS cfg
+[ ] spring retry with config-server fail fast
