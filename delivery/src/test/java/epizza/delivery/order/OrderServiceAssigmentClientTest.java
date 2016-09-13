@@ -41,7 +41,7 @@ public class OrderServiceAssigmentClientTest {
         OrderServiceAssigmentClient client = new DeliveryApplication().assignmentClient(restTemplate, URI.create(wiremockUrl));
 
         // WHEN
-        client.assignMyselfToOrder("1", new DeliveryJob("Joe Slo", LocalDateTime.now().plusMinutes(120)));
+        client.assignMyselfToOrder(1, new DeliveryJob("Joe Slo", LocalDateTime.now().plusMinutes(120)));
 
         // THEN
         verify(exactly(1), postRequestedFor(urlEqualTo("/orders/1/delivery")));
