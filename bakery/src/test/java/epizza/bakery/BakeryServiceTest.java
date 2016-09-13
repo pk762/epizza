@@ -6,6 +6,8 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
+import epizza.bakery.order.Order;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
@@ -20,16 +22,12 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
-
-import epizza.bakery.order.Order;
 
 @RunWith(SpringRunner.class)
 @BakeryApplicationTest(properties={"bakery.timeToBakePizzaInMillis:1"})
@@ -140,12 +138,9 @@ public class BakeryServiceTest {
         mockServer.expect(requestTo(bakeryOrder.getOrderLink())).andRespond(withSuccess(orderResponse, MediaType.APPLICATION_JSON));
 
         //complete the future when deliveryEventPublisher.sendDeliveredEvent is called
-        doAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                asyncInteractionFuture.complete(true);
-                return null;
-            }
+        doAnswer(invocationOnMock -> {
+            asyncInteractionFuture.complete(true);
+            return null;
         }).when(bakeryEventPublisher).sendBakingFinishedEvent(orderUri);
 
 

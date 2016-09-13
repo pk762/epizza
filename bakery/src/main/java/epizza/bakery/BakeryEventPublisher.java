@@ -1,6 +1,7 @@
 package epizza.bakery;
 
 import epizza.shared.event.EventPublisher;
+import lombok.AllArgsConstructor;
 
 import java.net.URI;
 import java.util.Map;
@@ -11,28 +12,21 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.ImmutableMap;
 
 @Component
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BakeryEventPublisher {
 
-    private EventPublisher eventPublisher;
-
-    private static final String BAKING_ORDER_RECEIVED_EVENT_TYPE = "BakingOrderReceived";
-    private static final String BAKING_FINISHED_EVENT_TYPE = "BakingFinished";
-
-    @Autowired
-    public BakeryEventPublisher(EventPublisher eventPublisher) {
-        this.eventPublisher = eventPublisher;
-    }
+    private final EventPublisher eventPublisher;
 
     public void sendBakingOrderReceivedEvent(BakeryOrderReceivedEvent event) {
-        Map<String, Object> payloadMap = ImmutableMap.of(
-                "orderLink", event.getOrderLink(),
-                "estimatedTimeOfCompletion", event.getEstimatedTimeOfCompletion());
-        eventPublisher.publish(BAKING_ORDER_RECEIVED_EVENT_TYPE, payloadMap);
+        Map<String, Object> payload = ImmutableMap.of(
+                        "orderLink", event.getOrderLink(),
+                        "estimatedTimeOfCompletion", event.getEstimatedTimeOfCompletion()
+        );
+        eventPublisher.publish("BakingOrderReceived", payload);
     }
 
     public void sendBakingFinishedEvent(URI orderLink) {
-        Map<String, Object> payloadMap = ImmutableMap.of(
-                "orderLink", orderLink);
-        eventPublisher.publish(BAKING_FINISHED_EVENT_TYPE, payloadMap);
+        Map<String, Object> payload = ImmutableMap.of("orderLink", orderLink);
+        eventPublisher.publish("BakingFinished", payload);
     }
 }

@@ -1,18 +1,16 @@
 package epizza.bakery;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
-
 import epizza.bakery.order.Order;
 import epizza.bakery.order.OrderServiceClient;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -23,13 +21,17 @@ import org.springframework.util.Assert;
 
 @Slf4j
 @Service
-@AllArgsConstructor(onConstructor = @__(@Autowired))
-public class BakeryServiceImpl {
+@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class BakeryService {
 
+    @NonNull
     private final BakeryEventPublisher bakeryEventPublisher;
 
+    @NonNull
     private final BakeryOrderRepository bakeryOrderRepository;
 
+    @NonNull
     private final OrderServiceClient orderServiceClient;
 
     @Value("${bakery.timeToBakePizzaInMillis:1}")
