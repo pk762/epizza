@@ -12,7 +12,7 @@ echo
 echo "#############################################"
 echo "# building 'messaging-boot-starter'         #"
 echo "#############################################"
-./shared/gradlew -p messaging-boot-starter build pTML
+./messaging-boot-starter/gradlew -p messaging-boot-starter build pTML
 
 echo
 echo "#############################################"
