@@ -12,6 +12,7 @@
 [x] integrate travis
 [x] docker-compose polishing
 [x] angular client polishing
-[ ] fix validation
-[ ] fix CORS cfg
+[x] fix validation
+[x] fix CORS cfg
 [ ] spring retry with config-server fail fast
+[ ] sleuth trace id
