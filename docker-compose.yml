@@ -2,11 +2,8 @@
 springboot:
   image: azul/zulu-openjdk:8
   mem_limit: 300m
-  volumes:
-    - ${PWD}/etc/logback-spring.xml:/etc/logback-spring.xml
   environment:
     - _JAVA_OPTIONS=-Xmx256m
-    - LOGGING_CONFIG=/etc/logback-spring.xml
     - DOCKER_IP=${DOCKER_IP}
 # ==============================================================================
 configclient:
@@ -43,6 +40,7 @@ configserver:
     - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:///repo
     - SPRING_CLOUD_CONFIG_LABEL=dev
     - SPRING_CLOUD_CONFIG_FAIL_FAST=true
+    - LOGGING_CONFIG=/repo/logback.xml
 # ==============================================================================
 order:
   extends: configclient
