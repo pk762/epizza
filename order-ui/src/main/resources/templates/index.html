@@ -17,12 +17,13 @@
   var app = angular.module('epizza',["restangular"]);
 
   // Inject Restangular into your controller
-  app.controller("MainCtrl",["Restangular","$scope", "$interval",function(Restangular,$scope, $interval){
+  app.controller("MainCtrl",["Restangular", "$scope", "$interval",function(Restangular, $scope, $interval){
     Restangular.setBaseUrl(apiHost);
     Restangular.setFullResponse(true);
 
-    Restangular.allUrl("pizzas", "pizzas").getList().then(function(pizzas) {
-      $scope.pizzas = pizzas.data._embedded.pizzas;
+    // load all pizzas
+    Restangular.allUrl("pizzas", "pizzas").getList().then(function(response) {
+      $scope.pizzas = response.data._embedded.pizzas;
     });
 
     $scope.cart = {};
@@ -73,26 +74,25 @@
           var lineItem = $scope.cart[pizzaUri];
           var newLineItem = {};
           newLineItem.quantity = lineItem.quantity;
-          newLineItem.pizza  = pizzaUri;
+          newLineItem.pizza    = pizzaUri;
           $scope.newCart.lineItems.push(newLineItem);
         }
         Restangular.allUrl("orders", "orders").post($scope.newCart).then(function(response) {
           var location = response.headers("Location");
           currentOrderResource = Restangular.oneUrl("order", location);
-          $scope.currentOrder = currentOrderResource.get().then(function(order) {
-            $scope.currentOrder = order.data;
+          $scope.currentOrder = currentOrderResource.get().then(function(response) {
+            $scope.currentOrder = response.data;
             $interval($scope.refreshOrder, 5000);
           });
         });
     };
 
     $scope.refreshOrder = function() {
-      $scope.currentOrder = currentOrderResource.get().then(function(order) {
-        $scope.currentOrder = order.data;
+      $scope.currentOrder = currentOrderResource.get().then(function(response) {
+        $scope.currentOrder = response.data;
       });
     };
   }]);
-
   </script>
 </head>
 <!-- Body tag augmented with ngController directive  -->
@@ -148,19 +148,25 @@
           <div class="panel panel-default" style="margin-top: 10px;">
             <div class="panel-heading">Cart</div>
             <table class="table table-striped">
-                <thead><th>Pizza</th><th>Quantity</th><th>Price</th></thead>
-                <tbody ng-repeat="lineItem in cart">
-                <tr>
-                    <td class="col-md-4">{{lineItem.pizza.name}}</td>
-                    <td class="col-md-2">{{lineItem.quantity}}</td>
-                    <td class="col-md-2" nowrap="nowrap">{{lineItem.price.amount | number : 2}} {{lineItem.price.currency}}</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Pizza</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                </thead>
+                    </tr>
+                <tbody>
+                    <tr ng-repeat="lineItem in cart">
+                        <td class="col-md-4">{{lineItem.pizza.name}}</td>
+                        <td class="col-md-2">{{lineItem.quantity}}</td>
+                        <td class="col-md-2" nowrap="nowrap">{{lineItem.price.amount | number : 2}} {{lineItem.price.currency}}</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>Total</td>
+                        <td>{{totalPrice.amount | number : 2}} {{totalPrice.currency}}</td>
+                    </tr>
                 </tbody>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>Total</td>
-                    <td>{{totalPrice.amount | number : 2}} {{totalPrice.currency}}</td>
-                </tr>
             </table>
           </div>
           <div class="panel panel-default" style="margin-top: 10px;">
@@ -197,7 +203,6 @@
           <button type="submit" ng-click="postOrder()">Place Order</button>
       </div>
     </div>
-
 </div>
 
 </body>
