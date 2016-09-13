@@ -9,3 +9,7 @@ logging:
 spring:
   jmx:
     enabled: false
+
+  h2:
+    console:
+      enabled: true

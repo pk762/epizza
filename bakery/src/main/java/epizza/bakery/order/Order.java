@@ -1,7 +1,6 @@
 package epizza.bakery.order;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
 import java.io.IOException;
@@ -17,8 +16,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@Getter
-@Setter
+@Data
 @ToString(of = { "orderItems" })
 public class Order {
 

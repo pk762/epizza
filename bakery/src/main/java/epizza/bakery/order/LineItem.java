@@ -1,14 +1,10 @@
 package epizza.bakery.order;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.net.URI;
 
-@Getter
-@Setter
-@ToString(of = { "pizza", "amount" })
+@Data
 public class LineItem {
 
     private URI pizza;

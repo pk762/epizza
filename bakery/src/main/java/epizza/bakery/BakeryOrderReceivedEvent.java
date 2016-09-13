@@ -1,13 +1,11 @@
 package epizza.bakery;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.net.URI;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 public class BakeryOrderReceivedEvent {
 
     private URI orderLink;
