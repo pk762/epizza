@@ -39,6 +39,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-hateoas')
     compile('org.springframework:spring-web')
     compile("com.google.guava:guava:19.0")
+    runtime('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
 
     compileOnly('org.projectlombok:lombok')
     testCompile('org.projectlombok:lombok')
