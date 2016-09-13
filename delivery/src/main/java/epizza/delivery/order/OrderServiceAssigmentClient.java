@@ -12,7 +12,7 @@ public class OrderServiceAssigmentClient {
 
     private final UriComponentsBuilder baseUri;
 
-    public void assignMyselfToOrder(String orderId, DeliveryJob job) {
+    public void assignMyselfToOrder(Integer orderId, DeliveryJob job) {
         restTemplate.postForEntity(baseUri.path("orders/" + orderId + "/delivery").toUriString(), job, Void.class);
     }
 }
