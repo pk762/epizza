@@ -62,7 +62,6 @@ dependencyManagement.imports {
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("org.springframework.boot:spring-boot-starter-hateoas")
     compile("epizza:messaging-boot-starter:0.+")
     compile("com.google.guava:guava:19.0")
     ["compileOnly", "testCompile"].each { "$it"("org.projectlombok:lombok") }
@@ -71,7 +70,6 @@ dependencies {
     runtime('org.springframework.cloud:spring-cloud-starter-config')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
     testCompile("org.assertj:assertj-core:3.1.0")
     testRuntime("com.jayway.jsonpath:json-path:2.0.0")
     testCompile("org.mockito:mockito-core:1.+")
