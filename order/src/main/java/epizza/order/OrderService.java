@@ -44,7 +44,7 @@ public class OrderService {
     }
 
     public Page<Order> findUnassigned(Pageable pageable) {
-        return orderRepository.findOrdersByStatus(OrderStatus.READY_FOR_DELIVERY, pageable);
+        return orderRepository.findOrdersByDeliveryBoyIsNull(pageable);
     }
 
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {

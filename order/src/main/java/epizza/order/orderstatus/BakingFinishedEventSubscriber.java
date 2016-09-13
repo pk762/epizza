@@ -13,6 +13,6 @@ public class BakingFinishedEventSubscriber extends epizza.order.orderstatus.Orde
 
     @Autowired
     public BakingFinishedEventSubscriber(ObjectMapper objectMapper, OrderService orderService) {
-        super(orderService, objectMapper, "BakingFinished", OrderStatus.READY_FOR_DELIVERY);
+        super(orderService, objectMapper, "BakingFinished", OrderStatus.DELIVERING);
     }
 }

@@ -148,6 +148,7 @@ public class OrderControllerTest {
                                 fieldWithPath("orderedAt").description("Order creation timestamp"),
                                 fieldWithPath("totalPrice").description("Total order amount"),
                                 fieldWithPath("estimatedTimeOfDelivery").description("Estimated time of delivery"),
+                                fieldWithPath("estimatedTimeOfBakingCompletion").description("Estimated time of baking completion"),
                                 fieldWithPath("deliveryBoy").description("Delivery boy"),
                                 fieldWithPath("comment").description("Customer's comment"),
                                 fieldWithPath("orderItems[]._links.pizza").description("Link to ordered pizza"),

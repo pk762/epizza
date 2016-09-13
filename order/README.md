@@ -392,3 +392,9 @@ X-Application-Context: application:8082
     }
 }
 ```
+
+
+
+```
+$ http -vj POST 192.168.99.100:8082/orders/4/delivery deliveryBoy=Jens estimatedTimeOfDelivery=2016-09-14T10:00:00
+```
