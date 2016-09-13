@@ -1,5 +1,0 @@
-[introduction]
-== Introduction
-
-This is a RESTful web service for managing the pizza baking process.
-It uses hypermedia to describe the relationships between resources and to allow navigation between them.
