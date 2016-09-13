@@ -9,22 +9,24 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Configuration
 @ConditionalOnClass(EnableRabbit.class)
 public class EventAutoConfiguration {
 
-    public static final String RND_EVENTS = "rnd.events";
+    public static final String EPIZZA_EVENTS = "epizza.events";
 
     @Bean
     @ConditionalOnMissingBean
     public FanoutExchange eventsExchange() {
         final boolean durable = true;
         final boolean autoDelete = false;
-        return new FanoutExchange(RND_EVENTS, durable, autoDelete);
+        return new FanoutExchange(EPIZZA_EVENTS, durable, autoDelete);
     }
 
     @Bean
-    @ConditionalOnMissingBean(RabbitTemplate.class)
+    @ConditionalOnMissingBean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setExchange(eventsExchange().getName());
@@ -33,7 +35,7 @@ public class EventAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public EventPublisher eventPublisher() {
-        return new EventPublisher();
+    public EventPublisher eventPublisher(ObjectMapper objectMapper, RabbitTemplate rabbitTemplate) {
+        return new EventPublisher(objectMapper, rabbitTemplate);
     }
 }

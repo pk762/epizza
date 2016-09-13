@@ -1,21 +1,21 @@
 package epizza.shared.event;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableMap;
 
+@Slf4j
+@AllArgsConstructor
 public class EventPublisher {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(EventPublisher.class);
 
     public static final String EVENT_TYPE = "type";
 
@@ -23,15 +23,13 @@ public class EventPublisher {
 
     public static final String EVENT_PAYLOAD = "payload";
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     public void publish(String type, String jsonPayload) {
-        final String event = createEvent(type, jsonPayload);
-        LOGGER.info("Publishing event '{}'", event);
+        String event = createEvent(type, jsonPayload);
+        log.info("Publishing event '{}'", event);
         rabbitTemplate.convertAndSend(event);
     }
 
@@ -54,11 +52,10 @@ public class EventPublisher {
     }
 
     private Map<String, String> eventPayload(String type, String jsonPayload) throws IOException {
-        Map<String, String> payload = new HashMap<>();
-        payload.put(EVENT_TYPE, type); //
-        payload.put(EVENT_TIMESTAMP, LocalDateTime.now().toString());
-        payload.put(EVENT_PAYLOAD, objectMapper.readValue(jsonPayload, new JsonMapTypeReference()));
-
-        return payload;
+        return ImmutableMap.<String, String> builder()
+                .put(EVENT_TYPE, type)
+                .put(EVENT_TIMESTAMP, LocalDateTime.now().toString())
+                .put(EVENT_PAYLOAD, objectMapper.readValue(jsonPayload, new JsonMapTypeReference()))
+                .build();
     }
 }

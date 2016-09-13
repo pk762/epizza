@@ -3,27 +3,22 @@ package epizza.shared.event;
 import static epizza.shared.event.EventPublisher.EVENT_PAYLOAD;
 import static epizza.shared.event.EventPublisher.EVENT_TYPE;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+
 import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractEventSubscriber {
 
     protected final ObjectMapper objectMapper;
 
     protected final String type;
-
-    protected AbstractEventSubscriber(ObjectMapper objectMapper, String type) {
-        Assert.notNull(objectMapper, "ObjectMapper must not be null.");
-        Assert.notNull(type, "Type must not be null.");
-
-        this.objectMapper = objectMapper;
-        this.type = type;
-    }
 
     protected Map<String, Object> extractEvent(String jsonEvent) {
         try {
@@ -35,7 +30,7 @@ public abstract class AbstractEventSubscriber {
 
     @EPizzaEventListener
     public void consume(@Payload String jsonEvent) {
-        final Map<String, Object> event = extractEvent(jsonEvent);
+        Map<String, Object> event = extractEvent(jsonEvent);
         if (isOwnType(event)) {
             handleOwnType(event);
         } else {

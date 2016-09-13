@@ -1,6 +1,6 @@
 package epizza.shared.event;
 
-import static epizza.shared.event.EventAutoConfiguration.RND_EVENTS;
+import static epizza.shared.event.EventAutoConfiguration.EPIZZA_EVENTS;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.springframework.amqp.core.ExchangeTypes.FANOUT;
@@ -24,7 +24,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
                         exclusive = "true"),
                 exchange = @Exchange(
                         type = FANOUT,
-                        value = RND_EVENTS,
+                        value = EPIZZA_EVENTS,
                         durable = "true",
                         autoDelete = "false"),
                 key = "#"))
