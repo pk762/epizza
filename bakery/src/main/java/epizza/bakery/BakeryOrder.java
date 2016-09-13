@@ -26,7 +26,6 @@ public class BakeryOrder {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @JsonIgnore
     private Long id;
 
     @Basic

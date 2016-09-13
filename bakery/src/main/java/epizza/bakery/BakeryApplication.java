@@ -12,9 +12,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootApplication
 @EntityScan
 @EnableAsync
+@SpringBootApplication
 public class BakeryApplication {
 
     public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class BakeryApplication {
     }
 
     @Bean
-    ThreadPoolTaskExecutor bakeryThreadPoolTaskExecutor() {
+    public ThreadPoolTaskExecutor bakeryThreadPoolTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         threadPoolTaskExecutor.setCorePoolSize(2);
         threadPoolTaskExecutor.setMaxPoolSize(2);

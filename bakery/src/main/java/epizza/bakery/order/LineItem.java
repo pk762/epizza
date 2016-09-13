@@ -1,34 +1,17 @@
 package epizza.bakery.order;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.net.URI;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
-
+@Getter
+@Setter
+@ToString(of = { "pizza", "amount" })
 public class LineItem {
+
     private URI pizza;
+
     private Integer amount;
-
-    public URI getPizza() {
-        return pizza;
-    }
-
-    public void setPizza(URI pizza) {
-        this.pizza = pizza;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this)
-                .add("pizza", pizza)
-                .add("amount", amount)
-                .toString();
-    }
 }

@@ -1,6 +1,8 @@
 package epizza.bakery.order;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.IOException;
 import java.net.URI;
@@ -15,6 +17,9 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+@Getter
+@Setter
+@ToString(of = { "orderItems" })
 public class Order {
 
     private URI orderLink;
@@ -29,19 +34,6 @@ public class Order {
     @JsonDeserialize(using = OrderLinkDeserializer.class)
     public void setOrderLink(URI orderLink) {
         this.orderLink = orderLink;
-    }
-
-    public List<LineItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<LineItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    @Override
-    public String toString() {
-        return toStringHelper(this).add("orderItems", orderItems).toString();
     }
 
     static class OrderLinkDeserializer extends JsonDeserializer<URI> {

@@ -14,18 +14,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class OrderCreatedEventSubscriber extends AbstractEventSubscriber {
 
-    private static final String ORDER_CREATED_EVENT_TYPE = "OrderCreated";
     private BakeryService bakeryService;
 
     @Autowired
     public OrderCreatedEventSubscriber(ObjectMapper objectMapper, BakeryService bakeryService) {
-        super(objectMapper, ORDER_CREATED_EVENT_TYPE);
+        super(objectMapper, "OrderCreated");
         this.bakeryService = bakeryService;
     }
 
     @Override
     protected void handleOwnType(Map<String, Object> event) {
-        final Map<String, Object> payload = getPayload(event);
+        Map<String, Object> payload = getPayload(event);
         String orderUriString = (String) payload.get("orderLink");
         URI orderUri = URI.create(orderUriString);
         bakeryService.acknowledgeOrder(orderUri);
