@@ -73,7 +73,7 @@ dependencies {
     runtime('org.springframework.cloud:spring-cloud-starter-config')
     runtime("com.h2database:h2")
 
-    compile("epizza:shared:0.+")
+    compile("epizza:messaging-boot-starter:0.+")
     compile("org.hibernate:hibernate-java8")
     compile("org.zalando:jackson-datatype-money:0.9.0")
     ["compileOnly", "testCompile"].each { "$it"("org.projectlombok:lombok") }

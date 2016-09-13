@@ -21,7 +21,7 @@ project.version = '0.1.14'
 group = 'epizza'
 
 jar {
-    baseName = 'shared'
+    // baseName = 'messaging-spring-starter'
     version = rootProject.version
 }
 sourceCompatibility = 1.8

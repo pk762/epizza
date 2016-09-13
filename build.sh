@@ -10,9 +10,9 @@ echo "#############################################"
 
 echo
 echo "#############################################"
-echo "# building 'shared'                         #"
+echo "# building 'messaging-boot-starter'         #"
 echo "#############################################"
-./shared/gradlew -p shared build pTML
+./shared/gradlew -p messaging-boot-starter build pTML
 
 echo
 echo "#############################################"
