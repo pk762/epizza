@@ -5,30 +5,36 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @EntityScan
 @EnableJpaRepositories
 @EnableSpringDataWebSupport
 @SpringBootApplication
-@EnableHypermediaSupport(type=HypermediaType.HAL)
+@EnableHypermediaSupport(type = HypermediaType.HAL)
 public class OrderApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class, args);
     }
 
-    // http://stackoverflow.com/questions/31724994/spring-data-rest-and-cors
+    @Bean
+    @Primary
+    public Validator validator() {
+        return new LocalValidatorFactoryBean();
+    }
+
     @Bean
     public FilterRegistrationBean corsFilter() {
+        // http://stackoverflow.com/questions/31724994/spring-data-rest-and-cors
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("*");
@@ -48,15 +54,5 @@ public class OrderApplication {
         FilterRegistrationBean corsFilter = new FilterRegistrationBean(new CorsFilter(source));
         corsFilter.setOrder(0);
         return corsFilter;
-    }
-
-    //@Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*").exposedHeaders("Location");
-            }
-        };
     }
 }
