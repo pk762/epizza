@@ -126,7 +126,7 @@
               <thead><th></th><th>Name</th><th>Description</th><th>Price</th></thead>
               <tbody ng-repeat="pizza in pizzas">
               <tr>
-                  <td class="col-md-2"><img ng:src="{{pizza.imageUrl}}" style="width:100px"/></td>
+                  <td class="col-md-2"><img ng-src="{{pizza.imageUrl}}" style="width:100px"/></td>
                   <td class="col-md-2">{{pizza.name}}</td>
                   <td class="col-md-4">{{pizza.description}}</td>
                   <td class="col-md-2">{{pizza.price.amount | number : 2}} {{pizza.price.currency}}</td>
@@ -142,7 +142,7 @@
       </div>
       <div id="cart" class="panel panel-default col-xs-4 col-md-offset-1">
 
-          <div class="alert alert-info"  style="margin-top: 10px;" role="alert" ng-show="currentOrder">
+          <div class="alert ng-class:{'alert-warning': currentOrder.status==='NEW', 'alert-info': currentOrder.status==='BAKING', 'alert-success': currentOrder.status==='DELIVERING'}" style="margin-top: 10px;" role="alert" ng-show="currentOrder">
             <b>Order Status: {{currentOrder.status}}</b> <br/>Estimated delivery: {{currentOrder.estimatedTimeOfDelivery}}
           </div>
           <div class="panel panel-default" style="margin-top: 10px;">
