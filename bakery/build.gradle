@@ -13,39 +13,11 @@ buildscript {
     }
 }
 
-plugins {
-    id "org.asciidoctor.convert" version "1.5.2"
-}
-
-ext {
-    snippetsDir = file('build/generated-snippets')
-}
-
 apply plugin: 'spring-boot'
 apply plugin: 'epizza-java'
 apply plugin: 'epizza-docker'
 
 version = '0.0.1-SNAPSHOT'
-
-asciidoctor {
-    sources {
-        include '*.adoc'
-    }
-
-    attributes 'snippets': snippetsDir
-    attributes 'version': project.version
-
-    inputs.dir snippetsDir
-    dependsOn test
-}
-
-jar {
-    dependsOn asciidoctor
-    from ("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
-    }
-    baseName = 'bakery'
-}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -76,14 +48,3 @@ dependencies {
     testCompile("org.projectlombok:lombok")
 }
 
-test {
-    systemProperty 'org.springframework.restdocs.outputDir', snippetsDir
-    outputs.dir snippetsDir
-}
-
-eclipse {
-    classpath {
-         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
-    }
-}
