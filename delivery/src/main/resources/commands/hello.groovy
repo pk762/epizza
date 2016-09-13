@@ -11,7 +11,7 @@ class hello {
     @Usage("Say Hello")
     @Command
     def main(InvocationContext context) {
-        BeanFactory beanFactory = context.getProperty("spring.beanfactory")
+        BeanFactory beanFactory = context.getAttributes().get("spring.beanfactory")
         return "Hello " + beanFactory
     }
 

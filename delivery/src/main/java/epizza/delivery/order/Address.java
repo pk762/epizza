@@ -1,4 +1,4 @@
-package epizza.delivery;
+package epizza.delivery.order;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 

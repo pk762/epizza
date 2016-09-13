@@ -3,7 +3,6 @@ package epizza.delivery.order;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
-import epizza.delivery.Address;
 import lombok.Getter;
 import lombok.Setter;
 
