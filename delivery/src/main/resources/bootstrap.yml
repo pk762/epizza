@@ -1,6 +1,6 @@
 spring:
   application:
-    name: bakery
+    name: delivery
   output:
     ansi:
       enabled: ALWAYS

@@ -1,3 +1,6 @@
 spring:
   application:
     name: order
+  output:
+    ansi:
+      enabled: ALWAYS

@@ -1,3 +1,6 @@
 spring:
   application:
     name: order-ui
+  output:
+    ansi:
+      enabled: ALWAYS
