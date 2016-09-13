@@ -130,7 +130,7 @@ public class BakeryServiceTest {
         bakeryService.bakeOrder(bakeryOrder.getOrderLink());
 
         //wait for async interaction until timeout
-        asyncInteractionFuture.get(1000, TimeUnit.MILLISECONDS);
+        asyncInteractionFuture.get(20_000, TimeUnit.MILLISECONDS);
 
         bakeryOrder = bakeryOrderRepository.findOne(bakeryOrder.getId());
     }
