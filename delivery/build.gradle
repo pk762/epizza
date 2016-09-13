@@ -43,6 +43,7 @@ dependencies {
     compileOnly('org.projectlombok:lombok')
     testCompile('org.projectlombok:lombok')
 
+    runtime("com.jayway.jsonpath:json-path:2.0.0")
     runtime("com.h2database:h2")
     runtime('org.springframework.cloud:spring-cloud-starter-config')
     runtime('net.logstash.logback:logstash-logback-encoder:4.7')
@@ -51,7 +52,6 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test")
 //    testCompile('com.epages:restdocs-wiremock:0.7.8')
     testCompile("org.assertj:assertj-core:3.1.0")
-    testRuntime("com.jayway.jsonpath:json-path:2.0.0")
     testCompile("org.mockito:mockito-core:1.+")
 }
 

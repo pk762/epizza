@@ -16,6 +16,9 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import epizza.delivery.order.OrderServiceAssigmentClient;
 
 @SpringBootApplication
 @EntityScan
@@ -44,6 +47,11 @@ public class DeliveryApplication {
         RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
         restTemplate.setMessageConverters(messageConverters);
         return restTemplate;
+    }
+
+    @Bean
+    public OrderServiceAssigmentClient assignmentClient(RestTemplate restTemplate, @Value("${orders.baseUri}") URI ordersUri) {
+        return new OrderServiceAssigmentClient(restTemplate, UriComponentsBuilder.fromUri(ordersUri));
     }
 
     @Bean

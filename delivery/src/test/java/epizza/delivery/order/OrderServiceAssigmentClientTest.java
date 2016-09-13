@@ -32,19 +32,19 @@ public class OrderServiceAssigmentClientTest {
     public void test() {
         // GIVEN
         String wiremockUrl = "http://localhost:" + wiremockServer.port();
-        stubFor(post(urlEqualTo("/orders/1")).willReturn(aResponse().withStatus(204)));
+        stubFor(post(urlEqualTo("/orders/1/delivery")).willReturn(aResponse().withStatus(204)));
     
         RestTemplate restTemplate = new DeliveryApplication().restTemplate(Arrays.asList(
                 new StringHttpMessageConverter(Charset.forName("UTF-8")), 
                 new MappingJackson2HttpMessageConverter()
                 ));
-        OrderServiceAssigmentClient client = new OrderServiceAssigmentClient(restTemplate);
+        OrderServiceAssigmentClient client = new DeliveryApplication().assignmentClient(restTemplate, URI.create(wiremockUrl));
 
         // WHEN
-        client.assignMyselfToOrder(URI.create(wiremockUrl + "/orders/1"), new DeliveryJob("Joe Slo", LocalDateTime.now().plusMinutes(120)));
+        client.assignMyselfToOrder("1", new DeliveryJob("Joe Slo", LocalDateTime.now().plusMinutes(120)));
 
         // THEN
-        verify(exactly(1), postRequestedFor(urlEqualTo("/orders/1")));
+        verify(exactly(1), postRequestedFor(urlEqualTo("/orders/1/delivery")));
     }
 
 }

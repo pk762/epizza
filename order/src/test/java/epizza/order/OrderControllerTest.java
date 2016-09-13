@@ -144,6 +144,7 @@ public class OrderControllerTest {
 
                 .andDo(document("order-get",
                         responseFields(
+                                fieldWithPath("_id").description("Order identifier"),
                                 fieldWithPath("status").description("Order status"),
                                 fieldWithPath("orderedAt").description("Order creation timestamp"),
                                 fieldWithPath("totalPrice").description("Total order amount"),

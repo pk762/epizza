@@ -29,6 +29,7 @@ import javax.persistence.Table;
 import org.javamoney.moneta.Money;
 import org.springframework.hateoas.Identifiable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
@@ -43,7 +44,9 @@ import com.google.common.collect.Lists;
 public class Order implements Identifiable<Long> {
 
     public static final Money DEFAULT_PRICE = Money.of(0.0, "EUR");
+
     @Id
+    @JsonProperty("_id")
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
