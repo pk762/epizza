@@ -58,17 +58,14 @@ bakery:
   links:
     - rabbitmq
     - configserver
-  ports:
-    - "8083:8083"
 # ==============================================================================
-#delivery:
-#  extends: configclient
-#  image: epizza/delivery
-#  links:
-#    - rabbitmq
-#    - configserver
-#  ports:
-#    - "8084:8084"
+delivery:
+  extends: configclient
+  image: epizza/delivery
+  links:
+    - configserver
+  ports:
+    - "2000:2000"
 # ==============================================================================
 orderui:
   extends: configclient
