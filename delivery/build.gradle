@@ -3,18 +3,15 @@ buildscript {
         springBootVersion = '1.4.0.RELEASE'
     }
     repositories {
-        mavenCentral()
         mavenLocal()
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
     }
     dependencies {
         classpath "epizza:gradle-plugins:0.1.0"
         classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
-}
-
-ext {
-    snippetsDir = file('build/generated-snippets')
 }
 
 apply plugin: 'spring-boot'
@@ -56,7 +53,3 @@ dependencies {
     testCompile("org.mockito:mockito-core:1.+")
 }
 
-test {
-    systemProperty 'org.springframework.restdocs.outputDir', snippetsDir
-    outputs.dir snippetsDir
-}
