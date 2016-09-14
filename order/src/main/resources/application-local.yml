@@ -6,6 +6,9 @@ logging:
     org.springframework.amqp.rabbit: 'OFF'
     org.springframework.beans.factory.support: 'WARN'
 
+
   h2:
     console:
       enabled: true
+      settings:
+        webAllowOthers: true

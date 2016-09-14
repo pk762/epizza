@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @Service
@@ -22,11 +23,18 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderEventPublisher orderEventPublisher;
+    private final CouponRepository couponRepository;
 
-    public Order create(Order order) {
+    public Order create(Order order, String couponCode) {
         if (order.getOrderItems().isEmpty()) {
             throw new IllegalArgumentException("order does not have items");
         }
+
+        if (StringUtils.hasLength(couponCode)) {
+            Optional.ofNullable(couponRepository.findOne(couponCode))
+                    .ifPresent(coupon -> order.setCoupon(coupon));
+        }
+
         order.setOrderedAt(LocalDateTime.now());
         Order savedOrder = orderRepository.saveAndFlush(order);
 
@@ -48,7 +56,7 @@ public class OrderService {
     }
 
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
-        if(order.getDeliveryBoy() != null) {
+        if (order.getDeliveryBoy() != null) {
             throw new OrderAssignedException();
         }
         log.info("Assigning delivery job '{}' to order number {}", deliveryJob, order.getId());

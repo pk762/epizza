@@ -20,6 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import epizza.order.catalog.Pizza;
+import lombok.SneakyThrows;
+
 import java.net.URI;
 
 import org.javamoney.moneta.Money;
@@ -43,9 +46,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-
-import epizza.order.catalog.Pizza;
-import lombok.SneakyThrows;
 
 @RunWith(SpringRunner.class)
 @OrderApplicationTest
@@ -210,7 +210,7 @@ public class OrderControllerTest {
 
         newOrder.addOrderItem(orderItem);
 
-        order = orderService.create(newOrder);
+        order = orderService.create(newOrder, null);
     }
 
     @SneakyThrows

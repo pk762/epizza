@@ -33,6 +33,7 @@
     };
 
     $scope.newCart = {};
+    $scope.newCart.couponCode = "";
     $scope.newCart.lineItems = [];
     $scope.newCart.deliveryAddress = {};
 
@@ -199,6 +200,14 @@
                   <textarea class="form-control" rows="3" ng-model="newCart.comment"></textarea>
                 </div>
             </div>
+          </div>
+          <div class="panel panel-default" style="margin-top: 10px;">
+              <div class="panel-heading">Coupon code</div>
+              <div class="panel-body">
+                  <div class="form-group">
+                      <textarea class="form-control" rows="3" ng-model="newCart.couponCode"></textarea>
+                  </div>
+              </div>
           </div>
           <button type="submit" ng-click="postOrder()">Place Order</button>
       </div>

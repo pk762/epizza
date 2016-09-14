@@ -203,7 +203,8 @@ echo '{
         "postalCode": "22222",
         "telephone": "+4940111111"
     },
-    "comment": "Slice it!"
+    "comment": "Slice it!",
+    "couponCode": "5EURO"
 }' | http POST http://localhost:8082/orders
 ```
 

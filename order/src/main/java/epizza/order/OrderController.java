@@ -46,6 +46,7 @@ public class OrderController {
     private final PagedResourcesAssembler<Order> pagedResourcesAssembler;
     private final Validator validator;
 
+
     @InitBinder
     public void registerValidator(WebDataBinder binder) {
         binder.addValidators(validator);
@@ -61,7 +62,8 @@ public class OrderController {
         order.setDeliveryAddress(cart.getDeliveryAddress());
         order.setComment(cart.getComment());
         order.setOrderItems(cart.getLineItems().stream().map(toLineItem()).collect(toList()));
-        order = orderService.create(order);
+
+        order = orderService.create(order, cart.getCouponCode());
         URI location = entityLinks.linkForSingleResource(Order.class, order.getId()).toUri();
         return ResponseEntity.created(location).build();
     }

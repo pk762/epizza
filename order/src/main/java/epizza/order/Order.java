@@ -24,7 +24,9 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 
 import org.javamoney.moneta.Money;
 import org.springframework.hateoas.Identifiable;
@@ -71,6 +73,10 @@ public class Order implements Identifiable<Long> {
 
     private String deliveryBoy;
 
+    @Valid
+    @ManyToOne(optional = true)
+    private Coupon coupon;
+
     @Column(name = "ETD")
     private LocalDateTime estimatedTimeOfDelivery;
 
@@ -90,5 +96,11 @@ public class Order implements Identifiable<Long> {
     public void addOrderItem(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         this.totalPrice = this.totalPrice.add(orderItem.getPrice());
+    }
+
+    public void setCoupon(Coupon coupon) {
+        this.coupon = coupon;
+        MonetaryAmount reducedPrice = totalPrice.subtract(coupon.getValue());
+        this.totalPrice = reducedPrice;
     }
 }
