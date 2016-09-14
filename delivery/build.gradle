@@ -46,7 +46,7 @@ dependencies {
     runtime('org.springframework.cloud:spring-cloud-starter-config')
     runtime('net.logstash.logback:logstash-logback-encoder:4.7')
 
-    testCompile('com.epages:wiremock-spring-boot-starter:0.7.9')
+    testCompile('com.epages:wiremock-spring-boot-starter:0.7.10')
 
     testRuntime (group:'epizza', name:'order', version:'+', classifier:'wiremock', ext:'jar', changing: true)
 

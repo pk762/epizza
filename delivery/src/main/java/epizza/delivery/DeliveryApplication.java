@@ -1,7 +1,5 @@
 package epizza.delivery;
 
-import epizza.delivery.order.OrderServiceAssigmentClient;
-
 import java.net.URI;
 import java.util.List;
 
@@ -15,7 +13,8 @@ import org.springframework.hateoas.client.Traverson;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+
+import epizza.delivery.order.OrderServiceClient;
 
 @SpringBootApplication
 public class DeliveryApplication {
@@ -35,8 +34,8 @@ public class DeliveryApplication {
     }
 
     @Bean
-    public OrderServiceAssigmentClient assignmentClient(RestTemplate restTemplate, @Value("${orders.baseUri}") URI ordersUri) {
-        return new OrderServiceAssigmentClient(restTemplate, UriComponentsBuilder.fromUri(ordersUri));
+    public OrderServiceClient orderClient(RestTemplate restTemplate, @Value("${orders.baseUri}") URI ordersUri) {
+        return new OrderServiceClient(restTemplate, ordersUri);
     }
 
     @Bean

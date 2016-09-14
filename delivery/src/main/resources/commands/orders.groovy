@@ -13,7 +13,7 @@ import org.springframework.hateoas.PagedResources
 import org.springframework.util.Assert
 
 import epizza.delivery.order.Order
-import epizza.delivery.order.OrderServiceListClient
+import epizza.delivery.order.OrderServiceClient
 
 class orders {
 
@@ -24,7 +24,7 @@ class orders {
         Assert.notNull(beanFactory)
         Pageable currentPage = new PageRequest(0, 10);
 
-        OrderServiceListClient listClient = beanFactory.getBean(OrderServiceListClient)
+        OrderServiceClient listClient = beanFactory.getBean(OrderServiceClient)
         PagedResources<Order> orders = listClient.getOrders(currentPage)
         String result = ""
 
