@@ -18,8 +18,10 @@ apply plugin: 'epizza-java'
 apply plugin: 'epizza-docker'
 apply plugin: 'epizza-restdocs'
 apply plugin: 'spring-boot'
+apply plugin: 'epizza-restdocs'
 
 version = '0.0.1-SNAPSHOT'
+group = 'epizza'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -61,7 +63,7 @@ dependencies {
     testCompile("org.assertj:assertj-core:3.1.0")
     testCompile("org.mockito:mockito-core:1.+")
     testCompileOnly("org.projectlombok:lombok")
-    testCompile('com.epages:restdocs-wiremock:0.7.8')
+    testCompile('com.epages:restdocs-wiremock:0.7.9')
     testRuntime("com.jayway.jsonpath:json-path:2.0.0")
     testRuntime("org.springframework.data:spring-data-rest-hal-browser")
 }

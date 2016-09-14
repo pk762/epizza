@@ -10,7 +10,7 @@ import org.springframework.beans.factory.BeanFactory
 import org.springframework.util.Assert
 
 import epizza.delivery.order.DeliveryJob
-import epizza.delivery.order.OrderServiceAssigmentClient
+import epizza.delivery.order.OrderServiceClient
 
 class select {
 
@@ -24,7 +24,7 @@ class select {
         BeanFactory beanFactory = context.attributes["spring.beanfactory"]
         Assert.notNull(beanFactory)
 
-        OrderServiceAssigmentClient client = beanFactory.getBean(OrderServiceAssigmentClient)
+        OrderServiceClient client = beanFactory.getBean(OrderServiceClient)
         client.assignMyselfToOrder(orderId, new DeliveryJob("Joe the User", LocalDateTime.now().plusMinutes(minutes)))
 
         String result = "SUCCESS..."
