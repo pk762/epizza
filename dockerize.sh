@@ -6,7 +6,7 @@ echo
 echo "#############################################"
 echo "# dockerizing 'config-server'               #"
 echo "#############################################"
-docker build --no-cache -t epizza/config-server:latest config-server
+./config-server/gradlew -p config-server buildDockerImage
 
 echo
 echo "#############################################"

@@ -19,9 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import epizza.order.catalog.Pizza;
-import lombok.SneakyThrows;
-
 import java.net.URI;
 
 import org.javamoney.moneta.Money;
@@ -38,7 +35,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.context.WebApplicationContext;
@@ -46,6 +42,9 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+
+import epizza.order.catalog.Pizza;
+import lombok.SneakyThrows;
 @RunWith(SpringRunner.class)
 @OrderApplicationTest
 public class OrderControllerTest {
@@ -73,17 +72,9 @@ public class OrderControllerTest {
 
     private MockMvc mockMvc;
 
-    private MockRestServiceServer mockServer;
-
     private ResultActions ordersResultAction;
 
     private String jsonInput;
-
-    private String pizzaSampleResponse = "{\n" +
-            "  \"name\": \"Pizza Salami\",\n" +
-            "  \"description\": \"The classic - Pizza Salami\",\n" +
-            "  \"imageUrl\": \"http://www.sardegna-rustica.de/images/pizza.jpg\",\n" +
-            "  \"price\": {\"amount\": 8.90, \"currency\": \"EUR\"}}";
 
     private Order order;
 

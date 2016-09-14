@@ -20,14 +20,18 @@ repositories {
 dependencies {
     compile localGroovy()
     compile gradleApi()
-
+    compile "gradle.plugin.com.boxfuse.client:flyway-release:4.0.3"
     compile 'com.bmuschko:gradle-docker-plugin:3.0.1'
     compileOnly('org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE')
+    compile "org.asciidoctor:asciidoctor-gradle-plugin:1.5.3"
 
     testCompile gradleTestKit()
     testCompile("org.spockframework:spock-core:1.0-groovy-2.4") {
         exclude module: 'groovy-all'
     }
+
+    runtime 'mysql:mysql-connector-java:5.1.39'
+
 }
 
 project.with {

@@ -16,6 +16,7 @@ Akt 1: Projektsetup
 Akt 2: Projektverlauf und 1. Go-Live
 
 - Requirements vom PO
+
 - MVP
 - Operations-Failure?
 

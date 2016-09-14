@@ -3,8 +3,8 @@ buildscript {
         springBootVersion = '1.4.0.RELEASE'
     }
     repositories {
-        mavenCentral()
         mavenLocal()
+        jcenter()
     }
     dependencies {
         classpath "epizza:gradle-plugins:0.1.0"
@@ -13,45 +13,18 @@ buildscript {
     }
 }
 
-plugins {
-    id "org.asciidoctor.convert" version "1.5.2"
-}
-ext {
-    snippetsDir = file('build/generated-snippets')
-}
-
 apply plugin: 'epizza-java'
 apply plugin: 'epizza-docker'
 apply plugin: 'spring-boot'
 
 version = '0.0.1-SNAPSHOT'
 
-asciidoctor {
-    sources {
-        include '*.adoc'
-    }
-
-    attributes 'snippets': snippetsDir
-    attributes 'version': project.version
-
-    inputs.dir snippetsDir
-    dependsOn test
-}
-
-jar {
-    dependsOn asciidoctor
-    from("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
-    }
-    baseName = 'order'
-}
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
     mavenLocal()
-    mavenCentral()
+    jcenter()
 }
 
 configurations {
@@ -86,6 +59,7 @@ dependencies {
     testCompile("org.assertj:assertj-core:3.1.0")
     testCompile("org.mockito:mockito-core:1.+")
     testCompileOnly("org.projectlombok:lombok")
+    testCompile('com.epages:restdocs-wiremock:0.7.8')
     testRuntime("com.jayway.jsonpath:json-path:2.0.0")
     testRuntime("org.springframework.data:spring-data-rest-hal-browser")
 }
