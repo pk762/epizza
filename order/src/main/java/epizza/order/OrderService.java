@@ -43,6 +43,16 @@ public class OrderService {
     }
 
     public Page<Order> getAll(Pageable pageable) {
-        return orderRepository.findAll(pageable);
+        return orderRepository.findOrdersByDeliveryBoyIsNull(pageable);
+    }
+
+    public void assignDelivery(Order order, DeliveryJob job) {
+        if(order.getDeliveryBoy() != null) {
+            throw new OrderAssignedException();
+        }
+
+        order.setDeliveryBoy(job.getDeliveryBoy());
+        order.setEstimatedTimeOfDelivery(job.getEstimatedTimeOfDelivery());
+        orderRepository.saveAndFlush(order);
     }
 }

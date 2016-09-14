@@ -1,8 +1,7 @@
 package commands
 
-
-import java.util.stream.Collectors;
-
+import epizza.delivery.order.Order
+import epizza.delivery.order.OrderServiceClient
 import org.crsh.cli.Command
 import org.crsh.cli.Usage
 import org.crsh.command.InvocationContext
@@ -12,9 +11,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.hateoas.PagedResources
 import org.springframework.util.Assert
 
-import epizza.delivery.order.Order
-import epizza.delivery.order.OrderServiceClient
-
 class orders {
 
     @Usage("lists open orders")
@@ -22,7 +18,7 @@ class orders {
     def main(InvocationContext context) {
         BeanFactory beanFactory = context.getAttributes().get("spring.beanfactory")
         Assert.notNull(beanFactory)
-        Pageable currentPage = new PageRequest(0, 10);
+        Pageable currentPage = new PageRequest(0, 10)
 
         OrderServiceClient listClient = beanFactory.getBean(OrderServiceClient)
         PagedResources<Order> orders = listClient.getOrders(currentPage)

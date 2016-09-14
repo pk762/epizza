@@ -4,7 +4,7 @@ springboot:
   mem_limit: 300m
   environment:
     - _JAVA_OPTIONS=-Xmx256m
-    - SPRING_PROFILES_ACTIVE=default
+    - SPRING_PROFILES_ACTIVE=logstash
     - DOCKER_IP=${DOCKER_IP}
 # ==============================================================================
 configclient:

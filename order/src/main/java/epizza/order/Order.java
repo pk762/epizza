@@ -72,6 +72,8 @@ public class Order implements Identifiable<Long> {
     @Column(name = "ETD")
     private LocalDateTime estimatedTimeOfDelivery;
 
+    private String deliveryBoy;
+
     @Column(name = "ETBC")
     private LocalDateTime estimatedTimeOfBakingCompletion;
 
