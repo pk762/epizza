@@ -1,5 +1,6 @@
 package epizza.order;
 
+import static com.epages.restdocs.WireMockDocumentation.wiremockJson;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -45,6 +46,7 @@ import com.google.common.collect.ImmutableMap;
 
 import epizza.order.catalog.Pizza;
 import lombok.SneakyThrows;
+
 @RunWith(SpringRunner.class)
 @OrderApplicationTest
 public class OrderControllerTest {
@@ -148,7 +150,9 @@ public class OrderControllerTest {
                                 fieldWithPath("orderItems[].price").description("Price (Currency symbol and numeric value)"),
                                 fieldWithPath("deliveryAddress").description("Delivery address as POSTed when <<resources-order-create,creating an Order>>"),
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
-                        ))) //
+                        )
+                        , wiremockJson()
+                        )) //
         ;
     }
 
@@ -166,7 +170,9 @@ public class OrderControllerTest {
                                 fieldWithPath("_embedded").description("Current page of <<resources-order-get,Orders>>"),
                                 fieldWithPath("page").description("<<paging,Paging>> information"),
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
-                        ))) //
+                        )
+                        , wiremockJson()
+                        )) //
         ;
     }
 
