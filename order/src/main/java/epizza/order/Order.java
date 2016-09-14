@@ -69,8 +69,6 @@ public class Order implements Identifiable<Long> {
     @Embedded
     private Address deliveryAddress;
 
-    private String deliveryBoy;
-
     @Column(name = "ETD")
     private LocalDateTime estimatedTimeOfDelivery;
 

@@ -3,8 +3,8 @@ Storyline - Schneller in die Cloud
 Akt 1: Projektsetup
 
 - Vorstellung der Protagonisten.
-  Persona "Dev"
-  Persona "Op"
+  Persona "Joe Developer"
+  Persona "Bob Operator"
 - Vorstellung des Projekts
   (Du weißt schon, dass 2 von 3 Softwareprojekten scheitern? - Du meintest die, auf denen "Java Enterprise" steht?)
   (magisches Dreieck: Zeit und Budget sind fix, da können wir nur noch am Umfang/Qualität justieren)
@@ -22,6 +22,9 @@ Akt 2: Projektverlauf und 1. Go-Live
 
 Akt 3: Operations-Improvements
 
+- API docs
+  - `$ ./order/gradlew -p order check asciidoc`
+  - `$ open order/build/asciidoc/html5/index.html`
 - Docker-Layer
   - `$ ./order/gradlew -p order buildDockerImage`
   - `$ docker history epizza/order:latest`

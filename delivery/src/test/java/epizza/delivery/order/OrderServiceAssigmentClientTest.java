@@ -9,6 +9,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
+import epizza.delivery.DeliveryApplication;
+import epizza.delivery.JsonConfiguration;
+
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -20,9 +23,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-
-import epizza.delivery.DeliveryApplication;
-import epizza.delivery.JsonConfiguration;
 
 public class OrderServiceAssigmentClientTest {
 

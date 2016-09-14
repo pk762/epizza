@@ -79,7 +79,7 @@ public class OrderController {
     @RequestMapping(path = "/orders", method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
     @ResponseBody
     public PagedResources<Resource<Order>> getAll(Pageable pageable) {
-        return pagedResourcesAssembler.toResource(orderService.findUnassigned(pageable));
+        return pagedResourcesAssembler.toResource(orderService.getAll(pageable));
     }
 
     private static void checkValidationResult(BindingResult bindingResult) {

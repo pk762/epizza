@@ -1,6 +1,5 @@
 package epizza.order;
 
-import epizza.order.delivery.DeliveryJob;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,20 +40,6 @@ public class OrderService {
 
     public Optional<Order> getOrder(Long id) {
         return Optional.ofNullable(orderRepository.findOne(id));
-    }
-
-    public Page<Order> findUnassigned(Pageable pageable) {
-        return orderRepository.findOrdersByDeliveryBoyIsNull(pageable);
-    }
-
-    public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
-        if(order.getDeliveryBoy() != null) {
-            throw new OrderAssignedException();
-        }
-        log.info("Assigning delivery job '{}' to order number {}", deliveryJob, order.getId());
-        order.setDeliveryBoy(deliveryJob.getDeliveryBoy());
-        order.setEstimatedTimeOfDelivery(deliveryJob.getEstimatedTimeOfDelivery());
-        return update(order);
     }
 
     public Page<Order> getAll(Pageable pageable) {
