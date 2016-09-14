@@ -1,5 +1,6 @@
 package epizza.order;
 
+import static com.epages.restdocs.WireMockDocumentation.wiremockJson;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -18,9 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
-import epizza.order.catalog.Pizza;
-import lombok.SneakyThrows;
 
 import java.net.URI;
 
@@ -45,6 +43,10 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+
+import epizza.order.catalog.Pizza;
+import lombok.SneakyThrows;
+
 @RunWith(SpringRunner.class)
 @OrderApplicationTest
 public class OrderControllerTest {
@@ -141,13 +143,16 @@ public class OrderControllerTest {
                                 fieldWithPath("totalPrice").description("Total order amount"),
                                 fieldWithPath("estimatedTimeOfDelivery").description("Estimated time of delivery"),
                                 fieldWithPath("estimatedTimeOfBakingCompletion").description("Estimated time of baking completion"),
+                                fieldWithPath("deliveryBoy").description("Delivery boy"),
                                 fieldWithPath("comment").description("Customer's comment"),
                                 fieldWithPath("orderItems[]._links.pizza").description("Link to ordered pizza"),
                                 fieldWithPath("orderItems[].quantity").description("Number of pizzas"),
                                 fieldWithPath("orderItems[].price").description("Price (Currency symbol and numeric value)"),
                                 fieldWithPath("deliveryAddress").description("Delivery address as POSTed when <<resources-order-create,creating an Order>>"),
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
-                        ))) //
+                        )
+                        , wiremockJson()
+                        )) //
         ;
     }
 
@@ -165,7 +170,9 @@ public class OrderControllerTest {
                                 fieldWithPath("_embedded").description("Current page of <<resources-order-get,Orders>>"),
                                 fieldWithPath("page").description("<<paging,Paging>> information"),
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
-                        ))) //
+                        )
+                        , wiremockJson()
+                        )) //
         ;
     }
 
