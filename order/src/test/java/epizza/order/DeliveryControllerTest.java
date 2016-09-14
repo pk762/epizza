@@ -1,5 +1,6 @@
 package epizza.order;
 
+import static com.epages.restdocs.WireMockDocumentation.wiremockJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -101,7 +102,9 @@ public class DeliveryControllerTest {
                 .andDo(document("delivery-create", requestFields(
                         fieldWithPath("deliveryBoy").description("Delivery boy"),
                         fieldWithPath("estimatedTimeOfDelivery").description("Estimated delivery time")
-                        )));
+                        )
+                        , wiremockJson()
+                        ));
     }
 
     @SneakyThrows

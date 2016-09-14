@@ -22,6 +22,7 @@ Akt 2: Projektverlauf und 1. Go-Live
 
 Akt 3: Operations-Improvements
 
+- Wiremock API contract testing
 - Docker-Layer
   - `$ ./order/gradlew -p order buildDockerImage`
   - `$ docker history epizza/order:latest`
