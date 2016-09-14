@@ -6,10 +6,6 @@ logging:
     org.springframework.amqp.rabbit: 'OFF'
     org.springframework.beans.factory.support: 'WARN'
 
-spring:
-  jmx:
-    enabled: false
-
   h2:
     console:
       enabled: true

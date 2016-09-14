@@ -51,6 +51,7 @@ public class OrderService {
         if(order.getDeliveryBoy() != null) {
             throw new OrderAssignedException();
         }
+        log.info("Assigning delivery job '{}' to order number {}", deliveryJob, order.getId());
         order.setDeliveryBoy(deliveryJob.getDeliveryBoy());
         order.setEstimatedTimeOfDelivery(deliveryJob.getEstimatedTimeOfDelivery());
         return update(order);

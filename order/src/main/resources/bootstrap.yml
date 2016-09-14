@@ -4,3 +4,5 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  jmx:
+    enabled: false

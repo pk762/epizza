@@ -18,8 +18,8 @@ class select {
     @Command
     def main(InvocationContext context) {
 
-        Integer orderId = Integer.parseInt(context.readLine("Which order to select?", false))
-        Integer minutes = Integer.parseInt(context.readLine("Expected delivery time in minutes: ", false))
+        Integer orderId = Integer.parseInt(context.readLine("Which order to select? ", true))
+        Integer minutes = Integer.parseInt(context.readLine("Expected delivery time in minutes: ", true))
 
         BeanFactory beanFactory = context.attributes["spring.beanfactory"]
         Assert.notNull(beanFactory)
