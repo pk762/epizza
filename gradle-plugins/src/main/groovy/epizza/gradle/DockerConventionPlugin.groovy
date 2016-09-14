@@ -94,11 +94,8 @@ class DockerConventionPlugin implements Plugin<Project> {
                 into('build/docker/app')
                 doLast {
                     project.fileTree('build/docker/app/BOOT-INF/lib').files.each { File file ->
-                        if (file.path.contains('SNAPSHOT')) {
-                            logger.warn("Found a SNAPSHOT dependency '{}'", file.path)
-                        } else {
-                            file.setLastModified(0L)
-                        }
+                        // https://jira.spring.io/browse/SPR-12862
+                        file.setLastModified(10_000L)
                     }
                 }
             }

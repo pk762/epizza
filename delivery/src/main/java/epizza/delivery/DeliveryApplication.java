@@ -1,5 +1,7 @@
 package epizza.delivery;
 
+import epizza.delivery.order.OrderServiceAssigmentClient;
+
 import java.net.URI;
 import java.util.List;
 
@@ -7,36 +9,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.client.Traverson;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import epizza.delivery.order.OrderServiceAssigmentClient;
-
 @SpringBootApplication
-@EntityScan
-@EnableAsync
 public class DeliveryApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DeliveryApplication.class, args);
-    }
-
-    @Bean
-    ThreadPoolTaskExecutor deliveryThreadPoolTaskExecutor() {
-        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setCorePoolSize(2);
-        threadPoolTaskExecutor.setMaxPoolSize(2);
-        threadPoolTaskExecutor.setQueueCapacity(1000);
-
-        return threadPoolTaskExecutor;
     }
 
     @Bean

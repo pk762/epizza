@@ -35,7 +35,10 @@ public class DeliveryController {
     }
 
     @RequestMapping(path="", method = POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> assignDelivery(@PathVariable("id") Order order, @RequestBody @Valid DeliveryJob deliveryJob, BindingResult bindingResult) {
+    public ResponseEntity<Void> assignDelivery(@PathVariable("id") Order order,
+                                               @RequestBody @Valid DeliveryJob deliveryJob,
+                                               BindingResult bindingResult
+    ) {
         if (bindingResult.hasErrors()) {
             throw new RepositoryConstraintViolationException(bindingResult);
         }

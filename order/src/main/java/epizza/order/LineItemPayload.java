@@ -1,17 +1,13 @@
 package epizza.order;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.net.URI;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class LineItemPayload {
 
     @NotNull

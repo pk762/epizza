@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
-public class BakingFinishedEventSubscriber extends epizza.order.orderstatus.OrderStatusEventSubscriber {
+public class BakingFinishedEventSubscriber extends OrderStatusEventSubscriber {
 
     @Autowired
     public BakingFinishedEventSubscriber(ObjectMapper objectMapper, OrderService orderService) {

@@ -10,14 +10,14 @@ repository:
 
 [source,bash]
 ----
-$ git clone git@github.com:ePages-de/rnd-microservices-handson.git
+$ git clone git@github.com:ePages-de/epizza.git
 ----
 
 Once the clone is complete, you're ready to get the service up and running:
 
 [source,bash]
 ----
-$ cd rnd-microservices-handson/order
+$ cd epizza/order
 $ ./gradlew bootRun
 ----
 

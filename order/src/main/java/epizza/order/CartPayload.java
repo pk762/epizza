@@ -1,8 +1,6 @@
 package epizza.order;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
@@ -11,9 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import com.google.common.collect.Lists;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class CartPayload {
 
     @Valid

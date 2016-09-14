@@ -20,7 +20,9 @@ public abstract class OrderStatusEventSubscriber extends AbstractEventSubscriber
 
     protected OrderStatusEventSubscriber(OrderService orderService,
                                          ObjectMapper objectMapper,
-                                         String type, OrderStatus orderStatus) {
+                                         String type,
+                                         OrderStatus orderStatus
+    ) {
         super(objectMapper, type);
         this.orderService = orderService;
         this.orderStatus = orderStatus;

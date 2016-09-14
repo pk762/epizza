@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 @Getter
-@AllArgsConstructor(onConstructor=@__(@JsonCreator))
 @ToString
+@AllArgsConstructor(onConstructor=@__(@JsonCreator))
 public class DeliveryJob {
 
     @NotNull
@@ -20,5 +20,4 @@ public class DeliveryJob {
 
     @NotNull
     private LocalDateTime estimatedTimeOfDelivery;
-
 }
