@@ -20,6 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import epizza.order.catalog.Pizza;
+import lombok.SneakyThrows;
+
 import java.net.URI;
 
 import org.javamoney.moneta.Money;
@@ -43,9 +46,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-
-import epizza.order.catalog.Pizza;
-import lombok.SneakyThrows;
 
 @RunWith(SpringRunner.class)
 @OrderApplicationTest
@@ -143,7 +143,6 @@ public class OrderControllerTest {
                                 fieldWithPath("totalPrice").description("Total order amount"),
                                 fieldWithPath("estimatedTimeOfDelivery").description("Estimated time of delivery"),
                                 fieldWithPath("estimatedTimeOfBakingCompletion").description("Estimated time of baking completion"),
-                                fieldWithPath("deliveryBoy").description("Delivery boy"),
                                 fieldWithPath("comment").description("Customer's comment"),
                                 fieldWithPath("orderItems[]._links.pizza").description("Link to ordered pizza"),
                                 fieldWithPath("orderItems[].quantity").description("Number of pizzas"),
