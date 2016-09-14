@@ -18,7 +18,6 @@ apply plugin: 'epizza-java'
 apply plugin: 'epizza-docker'
 apply plugin: 'epizza-restdocs'
 apply plugin: 'spring-boot'
-apply plugin: 'epizza-restdocs'
 
 version = '0.0.1-SNAPSHOT'
 group = 'epizza'
