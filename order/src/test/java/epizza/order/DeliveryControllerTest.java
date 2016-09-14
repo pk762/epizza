@@ -98,7 +98,7 @@ public class DeliveryControllerTest {
                 .content(deliveryInputData()))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andDo(document("create-delivery", requestFields(
+                .andDo(document("delivery-create", requestFields(
                         fieldWithPath("deliveryBoy").description("Delivery boy"),
                         fieldWithPath("estimatedTimeOfDelivery").description("Estimated delivery time")
                         )));
