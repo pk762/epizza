@@ -24,7 +24,7 @@ echo
 echo "#############################################"
 echo "# building 'order'                          #"
 echo "#############################################"
-./order/gradlew -p order build
+./order/gradlew -p order build pTML
 
 echo
 echo "#############################################"

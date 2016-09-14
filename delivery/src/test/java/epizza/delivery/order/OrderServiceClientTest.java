@@ -1,9 +1,13 @@
 package epizza.delivery.order;
 
+import epizza.delivery.DeliveryApplication;
+import lombok.SneakyThrows;
+
 import java.time.LocalDateTime;
 
 import org.assertj.core.api.BDDAssertions;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.epages.wiremock.starter.WireMockTest;
 import com.github.tomakehurst.wiremock.WireMockServer;
 
-import epizza.delivery.DeliveryApplication;
-import lombok.SneakyThrows;
-
+@Ignore
 @WireMockTest(stubPath="wiremock/order")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=DeliveryApplication.class, properties = {"orders.baseUri=http://localhost:${wiremock.port}/"})

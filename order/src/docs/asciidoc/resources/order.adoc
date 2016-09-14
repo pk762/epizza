@@ -56,20 +56,3 @@ include::{snippets}/order-get/curl-request.adoc[]
 ==== Example response
 
 include::{snippets}/order-get/http-response.adoc[]
-
-
-[[resources-delivery-create]]
-== Creating a delivery for an order
-
-A `POST` request is used to attach a delivery to an order. The server
-updates the relevant order data and responds with `204 No Content`.
-
-=== Request structure
-
-include::{snippets}/delivery-create/request-fields.adoc[]
-
-=== Example request
-
-include::{snippets}/delivery-create/curl-request.adoc[]
-
-

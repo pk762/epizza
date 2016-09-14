@@ -58,7 +58,7 @@ dependencies {
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.restdocs:spring-restdocs-mockmvc")
-    testCompile("com.epages:restdocs-wiremock:0.7.8")
+    testCompile("com.epages:restdocs-wiremock:0.7.10")
     testCompile("org.assertj:assertj-core:3.1.0")
     testCompile("org.mockito:mockito-core:1.+")
     testCompileOnly("org.projectlombok:lombok")
