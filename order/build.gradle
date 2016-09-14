@@ -16,6 +16,7 @@ buildscript {
 
 apply plugin: 'epizza-java'
 apply plugin: 'epizza-docker'
+apply plugin: 'epizza-restdocs'
 apply plugin: 'spring-boot'
 
 version = '0.0.1-SNAPSHOT'
