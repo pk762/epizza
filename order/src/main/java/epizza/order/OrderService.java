@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,11 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderEventPublisher orderEventPublisher;
+    private final UnassignedOrders unassignedOrders;
 
     public Order create(Order order) {
         if (order.getOrderItems().isEmpty()) {
@@ -44,11 +44,14 @@ public class OrderService {
     }
 
     public Page<Order> findUnassigned(Pageable pageable) {
-        return orderRepository.findOrdersByDeliveryBoyIsNull(pageable);
+        // FIXME refactor from most complex to most simple solution
+        return unassignedOrders.find(pageable);
+        //return orderRepository.findOrdersByDeliveryBoyIsNull(pageable);
+        //return orderRepository.findAll(order.deliveryBoy.isNull(), pageable);
     }
 
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
-        if(order.getDeliveryBoy() != null) {
+        if (order.getDeliveryBoy() != null) {
             throw new OrderAssignedException();
         }
         log.info("Assigning delivery job '{}' to order number {}", deliveryJob, order.getId());
