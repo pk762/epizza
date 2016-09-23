@@ -1,8 +1,12 @@
 package epizza.delivery.order;
 
+import static org.assertj.core.api.BDDAssertions.then;
+
+import epizza.delivery.DeliveryApplication;
+import lombok.SneakyThrows;
+
 import java.time.LocalDateTime;
 
-import org.assertj.core.api.BDDAssertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.epages.wiremock.starter.WireMockTest;
 import com.github.tomakehurst.wiremock.WireMockServer;
-
-import epizza.delivery.DeliveryApplication;
-import lombok.SneakyThrows;
 
 @WireMockTest(stubPath="wiremock/order")
 @RunWith(SpringRunner.class)
@@ -37,8 +38,7 @@ public class OrderServiceClientTest {
         PagedResources<Order> orders = client.getOrders(new PageRequest(0, 10));
 
         // THEN
-        BDDAssertions.then(orders.getContent())
-        .hasSize(1);
+        then(orders.getContent()).hasSize(1);
     }
 
     @Test
@@ -49,6 +49,6 @@ public class OrderServiceClientTest {
 
     @After
     public void dump_communication_failures() {
-        wiremockServer.findAllUnmatchedRequests().stream().forEach((n) -> System.out.println("logged unmatched request:  " + n));
+        wiremockServer.findAllUnmatchedRequests().forEach((n) -> System.out.println("logged unmatched request:  " + n));
     }
 }

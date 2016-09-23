@@ -26,7 +26,7 @@ public class OrderRepositoryImpl implements OrderRepositoryWithCriteraQuery {
     private final EntityManager entityManager;
 
     @Override
-    public Page<Order> findUnassignedOrders(Pageable pageable) {
+    public Page<Order> findUnassigned(Pageable pageable) {
         CriteriaQuery<Order> criteria = entityManager.getCriteriaBuilder().createQuery(Order.class);
         Root<Order> orders = criteria.from(Order.class);
         Path<String> deliveryBoy = orders.get("deliveryBoy");
@@ -38,7 +38,7 @@ public class OrderRepositoryImpl implements OrderRepositoryWithCriteraQuery {
     }
 
     @Override
-    public Long countUnassignedOrders() {
+    public Long countUnassigned() {
         CriteriaQuery<Long> criteria = entityManager.getCriteriaBuilder().createQuery(Long.class);
         Root<Order> orders = criteria.from(Order.class);
         Path<String> deliveryBoy = orders.get("deliveryBoy");
@@ -52,7 +52,7 @@ public class OrderRepositoryImpl implements OrderRepositoryWithCriteraQuery {
     private Page<Order> readPage(TypedQuery<Order> query, Pageable pageable) {
         query.setFirstResult(pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
-        Long total = countUnassignedOrders();
+        Long total = countUnassigned();
         List<Order> content = total > pageable.getOffset() ? query.getResultList() : emptyList();
         return new PageImpl<>(content, pageable, total);
     }
