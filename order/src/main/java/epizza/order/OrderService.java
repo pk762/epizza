@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+
     private final OrderEventPublisher orderEventPublisher;
-    private final UnassignedOrders unassignedOrders;
 
     public Order create(Order order) {
         if (order.getOrderItems().isEmpty()) {
@@ -43,13 +43,6 @@ public class OrderService {
         return Optional.ofNullable(orderRepository.findOne(id));
     }
 
-    public Page<Order> findUnassigned(Pageable pageable) {
-        // FIXME refactor from most complex to most simple solution
-        return unassignedOrders.find(pageable);
-        //return orderRepository.findOrdersByDeliveryBoyIsNull(pageable);
-        //return orderRepository.findAll(order.deliveryBoy.isNull(), pageable);
-    }
-
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
         if (order.getDeliveryBoy() != null) {
             throw new OrderAssignedException();
@@ -62,5 +55,27 @@ public class OrderService {
 
     public Page<Order> getAll(Pageable pageable) {
         return orderRepository.findAll(pageable);
+    }
+
+    // FIXME refactor from most complex to most simple solution
+    public Page<Order> findUnassigned(Pageable pageable) {
+        // findUnassignedUsingCriteriaQuery
+        //return orderRepository.findUnassignedOrders(pageable);
+
+        // findUnassignedUsingSpecificationQuery
+        //return orderRepository.findAll(where(deliveryBoyIsNull()), pageable);
+
+        // findUnassignedUsingExampleQuery
+        //Example<Order> example = Example.of(new Order());
+        //return orderRepository.findAll(example, pageable);
+
+        // using Querydsl
+        //return orderRepository.findAll(order.deliveryBoy.isNull(), pageable);
+
+        // using @Query annotation
+        return orderRepository.findUnassigned(pageable);
+
+        // using method naming convention
+        //return orderRepository.findByDeliveryBoyIsNull(pageable);
     }
 }

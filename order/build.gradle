@@ -18,6 +18,7 @@ apply plugin: 'epizza-java'
 apply plugin: 'epizza-docker'
 apply plugin: 'spring-boot'
 apply plugin: 'epizza-restdocs'
+// TODO look at https://github.com/ewerk/gradle-plugins/tree/master/querydsl-plugin
 
 version = '0.0.1-SNAPSHOT'
 group = 'epizza'
@@ -37,6 +38,7 @@ configurations {
 idea {
     module {
         sourceDirs += file('src/main/generated/')
+        generatedSourceDirs += file('src/main/generated/')
     }
 }
 

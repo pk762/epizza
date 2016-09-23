@@ -18,17 +18,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class UnassignedOrdersImpl implements UnassignedOrders {
+public class OrderRepositoryImpl implements OrderRepositoryWithCriteraQuery {
 
     private final EntityManager entityManager;
 
     @Override
-    @Transactional(readOnly = true)
-    public Page<Order> find(Pageable pageable) {
+    public Page<Order> findUnassignedOrders(Pageable pageable) {
         CriteriaQuery<Order> criteria = entityManager.getCriteriaBuilder().createQuery(Order.class);
         Root<Order> orders = criteria.from(Order.class);
         Path<String> deliveryBoy = orders.get("deliveryBoy");
@@ -40,8 +38,7 @@ public class UnassignedOrdersImpl implements UnassignedOrders {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Long count() {
+    public Long countUnassignedOrders() {
         CriteriaQuery<Long> criteria = entityManager.getCriteriaBuilder().createQuery(Long.class);
         Root<Order> orders = criteria.from(Order.class);
         Path<String> deliveryBoy = orders.get("deliveryBoy");
@@ -55,7 +52,7 @@ public class UnassignedOrdersImpl implements UnassignedOrders {
     private Page<Order> readPage(TypedQuery<Order> query, Pageable pageable) {
         query.setFirstResult(pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
-        Long total = count();
+        Long total = countUnassignedOrders();
         List<Order> content = total > pageable.getOffset() ? query.getResultList() : emptyList();
         return new PageImpl<>(content, pageable, total);
     }
