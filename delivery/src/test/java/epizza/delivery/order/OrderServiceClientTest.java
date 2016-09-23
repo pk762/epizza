@@ -44,7 +44,7 @@ public class OrderServiceClientTest {
     @Test
     public void should_assign_to_order() {
         // WHEN
-        client.assignMyselfToOrder(4, new DeliveryJob("Joe Slo", LocalDateTime.now().plusMinutes(120)));
+        client.assignMyselfToOrder(1, new DeliveryJob("Joe Slo", LocalDateTime.now().plusMinutes(120)));
     }
 
     @After

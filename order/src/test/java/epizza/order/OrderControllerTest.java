@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -59,9 +58,6 @@ public class OrderControllerTest {
     private OrderService orderService;
 
     @Autowired
-    private OrderRepository orderRepository;
-
-    @Autowired
     private EntityLinks entityLinks;
 
     @Autowired
@@ -86,11 +82,8 @@ public class OrderControllerTest {
         mockMvc = webAppContextSetup(context)
                 .apply(documentationConfiguration(this.restDocumentation).uris().withPort(80))
                 .build();
-
-        orderRepository.deleteAll();
+        context.getBean(OrderRepository.class).deleteAll();
         context.getBean(JdbcTemplate.class).execute("ALTER TABLE PIZZA_ORDER ALTER COLUMN id RESTART WITH 1");
-
-        reset(orderEventPublisher);
     }
 
     @Test
