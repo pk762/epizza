@@ -14,6 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import lombok.SneakyThrows;
+
 import java.net.URI;
 import java.util.List;
 
@@ -26,7 +28,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.hal.HalLinkDiscoverer;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,14 +38,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
-import lombok.SneakyThrows;
-
 @RunWith(SpringRunner.class)
 @OrderApplicationTest
 public class DeliveryControllerTest {
 
     @Rule
     public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("build/generated-snippets");
+
+    @Rule
+    @Autowired
+    public DbCleanupRule dbCleanupRule;
 
     @Autowired
     private WebApplicationContext context;
@@ -63,8 +66,6 @@ public class DeliveryControllerTest {
         mockMvc = webAppContextSetup(context)
                 .apply(documentationConfiguration(this.restDocumentation).uris().withPort(80))
                 .build();
-        context.getBean(OrderRepository.class).deleteAll();
-        context.getBean(JdbcTemplate.class).execute("ALTER TABLE PIZZA_ORDER ALTER COLUMN id RESTART WITH 1");
     }
 
     @Test
