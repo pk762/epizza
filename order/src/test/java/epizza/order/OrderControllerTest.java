@@ -34,6 +34,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -87,6 +88,7 @@ public class OrderControllerTest {
                 .build();
 
         orderRepository.deleteAll();
+        context.getBean(JdbcTemplate.class).execute("ALTER TABLE PIZZA_ORDER ALTER COLUMN id RESTART WITH 1");
 
         reset(orderEventPublisher);
     }
