@@ -4,7 +4,7 @@
 [x] remove moneymodule
 [x] remove rest customizations
 [x] provide /openOrders resource on order service
-[ ] rewrite delivery to use rest calls
+[x] rewrite delivery to use rest calls
 [x] create gradle convention plugin
   [ ] gradle convention for restdocs-wiremock stubs
 [x] new service: config-server
@@ -16,3 +16,4 @@
 [x] fix CORS cfg
 [ ] spring retry with config-server fail fast
 [ ] sleuth trace id
+[ ] no ansi term in testing
