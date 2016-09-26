@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
-import epizza.order.OrderService.QueryImplementation;
 import epizza.order.catalog.Pizza;
 import epizza.order.catalog.PizzaRepository;
 
@@ -43,11 +42,11 @@ public class OrderServiceTest {
     public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
     @Parameter
-    public QueryImplementation queryImplementation;
+    public OrderRepositoryQueryImplementation implementation;
 
     @Parameters(name = "query implementation {0}")
-    public static QueryImplementation[] data() {
-        return QueryImplementation.values();
+    public static OrderRepositoryQueryImplementation[] implementations() {
+        return OrderRepositoryQueryImplementation.values();
     }
 
     @Autowired
@@ -83,7 +82,7 @@ public class OrderServiceTest {
         // GIVEN
 
         // WHEN
-        Page<Order> unassignedOrders = orderService.findUnassigned(new PageRequest(0, 20), queryImplementation);
+        Page<Order> unassignedOrders = orderService.findUnassigned(new PageRequest(0, 20), implementation);
 
         // THEN
         then(unassignedOrders.getContent()).extracting(Order::getDeliveryBoy).filteredOn(Objects::nonNull).isEmpty();

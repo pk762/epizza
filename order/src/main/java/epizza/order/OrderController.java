@@ -1,6 +1,5 @@
 package epizza.order;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -37,7 +36,7 @@ import static java.util.stream.Collectors.toList;
 @RepositoryRestController
 @ExposesResourceFor(Order.class)
 @CrossOrigin(exposedHeaders = "Location", value = "*")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
