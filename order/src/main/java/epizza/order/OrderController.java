@@ -1,16 +1,5 @@
 package epizza.order;
 
-import static java.util.stream.Collectors.toList;
-
-import epizza.order.catalog.Pizza;
-import epizza.order.catalog.PizzaRepository;
-import lombok.AllArgsConstructor;
-
-import java.net.URI;
-import java.util.function.Function;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.core.RepositoryConstraintViolationException;
@@ -33,6 +22,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.net.URI;
+import java.util.function.Function;
+
+import javax.validation.Valid;
+
+import epizza.order.catalog.Pizza;
+import epizza.order.catalog.PizzaRepository;
+import lombok.AllArgsConstructor;
+
+import static java.util.stream.Collectors.toList;
 
 @RepositoryRestController
 @ExposesResourceFor(Order.class)

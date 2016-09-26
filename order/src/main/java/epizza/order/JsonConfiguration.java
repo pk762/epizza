@@ -1,11 +1,5 @@
 package epizza.order;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
-import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
-
-import java.util.Locale;
-
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +7,12 @@ import org.springframework.core.Ordered;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.zalando.jackson.datatype.money.FastMoneyFactory;
 import org.zalando.jackson.datatype.money.MoneyModule;
+
+import java.util.Locale;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
+import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 
 @Configuration
 public class JsonConfiguration implements Jackson2ObjectMapperBuilderCustomizer, Ordered {

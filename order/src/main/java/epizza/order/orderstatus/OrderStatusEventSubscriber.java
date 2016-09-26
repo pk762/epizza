@@ -1,16 +1,17 @@
 package epizza.order.orderstatus;
 
+import com.google.common.base.Strings;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.net.URI;
+import java.util.Map;
+
 import epizza.order.Order;
 import epizza.order.OrderService;
 import epizza.order.OrderStatus;
 import epizza.shared.event.AbstractEventSubscriber;
 import lombok.extern.slf4j.Slf4j;
-
-import java.net.URI;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Strings;
 
 @Slf4j
 public abstract class OrderStatusEventSubscriber extends AbstractEventSubscriber {
@@ -43,7 +44,9 @@ public abstract class OrderStatusEventSubscriber extends AbstractEventSubscriber
 
     protected void enhanceOrder(Order order, Map<String, Object> payload) {
         //add logic in implementation if needed
-    };
+    }
+
+    ;
 
     private Long getOrderIdFromPayload(Map<String, Object> payload, Map<String, Object> event) {
         String orderUriString = (String) payload.get("orderLink");
