@@ -2,14 +2,11 @@ package epizza.order;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import javax.money.MonetaryAmount;
 import javax.persistence.Access;
@@ -36,10 +33,6 @@ import com.google.common.collect.Lists;
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA_ORDER")
-@Getter
-@Setter
-@NoArgsConstructor
-@EqualsAndHashCode(of = { "id" })
 @ToString(of = { "id", "orderItems" })
 public class Order implements Identifiable<Long> {
 
@@ -77,6 +70,10 @@ public class Order implements Identifiable<Long> {
     @Column(name = "ETBC")
     private LocalDateTime estimatedTimeOfBakingCompletion;
 
+    public Order() {
+        // JPA needs this
+    }
+
     public List<OrderItem> getOrderItems() {
         return ImmutableList.copyOf(orderItems);
     }
@@ -90,5 +87,93 @@ public class Order implements Identifiable<Long> {
     public void addOrderItem(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         this.totalPrice = this.totalPrice.add(orderItem.getPrice());
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getOrderedAt() {
+        return orderedAt;
+    }
+
+    public void setOrderedAt(LocalDateTime orderedAt) {
+        this.orderedAt = orderedAt;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public MonetaryAmount getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(MonetaryAmount totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public String getDeliveryBoy() {
+        return deliveryBoy;
+    }
+
+    public void setDeliveryBoy(String deliveryBoy) {
+        this.deliveryBoy = deliveryBoy;
+    }
+
+    public LocalDateTime getEstimatedTimeOfDelivery() {
+        return estimatedTimeOfDelivery;
+    }
+
+    public void setEstimatedTimeOfDelivery(LocalDateTime estimatedTimeOfDelivery) {
+        this.estimatedTimeOfDelivery = estimatedTimeOfDelivery;
+    }
+
+    public LocalDateTime getEstimatedTimeOfBakingCompletion() {
+        return estimatedTimeOfBakingCompletion;
+    }
+
+    public void setEstimatedTimeOfBakingCompletion(LocalDateTime estimatedTimeOfBakingCompletion) {
+        this.estimatedTimeOfBakingCompletion = estimatedTimeOfBakingCompletion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
