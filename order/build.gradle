@@ -32,6 +32,7 @@ repositories {
 
 configurations {
     all*.exclude module: 'aspectjrt'            // included in org.aspectj:aspectjweaver
+    generated
 }
 
 dependencyManagement.imports {
@@ -68,14 +69,31 @@ dependencies {
     testRuntime("org.springframework.data:spring-data-rest-hal-browser")
 }
 
-idea {
-    module {
-        sourceDirs += file('src/main/generated')
+ext {
+    generatedDir = 'src/main/generated'
+}
+
+sourceSets {
+    generated {
+        java {
+            srcDir generatedDir
+        }
     }
 }
 
+idea {
+    module {
+        sourceDirs += file(generatedDir)
+    }
+}
+
+eclipse {
+    classpath {
+        plusConfigurations += [ configurations.generated ]
+    }
+}
 
 compileJava {
     options.compilerArgs << '-s'
-    options.compilerArgs << 'src/main/generated'
+    options.compilerArgs << generatedDir
 }
