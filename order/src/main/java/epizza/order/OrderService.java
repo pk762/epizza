@@ -60,20 +60,19 @@ public class OrderService {
     // FIXME refactor from most complex to most simple solution
     public Page<Order> findUnassigned(Pageable pageable) {
         // findUnassignedUsingCriteriaQuery
-        //return orderRepository.findUnassignedOrders(pageable);
+        return orderRepository.findUnassigned(pageable);
 
         // findUnassignedUsingSpecificationQuery
-        //return orderRepository.findAll(where(deliveryBoyIsNull()), pageable);
+        //return orderRepository.findAll(where(deliveryBoyIsNullSpecification()), pageable);
 
         // findUnassignedUsingExampleQuery
-        //Example<Order> example = Example.of(new Order());
-        //return orderRepository.findAll(example, pageable);
+        //return orderRepository.findAll(deliveryBoyIsNullExample(), pageable);
 
         // using Querydsl
         //return orderRepository.findAll(order.deliveryBoy.isNull(), pageable);
 
         // using @Query annotation
-        return orderRepository.findUnassigned(pageable);
+        //return orderRepository.findByMissingDeliveryBoy(pageable);
 
         // using method naming convention
         //return orderRepository.findByDeliveryBoyIsNull(pageable);
