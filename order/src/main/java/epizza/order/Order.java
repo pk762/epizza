@@ -5,8 +5,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.javamoney.moneta.Money;
 import org.springframework.hateoas.Identifiable;
 
@@ -36,12 +34,12 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA_ORDER")
 @NamedQueries(@NamedQuery(name = OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, query = OrderRepositoryWithNamedQuery.UNASSIGNED_QUERY))
+// FIXME introduce lombok
 public class Order implements Identifiable<Long> {
 
     public static final Money DEFAULT_PRICE = Money.of(0.0, "EUR");
 
     @Id
-    @JsonProperty("_id")
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
@@ -71,10 +69,6 @@ public class Order implements Identifiable<Long> {
 
     @Column(name = "ETBC")
     private LocalDateTime estimatedTimeOfBakingCompletion;
-
-    public Order() {
-        // JPA needs this
-    }
 
     public List<OrderItem> getOrderItems() {
         return ImmutableList.copyOf(orderItems);

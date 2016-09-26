@@ -51,7 +51,7 @@ public class OrderService {
 
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
         if (order.getDeliveryBoy() != null) {
-            throw new OrderAssignedException();
+            throw new OrderAssignedException(String.format("Order '%d' is already assigned to '%s'", order.getId(), order.getDeliveryBoy()));
         }
         log.info("Assigning delivery job '{}' to order number {}", deliveryJob, order.getId());
         order.setDeliveryBoy(deliveryJob.getDeliveryBoy());

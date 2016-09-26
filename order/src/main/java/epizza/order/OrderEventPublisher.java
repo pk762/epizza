@@ -7,15 +7,12 @@ import org.springframework.stereotype.Component;
 
 import epizza.shared.event.EventPublisher;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
 @AllArgsConstructor
 public class OrderEventPublisher {
 
     private final EventPublisher eventPublisher;
-
     private final EntityLinks entityLinks;
 
     public void sendOrderCreatedEvent(Order order) {
