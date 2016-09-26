@@ -1,13 +1,5 @@
 package epizza.order;
 
-import epizza.order.catalog.Pizza;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
 import javax.money.MonetaryAmount;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -16,13 +8,21 @@ import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
+import epizza.order.catalog.Pizza;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 @Embeddable
 @Access(AccessType.FIELD)
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString(of={"pizza", "quantity"})
+@ToString(of = {"pizza", "quantity"})
 public class OrderItem {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)

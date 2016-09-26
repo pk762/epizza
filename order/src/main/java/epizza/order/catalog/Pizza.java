@@ -1,13 +1,8 @@
 package epizza.order.catalog;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Singular;
-import lombok.ToString;
+import com.google.common.collect.Sets;
+
+import org.springframework.hateoas.Identifiable;
 
 import java.util.Set;
 
@@ -25,9 +20,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.hateoas.Identifiable;
-
-import com.google.common.collect.Sets;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Singular;
+import lombok.ToString;
 
 @Entity
 @Access(AccessType.FIELD)
@@ -35,8 +35,8 @@ import com.google.common.collect.Sets;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(of = { "id" })
-@ToString(of = { "id", "name" })
+@EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id", "name"})
 public class Pizza implements Identifiable<Long> {
 
     @Id

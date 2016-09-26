@@ -1,8 +1,9 @@
 package epizza.order;
 
-import static java.util.Collections.emptyList;
-
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -14,16 +15,21 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
+import lombok.RequiredArgsConstructor;
+
+import static java.util.Collections.emptyList;
 
 @Repository
 @RequiredArgsConstructor
-public class OrderRepositoryImpl implements OrderRepositoryWithCriteraQuery {
+public class OrderRepositoryImpl implements OrderRepositoryWithNamedQuery, OrderRepositoryWithCriteraQuery {
 
     private final EntityManager entityManager;
+
+    @Override
+    public Page<Order> findByNamedQuery(String name, Pageable pageable) {
+        TypedQuery<Order> query = entityManager.createNamedQuery(name, Order.class);
+        return readPage(query, pageable);
+    }
 
     @Override
     public Page<Order> findUnassigned(Pageable pageable) {

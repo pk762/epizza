@@ -1,13 +1,13 @@
 package epizza.order;
 
-import lombok.Data;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import com.google.common.collect.Lists;
+import lombok.Data;
 
 @Data
 public class CartPayload {

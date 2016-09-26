@@ -1,5 +1,7 @@
 package epizza.order;
 
+import org.javamoney.moneta.Money;
+
 import java.util.Locale;
 
 import javax.money.MonetaryAmount;
@@ -7,8 +9,6 @@ import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
-import org.javamoney.moneta.Money;
 
 @Converter(autoApply = true)
 public class MoneyPersistenceConverter implements AttributeConverter<MonetaryAmount, String> {

@@ -1,11 +1,11 @@
 package epizza.order;
 
-import lombok.Data;
-
 import java.net.URI;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import lombok.Data;
 
 @Data
 public class LineItemPayload {

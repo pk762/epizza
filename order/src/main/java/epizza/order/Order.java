@@ -1,12 +1,17 @@
 package epizza.order;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.javamoney.moneta.Money;
+import org.springframework.hateoas.Identifiable;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 import javax.money.MonetaryAmount;
 import javax.persistence.Access;
@@ -21,19 +26,16 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.javamoney.moneta.Money;
-import org.springframework.hateoas.Identifiable;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA_ORDER")
-@ToString(of = { "id", "orderItems" })
+@NamedQueries(@NamedQuery(name = OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, query = OrderRepositoryWithNamedQuery.UNASSIGNED_QUERY))
 public class Order implements Identifiable<Long> {
 
     public static final Money DEFAULT_PRICE = Money.of(0.0, "EUR");
@@ -164,16 +166,26 @@ public class Order implements Identifiable<Long> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         Order order = (Order) o;
-        return Objects.equals(id, order.id);
+        return Objects.equal(id, order.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this) //
+                .add("id", id) //
+                .add("orderItems", orderItems) //
+                .toString();
     }
 }

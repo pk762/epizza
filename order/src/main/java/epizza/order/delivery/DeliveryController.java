@@ -1,13 +1,5 @@
 package epizza.order.delivery;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
-import epizza.order.Order;
-import epizza.order.OrderService;
-import lombok.RequiredArgsConstructor;
-
-import javax.validation.Valid;
-
 import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
+import epizza.order.Order;
+import epizza.order.OrderService;
+import lombok.RequiredArgsConstructor;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @RequiredArgsConstructor
-@RequestMapping(path="/orders/{id}/delivery")
+@RequestMapping(path = "/orders/{id}/delivery")
 @RestController
 public class DeliveryController {
 
@@ -34,7 +34,7 @@ public class DeliveryController {
         binder.addValidators(validator);
     }
 
-    @RequestMapping(path="", method = POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "", method = POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> assignDelivery(@PathVariable("id") Order order,
                                                @RequestBody @Valid DeliveryJob deliveryJob,
                                                BindingResult bindingResult
