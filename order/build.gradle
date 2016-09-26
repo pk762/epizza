@@ -63,7 +63,6 @@ dependencies {
         exclude group: 'javax.jdo'
     }
     apt('org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final')
-    apt('org.projectlombok:lombok:1.16.10')
 
     // test
     testCompile("org.springframework.boot:spring-boot-starter-test")
@@ -76,4 +75,26 @@ dependencies {
     testRuntime("com.jayway.jsonpath:json-path:2.0.0")
     testRuntime("org.springframework.data:spring-data-rest-hal-browser")
 }
+ext {
+    generatedDir = 'src/main/generated'
+}
 
+compileJava {
+    generatedSourcesDestinationDir = generatedDir
+}
+
+idea {
+    module {
+        sourceDirs += file(generatedDir)
+    }
+}
+
+task cleanGenerated(type: Delete) {
+    file(generatedDir).list({ File dir, String name ->
+        return ".gitkeep" != name
+    }).each { f ->
+        delete "${generatedDir}/${f}"
+    }
+}
+
+clean.dependsOn(cleanGenerated)
