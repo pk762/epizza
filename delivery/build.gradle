@@ -38,6 +38,7 @@ dependencies {
     compile('org.springframework:spring-web')
     compile("com.google.guava:guava:19.0")
     runtime('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    runtime("com.jayway.jsonpath:json-path")
 
     compileOnly('org.projectlombok:lombok')
     testCompile('org.projectlombok:lombok')
