@@ -1,17 +1,15 @@
 package epizza.delivery;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.client.Traverson;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import epizza.delivery.order.OrderServiceClient;
@@ -24,13 +22,8 @@ public class DeliveryApplication {
     }
 
     @Bean
-    public RestTemplate restTemplate(List<HttpMessageConverter<?>> messageConverters) {
-        SimpleClientHttpRequestFactory httpRequestFactory = new SimpleClientHttpRequestFactory();
-        httpRequestFactory.setConnectTimeout(5000);
-        httpRequestFactory.setReadTimeout(5000);
-        RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
-        restTemplate.setMessageConverters(messageConverters);
-        return restTemplate;
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
     }
 
     @Bean

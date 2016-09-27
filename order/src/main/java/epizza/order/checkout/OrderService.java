@@ -93,6 +93,8 @@ public class OrderService {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Order Items is empty.")
     public static class OrderItemsEmptyException extends RuntimeException {
+      private static final long serialVersionUID = 1L;
+
         public OrderItemsEmptyException(String message) {
             super(message);
         }
@@ -100,6 +102,8 @@ public class OrderService {
 
     @ResponseStatus(code = HttpStatus.CONFLICT, reason = "Order already assigned.")
     public static class OrderAssignedException extends RuntimeException {
+      private static final long serialVersionUID = 1L;
+
         public OrderAssignedException(String message) {
             super(message);
         }
