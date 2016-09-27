@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.checkout;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -16,8 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static epizza.order.OrderRepositoryExamples.whereDeliveryBoyIsNull;
-import static epizza.order.OrderRepositorySpecifications.deliveryBoyIsNull;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
 @Slf4j
@@ -76,9 +74,9 @@ public class OrderService {
             case CRITERIA_QUERY:
                 return orderRepository.findUnassigned(pageable);
             case QUERY_BY_SPECIFICATION:
-                return orderRepository.findAll(where(deliveryBoyIsNull()), pageable);
+                return orderRepository.findAll(where(OrderRepositorySpecifications.deliveryBoyIsNull()), pageable);
             case QUERY_BY_EXAMPLE:
-                return orderRepository.findAll(whereDeliveryBoyIsNull(), pageable);
+                return orderRepository.findAll(OrderRepositoryExamples.whereDeliveryBoyIsNull(), pageable);
             case QUERYDSL:
                 return orderRepository.findAll(QOrder.order.deliveryBoy.isNull(), pageable);
             case QUERY_ANNOTATION:

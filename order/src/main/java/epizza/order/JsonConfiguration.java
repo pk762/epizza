@@ -1,5 +1,7 @@
 package epizza.order;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,8 @@ import org.zalando.jackson.datatype.money.FastMoneyFactory;
 import org.zalando.jackson.datatype.money.MoneyModule;
 
 import java.util.Locale;
+
+import epizza.order.checkout.Order;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.ALWAYS;
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
@@ -36,5 +40,10 @@ public class JsonConfiguration implements Jackson2ObjectMapperBuilderCustomizer,
                 .serializationInclusion(ALWAYS) //
                 .featuresToDisable(WRITE_DATES_AS_TIMESTAMPS, FAIL_ON_UNKNOWN_PROPERTIES) //
                 .mixIn(Order.class, OrderMixin.class);
+    }
+
+    public interface OrderMixin {
+        @JsonProperty("_id")
+        Long getId();
     }
 }

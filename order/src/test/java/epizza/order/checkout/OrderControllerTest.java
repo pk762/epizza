@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.checkout;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -25,7 +25,14 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.net.URI;
 
+import epizza.order.DbCleanupRule;
+import epizza.order.OrderApplicationTest;
 import epizza.order.catalog.Pizza;
+import epizza.order.checkout.Address;
+import epizza.order.checkout.Order;
+import epizza.order.checkout.OrderEventPublisher;
+import epizza.order.checkout.OrderItem;
+import epizza.order.checkout.OrderService;
 import lombok.SneakyThrows;
 
 import static com.epages.restdocs.WireMockDocumentation.wiremockJson;

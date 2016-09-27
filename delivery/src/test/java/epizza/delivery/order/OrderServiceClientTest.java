@@ -1,8 +1,7 @@
 package epizza.delivery.order;
 
-import static org.assertj.core.api.BDDAssertions.then;
-
-import java.time.LocalDateTime;
+import com.epages.wiremock.starter.WireMockTest;
+import com.github.tomakehurst.wiremock.WireMockServer;
 
 import org.junit.After;
 import org.junit.Test;
@@ -11,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.epages.wiremock.starter.WireMockTest;
-import com.github.tomakehurst.wiremock.WireMockServer;
+import java.time.LocalDateTime;
 
 import epizza.delivery.DeliveryApplicationTest;
 import lombok.SneakyThrows;
+
+import static org.assertj.core.api.BDDAssertions.then;
 
 @WireMockTest(stubPath = "wiremock/order")
 @RunWith(SpringRunner.class)

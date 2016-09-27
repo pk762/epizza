@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.checkout;
 
 import com.google.common.collect.ImmutableList;
 
@@ -21,8 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
+import epizza.order.OrderApplicationTest;
 import epizza.order.catalog.Pizza;
 import epizza.order.catalog.PizzaRepository;
+import epizza.order.status.OrderStatus;
 
 import static org.assertj.core.api.BDDAssertions.then;
 

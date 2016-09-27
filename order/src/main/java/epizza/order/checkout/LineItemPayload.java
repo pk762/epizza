@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.checkout;
 
 import java.net.URI;
 

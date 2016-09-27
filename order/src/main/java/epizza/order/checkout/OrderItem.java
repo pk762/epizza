@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.checkout;
 
 import javax.money.MonetaryAmount;
 import javax.persistence.Access;
