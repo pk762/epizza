@@ -34,6 +34,7 @@ public class JsonConfiguration implements Jackson2ObjectMapperBuilderCustomizer,
                 .timeZone("UTC") //
                 .indentOutput(true) //
                 .serializationInclusion(ALWAYS) //
-                .featuresToDisable(WRITE_DATES_AS_TIMESTAMPS, FAIL_ON_UNKNOWN_PROPERTIES);
+                .featuresToDisable(WRITE_DATES_AS_TIMESTAMPS, FAIL_ON_UNKNOWN_PROPERTIES) //
+                .mixIn(Order.class, OrderMixin.class);
     }
 }

@@ -3,8 +3,12 @@ server:
 
 logging:
   level:
+    root: 'WARN'
+    epizza: 'INFO'
     org.springframework.amqp.rabbit: 'OFF'
     org.springframework.beans.factory.support: 'WARN'
+    org.hibernate.type.descriptor.java.JavaTypeDescriptorRegistry: 'ERROR'
+    org.springframework.context.annotation.ConfigurationClassPostProcessor: 'ERROR'
 
   h2:
     console:

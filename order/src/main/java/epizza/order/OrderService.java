@@ -2,27 +2,22 @@ package epizza.order;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import epizza.order.delivery.DeliveryJob;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static java.util.stream.Collectors.toSet;
-import static org.springframework.data.domain.ExampleMatcher.matching;
+import static epizza.order.OrderRepositoryExamples.whereDeliveryBoyIsNull;
+import static epizza.order.OrderRepositorySpecifications.deliveryBoyIsNull;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
 @Slf4j
@@ -56,7 +51,7 @@ public class OrderService {
 
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
         if (order.getDeliveryBoy() != null) {
-            throw new OrderAssignedException();
+            throw new OrderAssignedException(String.format("Order '%d' is already assigned to '%s'", order.getId(), order.getDeliveryBoy()));
         }
         log.info("Assigning delivery job '{}' to order number {}", deliveryJob, order.getId());
         order.setDeliveryBoy(deliveryJob.getDeliveryBoy());
@@ -70,23 +65,12 @@ public class OrderService {
 
 
     public Page<Order> findUnassigned(Pageable pageable) {
-        return findUnassigned(pageable, QueryImplementation.NAMED_QUERY);
+        return findUnassigned(pageable, OrderRepositoryQueryImplementation.NAMED_QUERY);
     }
 
     @VisibleForTesting
-    enum QueryImplementation {
-        NAMED_QUERY, // JPA Named Query
-        CRITERIA_QUERY, // JPA Criteria Query
-        QUERY_BY_SPECIFICATION, // Spring Data Query By Specification
-        QUERY_BY_EXAMPLE, // Spring Data Query By Example
-        QUERY_ANNOTATION, // Spring Data @Query Annotation
-        NAMING_CONVENTION, //  Spring Data method naming convention
-        QUERYDSL // Querydsl
-    }
-
-    @VisibleForTesting
-    Page<Order> findUnassigned(Pageable pageable, QueryImplementation queryImplementation) {
-        switch (queryImplementation) {
+    Page<Order> findUnassigned(Pageable pageable, OrderRepositoryQueryImplementation implementation) {
+        switch (implementation) {
             case NAMED_QUERY:
                 return orderRepository.findByNamedQuery(OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, pageable);
             case CRITERIA_QUERY:
@@ -102,24 +86,7 @@ public class OrderService {
             case NAMING_CONVENTION:
                 return orderRepository.findByDeliveryBoyIsNull(pageable);
             default:
-                throw new IllegalStateException(String.format("Unknown query implementation '%s'", queryImplementation));
+                throw new IllegalStateException(String.format("Unknown query implementation '%s'", implementation));
         }
-    }
-
-    private static Specification<Order> deliveryBoyIsNull() {
-        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.isNull(root.get("deliveryBoy"));
-    }
-
-    private static Example<Order> whereDeliveryBoyIsNull() {
-        String[] ignoredPaths = Stream.of(Order.class.getDeclaredFields()) //
-                .map(Field::getName) //
-                .filter((fieldName) -> !"deliveryBoy".equals(fieldName)) //
-                .collect(toSet()) //
-                .toArray(new String[]{});
-
-        ExampleMatcher matcher = matching() //
-                .withIncludeNullValues() //
-                .withIgnorePaths(ignoredPaths);
-        return Example.of(new Order(), matcher);
     }
 }

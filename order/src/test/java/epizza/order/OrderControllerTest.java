@@ -1,28 +1,9 @@
 package epizza.order;
 
-import static com.epages.restdocs.WireMockDocumentation.wiremockJson;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.verify;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
-import epizza.order.catalog.Pizza;
-import lombok.SneakyThrows;
-
-import java.net.URI;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.javamoney.moneta.Money;
 import org.junit.Before;
@@ -42,9 +23,29 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import java.net.URI;
+
+import epizza.order.catalog.Pizza;
+import lombok.SneakyThrows;
+
+import static com.epages.restdocs.WireMockDocumentation.wiremockJson;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.Mockito.verify;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringRunner.class)
 @OrderApplicationTest
@@ -81,7 +82,7 @@ public class OrderControllerTest {
     private Order order;
 
     @Before
-    public void setupContext(){
+    public void setupContext() {
         mockMvc = webAppContextSetup(context)
                 .apply(documentationConfiguration(this.restDocumentation).uris().withPort(80))
                 .build();
@@ -109,7 +110,7 @@ public class OrderControllerTest {
                                 fieldWithPath("deliveryAddress.postalCode").description("Your postal code"), //
                                 fieldWithPath("deliveryAddress.telephone").description("Your telephone"), //
                                 fieldWithPath("deliveryAddress.email").description("Your email address").optional() //
-                )))
+                        )))
         ;
 
         verify(orderEventPublisher).sendOrderCreatedEvent(order);
@@ -148,7 +149,7 @@ public class OrderControllerTest {
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
                         )
                         , wiremockJson()
-                        )) //
+                )) //
         ;
     }
 
@@ -168,7 +169,7 @@ public class OrderControllerTest {
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
                         )
                         , wiremockJson()
-                        )) //
+                )) //
         ;
     }
 
@@ -213,7 +214,8 @@ public class OrderControllerTest {
     private void whenOrderCreated() {
         ordersResultAction = mockMvc.perform(post("/orders")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonInput));
+                .content(jsonInput))
+                .andExpect(status().is2xxSuccessful());
 
         order = orderService.getAll(null).iterator().next();
     }
@@ -234,8 +236,8 @@ public class OrderControllerTest {
                 "comment", "Some comment",
                 "deliveryAddress", address,
                 "lineItems", ImmutableList.of(ImmutableMap.of(
-                                "quantity", 1,
-                                "pizza", "http://localhost/pizzas/1"
+                        "quantity", 1,
+                        "pizza", "http://localhost/pizzas/1"
                         )
                 )
         ));

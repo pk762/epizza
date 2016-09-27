@@ -2,17 +2,14 @@ package epizza.order;
 
 import com.google.common.collect.ImmutableMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.stereotype.Component;
 
 import epizza.shared.event.EventPublisher;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 public class OrderEventPublisher {
 
     private final EventPublisher eventPublisher;
