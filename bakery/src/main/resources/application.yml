@@ -1,9 +1,10 @@
 server:
   port: 8083
 
-logging:
-  level:
-    feign: DEBUG
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
 
 bakery:
   timeToBakePizzaInMillis: 15000

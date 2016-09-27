@@ -1,8 +1,5 @@
 spring:
   application:
     name: order
-  output:
-    ansi:
-      enabled: ALWAYS
   jmx:
     enabled: false

@@ -4,6 +4,9 @@ spring:
   rabbitmq:
     host: ${rabbitmq.host:rabbitmq}
     port: ${rabbitmq.port:5672}
+  output:
+    ansi:
+      enabled: ALWAYS
 
 server:
   port: ${port:8084}
@@ -13,7 +16,6 @@ logging:
     com.epages: INFO
     feign: DEBUG
     org.springframework: INFO
-#    http.wire: DEBUG
 
 orders:
   baseUri: "http://localhost:8082/"

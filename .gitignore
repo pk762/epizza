@@ -24,3 +24,5 @@ _ajdump
 *.iws
 out/
 docker-compose.override.yml
+order/src/main/generated/
+!order/src/main/generated/.gitkeep
