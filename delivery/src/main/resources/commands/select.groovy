@@ -2,6 +2,7 @@ package commands
 
 
 import java.time.LocalDateTime
+import java.time.temporal.TemporalUnit;
 
 import org.crsh.cli.Command
 import org.crsh.cli.Usage
@@ -18,6 +19,7 @@ class select {
     @Command
     def main(InvocationContext context) {
 
+        String deliveryBoy = context.readLine("Driver name: ", true)
         Integer orderId = Integer.parseInt(context.readLine("Which order to select? ", true))
         Integer minutes = Integer.parseInt(context.readLine("Expected delivery time in minutes: ", true))
 
@@ -25,7 +27,7 @@ class select {
         Assert.notNull(beanFactory)
 
         OrderServiceClient client = beanFactory.getBean(OrderServiceClient)
-        client.assignMyselfToOrder(orderId, new DeliveryJob("Joe the User", LocalDateTime.now().plusMinutes(minutes)))
+        client.assignMyselfToOrder(orderId, DeliveryJob.create(deliveryBoy, minutes))
 
         String result = "SUCCESS..."
 
