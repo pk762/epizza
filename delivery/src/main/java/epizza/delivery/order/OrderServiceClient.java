@@ -3,7 +3,6 @@ package epizza.delivery.order;
 import java.net.URI;
 
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
@@ -22,7 +21,7 @@ public class OrderServiceClient {
         restTemplate.postForEntity(UriComponentsBuilder.fromUri(baseUri).path("orders/" + orderId + "/delivery").toUriString(), job, Void.class);
     }
 
-    public PagedResources<Order> getOrders(Pageable pageable) {
+    public PagedResources<Order> getOrders() {
         return restTemplate.exchange(
                 UriComponentsBuilder.fromUri(baseUri).path("/orders").build().toUri(), 
                 HttpMethod.GET,

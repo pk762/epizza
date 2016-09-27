@@ -22,10 +22,9 @@ class orders {
     def main(InvocationContext context) {
         BeanFactory beanFactory = context.getAttributes().get("spring.beanfactory")
         Assert.notNull(beanFactory)
-        Pageable currentPage = new PageRequest(0, 10);
 
         OrderServiceClient listClient = beanFactory.getBean(OrderServiceClient)
-        PagedResources<Order> orders = listClient.getOrders(currentPage)
+        PagedResources<Order> orders = listClient.getOrders()
         String result = ""
 
         for (Order order in orders.getContent()) {

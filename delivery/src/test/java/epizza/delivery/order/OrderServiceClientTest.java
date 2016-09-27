@@ -1,22 +1,21 @@
 package epizza.delivery.order;
 
-import com.epages.wiremock.starter.WireMockTest;
-import com.github.tomakehurst.wiremock.WireMockServer;
+import static org.assertj.core.api.BDDAssertions.then;
+
+import java.time.LocalDateTime;
 
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
+import com.epages.wiremock.starter.WireMockTest;
+import com.github.tomakehurst.wiremock.WireMockServer;
 
 import epizza.delivery.DeliveryApplicationTest;
 import lombok.SneakyThrows;
-
-import static org.assertj.core.api.BDDAssertions.then;
 
 @WireMockTest(stubPath = "wiremock/order")
 @RunWith(SpringRunner.class)
@@ -34,7 +33,7 @@ public class OrderServiceClientTest {
     public void should_list_orders() {
 
         // WHEN
-        PagedResources<Order> orders = client.getOrders(new PageRequest(0, 10));
+        PagedResources<Order> orders = client.getOrders();
 
         // THEN
         then(orders.getContent()).hasSize(1);
