@@ -32,8 +32,10 @@ dependencyManagement.imports {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-remote-shell')
-    compile('org.springframework.hateoas:spring-hateoas')
-    runtime('org.springframework.plugin:spring-plugin-core')
+    compile('org.springframework.boot:spring-boot-starter-hateoas') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+//    runtime('org.springframework.plugin:spring-plugin-core')
     compile('org.springframework.cloud:spring-cloud-starter-hystrix')
     compile('org.springframework:spring-web')
     compile("com.google.guava:guava:19.0")
