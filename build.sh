@@ -2,6 +2,8 @@
 
 set -e
 
+
+if echo $@ | grep -q 'infra'; then
 echo
 echo "#############################################"
 echo "# building 'gradle-plugins'                 #"
@@ -19,7 +21,9 @@ echo "#############################################"
 echo "# building 'config-server'                  #"
 echo "#############################################"
 ./config-server/gradlew -p config-server build
+fi
 
+if echo $@ | grep -e 'services'; then
 echo
 echo "#############################################"
 echo "# building 'order'                          #"
@@ -37,9 +41,12 @@ echo "#############################################"
 echo "# building 'delivery'                       #"
 echo "#############################################"
 ./delivery/gradlew -p delivery build
+fi
 
+if echo $@ | grep -e 'ui'; then
 echo
 echo "#############################################"
 echo "# building 'order-ui'                       #"
 echo "#############################################"
 ./order-ui/gradlew -p order-ui build
+fi
