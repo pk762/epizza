@@ -25,13 +25,17 @@ public class OrderServiceClient {
 
     @HystrixCommand
     public void assignMyselfToOrder(Integer orderId, DeliveryJob job) {
-        restTemplate.postForEntity(UriComponentsBuilder.fromUri(baseUri).path("orders/" + orderId + "/delivery").toUriString(), job, Void.class);
+        String uri = UriComponentsBuilder.fromUri(baseUri).path("orders/" + orderId + "/delivery").toUriString();
+        log.info("Assigning myself to order via Location: {}", uri);
+        restTemplate.postForEntity(uri, job, Void.class);
     }
 
     @HystrixCommand(fallbackMethod = "hystrixFallback")
     public PagedResources<Order> getOrders() {
+        URI uri = UriComponentsBuilder.fromUri(baseUri).path("/orders").build().toUri();
+        log.info("Retrieving orders from Location: {}", uri);
         return restTemplate.exchange(
-                UriComponentsBuilder.fromUri(baseUri).path("/orders").build().toUri(), 
+                uri, 
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<PagedResources<Order>>() {}).getBody();
