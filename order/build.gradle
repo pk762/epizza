@@ -89,7 +89,7 @@ idea {
     }
 }
 
-task cleanGenerated(type: Delete) {
+clean.doLast {
     file(generatedDir).list({ File dir, String name ->
         return ".gitkeep" != name
     }).each { f ->
@@ -97,4 +97,3 @@ task cleanGenerated(type: Delete) {
     }
 }
 
-clean.dependsOn(cleanGenerated)
