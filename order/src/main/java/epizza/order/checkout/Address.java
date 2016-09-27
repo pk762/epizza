@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.checkout;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;

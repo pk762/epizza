@@ -1,11 +1,11 @@
-package epizza.order;
-
-import static org.assertj.core.api.BDDAssertions.then;
-
-import epizza.order.catalog.Pizza;
+package epizza.order.checkout;
 
 import org.javamoney.moneta.Money;
 import org.junit.Test;
+
+import epizza.order.catalog.Pizza;
+
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class OrderTest {
 

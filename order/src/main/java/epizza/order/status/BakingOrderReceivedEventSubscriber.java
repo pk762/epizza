@@ -1,4 +1,4 @@
-package epizza.order.orderstatus;
+package epizza.order.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -9,12 +9,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-import epizza.order.Order;
-import epizza.order.OrderService;
-import epizza.order.OrderStatus;
+import epizza.order.checkout.Order;
+import epizza.order.checkout.OrderService;
 
 @Component
-public class BakingOrderReceivedEventSubscriber extends OrderStatusEventSubscriber {
+public class BakingOrderReceivedEventSubscriber extends AbstractOrderStatusEventSubscriber {
 
     @Autowired
     public BakingOrderReceivedEventSubscriber(OrderService orderService, ObjectMapper objectMapper) {

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import epizza.order.Order;
-import epizza.order.OrderService;
+import epizza.order.checkout.Order;
+import epizza.order.checkout.OrderService;
 import lombok.RequiredArgsConstructor;
 
 @RestController

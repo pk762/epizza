@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.checkout;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -27,6 +27,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import epizza.order.status.OrderStatus;
 
 import static javax.persistence.GenerationType.IDENTITY;
 

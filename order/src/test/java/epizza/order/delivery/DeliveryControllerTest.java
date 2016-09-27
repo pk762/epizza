@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.delivery;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -23,6 +23,9 @@ import org.springframework.web.context.WebApplicationContext;
 import java.net.URI;
 import java.util.List;
 
+import epizza.order.DbCleanupRule;
+import epizza.order.OrderApplicationTest;
+import epizza.order.checkout.OrderEventPublisher;
 import lombok.SneakyThrows;
 
 import static com.epages.restdocs.WireMockDocumentation.wiremockJson;

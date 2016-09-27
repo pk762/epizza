@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.checkout;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

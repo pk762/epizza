@@ -1,4 +1,4 @@
-package epizza.order;
+package epizza.order.checkout;
 
 import org.springframework.data.jpa.domain.Specification;
 

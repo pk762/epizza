@@ -1,10 +1,11 @@
 package epizza.order;
 
-import lombok.RequiredArgsConstructor;
-
 import org.junit.rules.ExternalResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
+import epizza.order.checkout.OrderRepository;
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
