@@ -19,7 +19,11 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 @WireMockTest(stubPath = "wiremock/order")
 @RunWith(SpringRunner.class)
-@DeliveryApplicationTest(properties = {"orders.baseUri=http://localhost:${wiremock.port}/"})
+@DeliveryApplicationTest(properties = {
+        "orders.baseUri=http://localhost:${wiremock.port}/",
+        "hystrix.command.getOrders.execution.timeout.enabled=true",
+        "hystrix.command.getOrders.execution.isolation.thread.timeoutInMilliseconds=2000"
+})
 public class OrderServiceClientTest {
 
     @Autowired
@@ -45,8 +49,17 @@ public class OrderServiceClientTest {
         client.assignMyselfToOrder(1, new DeliveryJob("Joe Slo", LocalDateTime.now().plusMinutes(120)));
     }
 
+    @Test
+    public void should_use_fallback_on_timeout() {
+        wiremockServer.setGlobalFixedDelay(2001);
+        PagedResources<Order> orders = client.getOrders();
+        then(orders.getContent()).hasSize(0);
+    }
+
     @After
     public void dump_communication_failures() {
-        wiremockServer.findAllUnmatchedRequests().forEach((n) -> System.out.println("logged unmatched request:  " + n));
+        wiremockServer.setGlobalFixedDelay(0);
+        wiremockServer.findAllUnmatchedRequests().forEach((n) -> System.out.println("Logged unmatched request:  " + n));
     }
+
 }
