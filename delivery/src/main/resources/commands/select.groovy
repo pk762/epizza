@@ -19,9 +19,9 @@ class select {
     @Command
     def main(InvocationContext context) {
 
+        Integer orderId    = Integer.parseInt(context.readLine("Which order to select? ", true))
         String deliveryBoy = context.readLine("Driver name: ", true)
-        Integer orderId = Integer.parseInt(context.readLine("Which order to select? ", true))
-        Integer minutes = Integer.parseInt(context.readLine("Expected delivery time in minutes: ", true))
+        Integer minutes    = Integer.parseInt(context.readLine("Expected delivery time in minutes: ", true))
 
         BeanFactory beanFactory = context.attributes["spring.beanfactory"]
         Assert.notNull(beanFactory)

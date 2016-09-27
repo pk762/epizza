@@ -1,5 +1,8 @@
 package epizza.delivery.order;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import java.net.URI;
 import java.util.Collections;
 
@@ -12,9 +15,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
-import lombok.RequiredArgsConstructor;
-
 @RequiredArgsConstructor
+@Slf4j
 public class OrderServiceClient {
 
     private final RestTemplate restTemplate;
@@ -36,6 +38,7 @@ public class OrderServiceClient {
     }
 
     PagedResources<Order> hystrixFallback() {
+        log.error("Hystrix said: Need to use fallback (empty list)");
         return new PagedResources<>(Collections.emptyList(), new PageMetadata(0, 0, 0));
     }
 }
