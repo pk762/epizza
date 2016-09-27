@@ -50,8 +50,6 @@ public class Address {
     @Basic(optional = false)
     private String telephone;
 
-    private String email;
-
     @JsonPOJOBuilder(withPrefix = "")
     public static class AddressBuilder {
 

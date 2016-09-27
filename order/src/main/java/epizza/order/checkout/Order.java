@@ -39,7 +39,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 // FIXME introduce lombok
 public class Order implements Identifiable<Long> {
 
-    public static final Money DEFAULT_PRICE = Money.of(0.0, "EUR");
+    private static final Money DEFAULT_PRICE = Money.of(0.0, "EUR");
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

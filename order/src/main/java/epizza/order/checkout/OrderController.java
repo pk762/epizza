@@ -16,31 +16,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 
-import static java.util.stream.Collectors.toList;
-
 @RepositoryRestController
 @ExposesResourceFor(Order.class)
-//@CrossOrigin(exposedHeaders = "Location", value = "*")
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
+
     private final EntityLinks entityLinks;
+
     private final OrderItemConverter toOrderItem;
+
     private final PagedResourcesAssembler<Order> pagedResourcesAssembler;
 
     @RequestMapping(path = "/orders", method = RequestMethod.POST)
     public ResponseEntity<Void> create(@RequestBody @Valid CartPayload cart) {
+        List<OrderItem> orderItems = cart.getLineItems().stream()
+                .map(toOrderItem)
+                .collect(Collectors.toList());
+
         Order order = new Order();
         order.setDeliveryAddress(cart.getDeliveryAddress());
         order.setComment(cart.getComment());
-        order.setOrderItems(cart.getLineItems().stream().map(toOrderItem).collect(toList()));
+        order.setOrderItems(orderItems);
         order = orderService.create(order);
+
         URI location = entityLinks.linkForSingleResource(Order.class, order.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
