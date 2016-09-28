@@ -4,7 +4,6 @@ buildscript {
     }
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
-        mavenCentral()
         mavenLocal()
     }
     dependencies {
@@ -21,7 +20,7 @@ apply plugin: 'epizza-docker'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
-    mavenCentral()
+    jcenter()
     mavenLocal()
 }
 

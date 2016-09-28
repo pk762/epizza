@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
     }
 }
@@ -13,7 +12,6 @@ apply plugin: 'java-gradle-plugin'
 apply plugin: 'maven-publish'
 
 repositories {
-    jcenter()
     maven { url "https://plugins.gradle.org/m2/" }
 }
 

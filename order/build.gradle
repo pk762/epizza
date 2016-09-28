@@ -3,9 +3,8 @@ buildscript {
         springBootVersion = '1.4.0.RELEASE'
     }
     repositories {
-        mavenLocal()
         maven { url "https://plugins.gradle.org/m2/" }
-        jcenter()
+        mavenLocal()
     }
     dependencies {
         classpath("epizza:gradle-plugins:0.1.0")
@@ -28,8 +27,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenLocal()
     jcenter()
+    mavenLocal()
 }
 
 configurations {
