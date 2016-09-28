@@ -63,15 +63,15 @@ public class Order implements Identifiable<Long> {
     @Embedded
     private Address deliveryAddress;
 
-// SCHNIPP
     @Column(name = "ETBC")
     private LocalDateTime estimatedTimeOfBakingCompletion;
 
+// SCHNIPP
     @Column(name = "ETD")
     private LocalDateTime estimatedTimeOfDelivery;
-// SCHNAPP
 
     private String deliveryBoy;
+// SCHNAPP
 
     public List<OrderItem> getOrderItems() {
         return ImmutableList.copyOf(orderItems);
