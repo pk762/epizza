@@ -46,10 +46,13 @@ task build << {
     def connection = openCompositeConnection()
     try {
         executeTask(connection, "gradle-plugins", ":build")
+        executeTask(connection, "gradle-plugins", ":pTML")
         executeTask(connection, "messaging-boot-starter", ":build")
+        executeTask(connection, "messaging-boot-starter", ":pTML")
         executeTask(connection, "order", ":build")
         executeTask(connection, "bakery", ":build")
         executeTask(connection, "delivery", ":build")
+        executeTask(connection, "order-ui", ":build")
     } finally {
         connection.close()
     }
