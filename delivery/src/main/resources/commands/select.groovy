@@ -27,7 +27,7 @@ class select {
         Assert.notNull(beanFactory)
 
         OrderServiceClient client = beanFactory.getBean(OrderServiceClient)
-        client.assignMyselfToOrder(orderId, DeliveryJob.create(deliveryBoy, minutes))
+        client.selectOrder(orderId, DeliveryJob.create(deliveryBoy, minutes))
 
         return "SUCCESS..."
     }
