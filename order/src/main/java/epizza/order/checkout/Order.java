@@ -36,8 +36,14 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA_ORDER")
 @NamedQueries({
-        @NamedQuery(name = OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, query = OrderRepositoryWithNamedQuery.UNASSIGNED_QUERY),
-        @NamedQuery(name = OrderRepositoryWithNamedQuery.COUNT_UNASSIGNED_NAME, query = OrderRepositoryWithNamedQuery.COUNT_UNASSIGNED_QUERY)
+        @NamedQuery(
+                name = OrderRepositoryWithNamedQuery.UNASSIGNED_NAME,
+                query = OrderRepositoryWithNamedQuery.UNASSIGNED_QUERY
+        ),
+        @NamedQuery(
+                name = OrderRepositoryWithNamedQuery.COUNT_UNASSIGNED_NAME,
+                query = OrderRepositoryWithNamedQuery.COUNT_UNASSIGNED_QUERY
+        )
 })
 public class Order implements Identifiable<Long> {
 
