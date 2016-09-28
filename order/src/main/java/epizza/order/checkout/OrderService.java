@@ -1,7 +1,5 @@
 package epizza.order.checkout;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,8 +14,6 @@ import java.util.Optional;
 import epizza.order.delivery.DeliveryJob;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import static org.springframework.data.jpa.domain.Specifications.where;
 
 @Slf4j
 @Service
@@ -55,35 +51,11 @@ public class OrderService {
     }
 
     public Page<Order> findUnassigned(Pageable pageable) {
-        return findUnassigned(pageable, OrderRepositoryQueryImplementation.NAMED_QUERY);
-    }
-
-    @VisibleForTesting
-    Page<Order> findUnassigned(Pageable pageable, OrderRepositoryQueryImplementation implementation) {
-        switch (implementation) {
-            case NAMED_QUERY:
-                return orderRepository.findByNamedQuery(OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, pageable);
-            // SCHNIPP
-            case CRITERIA_QUERY:
-                return orderRepository.findUnassigned(pageable);
-            case QUERY_BY_SPECIFICATION:
-                return orderRepository.findAll(where(OrderRepositorySpecifications.deliveryBoyIsNull()), pageable);
-            case QUERY_BY_EXAMPLE:
-                return orderRepository.findAll(OrderRepositoryExamples.whereDeliveryBoyIsNull(), pageable);
-            case QUERYDSL:
-                return orderRepository.findAll(QOrder.order.deliveryBoy.isNull(), pageable);
-            case QUERY_ANNOTATION:
-                return orderRepository.findByMissingDeliveryBoy(pageable);
-            case NAMING_CONVENTION:
-                return orderRepository.findByDeliveryBoyIsNull(pageable);
-            // SCHNAPP
-            default:
-                throw new IllegalStateException(String.format("Unknown query implementation '%s'", implementation));
-        }
+        return orderRepository.findByNamedQuery(OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, pageable);
     }
 
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
-        // SCHNIPP
+// SCHNIPP
         if (order.getDeliveryBoy() != null) {
             throw new OrderAssignedException(String.format("Order '%d' is already assigned to '%s'", order.getId(), order.getDeliveryBoy()));
         }
@@ -91,7 +63,7 @@ public class OrderService {
         order.setDeliveryBoy(deliveryJob.getDeliveryBoy());
         order.setEstimatedTimeOfDelivery(deliveryJob.getEstimatedTimeOfDelivery());
         update(order);
-        // SCHNAPP
+// SCHNAPP
         return order;
     }
 

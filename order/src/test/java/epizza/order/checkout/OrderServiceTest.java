@@ -34,7 +34,9 @@ import static org.assertj.core.api.BDDAssertions.then;
         "spring.jpa.properties.hibernate.format_sql=true",
         "spring.jpa.properties.hibernate.use_sql_comments=false"
 })
+// SCHNIPP
 @RunWith(Parameterized.class)
+// SCHNAPP
 public class OrderServiceTest {
 
     @ClassRule
@@ -43,6 +45,7 @@ public class OrderServiceTest {
     @Rule
     public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
+// SCHNIPP
     @Parameter
     public OrderRepositoryQueryImplementation implementation;
 
@@ -50,6 +53,7 @@ public class OrderServiceTest {
     public static OrderRepositoryQueryImplementation[] implementations() {
         return OrderRepositoryQueryImplementation.values();
     }
+// SCHNAPP
 
     @Autowired
     private OrderService orderService;
@@ -84,7 +88,7 @@ public class OrderServiceTest {
         // GIVEN
 
         // WHEN
-        Page<Order> unassignedOrders = orderService.findUnassigned(new PageRequest(0, 20), implementation);
+        Page<Order> unassignedOrders = orderService.findUnassigned(new PageRequest(0, 20));
 
         // THEN
 // SCHNIPP
