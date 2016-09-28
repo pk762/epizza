@@ -29,9 +29,7 @@ class select {
         OrderServiceClient client = beanFactory.getBean(OrderServiceClient)
         client.assignMyselfToOrder(orderId, DeliveryJob.create(deliveryBoy, minutes))
 
-        String result = "SUCCESS..."
-
-        return result
+        return "SUCCESS..."
     }
 
 }

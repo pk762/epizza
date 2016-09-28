@@ -1,6 +1,8 @@
 spring:
   application:
     name: delivery
+  main:
+    web-environment: false
   output:
     ansi:
       enabled: ALWAYS

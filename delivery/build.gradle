@@ -3,9 +3,9 @@ buildscript {
         springBootVersion = '1.4.0.RELEASE'
     }
     repositories {
-        mavenLocal()
         maven { url "https://plugins.gradle.org/m2/" }
         mavenCentral()
+        mavenLocal()
     }
     dependencies {
         classpath "epizza:gradle-plugins:0.1.0"
@@ -21,8 +21,8 @@ apply plugin: 'epizza-docker'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
 }
 
 dependencyManagement.imports {
@@ -32,13 +32,9 @@ dependencyManagement.imports {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-remote-shell')
-    compile('org.springframework.boot:spring-boot-starter-hateoas') {
-        exclude module: 'spring-boot-starter-tomcat'
-    }
-//    runtime('org.springframework.plugin:spring-plugin-core')
+    compile('org.springframework.hateoas:spring-hateoas')
+    runtime('org.springframework.plugin:spring-plugin-core')
     compile('org.springframework.cloud:spring-cloud-starter-hystrix')
-    compile('org.springframework:spring-web')
-    compile("com.google.guava:guava:19.0")
     runtime('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
     runtime("com.jayway.jsonpath:json-path")
 
@@ -49,13 +45,8 @@ dependencies {
     runtime('net.logstash.logback:logstash-logback-encoder:4.7')
 
     testCompile('com.epages:wiremock-spring-boot-starter:0.7.10')
-
     testRuntime (group:'epizza', name:'order', version:'+', classifier:'wiremock', ext:'jar', changing: true)
-
     testCompile('com.github.tomakehurst:wiremock:2.1.12')
     testCompile("org.springframework.boot:spring-boot-starter-test")
-//    testCompile('com.epages:restdocs-wiremock:0.7.8')
-    testCompile("org.assertj:assertj-core:3.1.0")
-    testCompile("org.mockito:mockito-core:1.+")
 }
 

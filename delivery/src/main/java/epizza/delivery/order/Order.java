@@ -1,8 +1,5 @@
 package epizza.delivery.order;
 
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.ResourceSupport;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -10,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Order extends ResourceSupport {
+public class Order {
 
     @JsonProperty("_id")
     private String orderId;
@@ -19,8 +16,4 @@ public class Order extends ResourceSupport {
 
     private String comment;
 
-    public Order withLink(Link link) {
-        this.add(link);
-        return this;
-    }
 }

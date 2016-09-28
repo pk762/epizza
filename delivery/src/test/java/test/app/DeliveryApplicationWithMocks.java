@@ -1,4 +1,4 @@
-package epizza.delivery;
+package test.app;
 
 import java.net.URI;
 
@@ -7,12 +7,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.common.ClasspathFileSource;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
+import epizza.delivery.DeliveryApplication;
+
 @SpringBootApplication
+@Profile("runmock")
 @Import(DeliveryApplication.class)
 class DeliveryApplicationWithMocks {
 
@@ -21,7 +25,7 @@ class DeliveryApplicationWithMocks {
     }
 
     @Bean
-    public WireMockServer wiremockServer(@Value("${orders.baseUri}") URI ordersBaseUri) {
+    public WireMockServer wireMockServer(@Value("${orders.baseUri}") URI ordersBaseUri) {
         WireMockServer wireMockServer = new WireMockServer(
                 WireMockConfiguration.options().port(ordersBaseUri.getPort())
                 .fileSource(new ClasspathFileSource("wiremock/order")));
