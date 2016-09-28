@@ -88,7 +88,7 @@ public class OrderServiceTest {
         // GIVEN
 
         // WHEN
-        Page<Order> unassignedOrders = orderService.findUnassigned(new PageRequest(0, 20));
+        Page<Order> unassignedOrders = orderService.getAll(new PageRequest(0, 20));
 
         // THEN
 // SCHNIPP

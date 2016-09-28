@@ -47,10 +47,6 @@ public class OrderService {
     }
 
     public Page<Order> getAll(Pageable pageable) {
-        return orderRepository.findAll(pageable);
-    }
-
-    public Page<Order> findUnassigned(Pageable pageable) {
         return orderRepository.findByNamedQuery(OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, pageable);
     }
 
