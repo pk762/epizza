@@ -8,11 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URI;
 // SCHNIPP
 import java.util.Collections;
+// SCHNAPP
 
 import org.springframework.hateoas.PagedResources;
 // SCHNIPP
 import org.springframework.hateoas.PagedResources.PageMetadata;
+//SCHNAPP
 import org.springframework.hateoas.mvc.TypeReferences;
+// SCHNIPP
 import org.springframework.http.HttpMethod;
 // SCHNAPP
 import org.springframework.web.client.RestTemplate;
