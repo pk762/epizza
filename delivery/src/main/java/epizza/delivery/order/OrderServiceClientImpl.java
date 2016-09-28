@@ -25,7 +25,7 @@ public class OrderServiceClientImpl implements OrderServiceClient {
     private final RestTemplate restTemplate;
 
     private final URI baseUri;
-// SCHNAPP public OrderServiceClientImpl(RestTemplate restTemplate, URI baseUri) {}
+// SCHNAPP    public OrderServiceClientImpl(RestTemplate restTemplate, URI baseUri) {}
 
     @Override
 // SCHNIPP
@@ -36,7 +36,7 @@ public class OrderServiceClientImpl implements OrderServiceClient {
         String uri = UriComponentsBuilder.fromUri(baseUri).path("orders/" + orderId + "/delivery").toUriString();
         log.info("Assigning myself to order via Location: {}", uri);
         restTemplate.postForEntity(uri, job, Void.class);
-// SCHNAPP throw new UnsupportedOperationException();
+// SCHNAPP        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -48,11 +48,11 @@ public class OrderServiceClientImpl implements OrderServiceClient {
         URI uri = UriComponentsBuilder.fromUri(baseUri).path("/orders").build().toUri();
         log.info("Retrieving orders from Location: {}", uri);
         return restTemplate.exchange(
-                uri, 
+                uri,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<PagedResources<Order>>() {}).getBody();
-// SCHNAPP throw new UnsupportedOperationException();
+// SCHNAPP        throw new UnsupportedOperationException();
     }
 
 // SCHNIPP
