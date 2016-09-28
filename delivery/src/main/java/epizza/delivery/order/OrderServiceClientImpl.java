@@ -1,31 +1,35 @@
 package epizza.delivery.order;
 
 import lombok.RequiredArgsConstructor;
+// SCHNIPP
 import lombok.extern.slf4j.Slf4j;
+// SCHNAPP
 
 import java.net.URI;
+// SCHNIPP
 import java.util.Collections;
-
+// SCHNAPP
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.hateoas.PagedResources;
+// SCHNIPP
 import org.springframework.hateoas.PagedResources.PageMetadata;
 import org.springframework.http.HttpMethod;
+// SCHNAPP
 import org.springframework.web.client.RestTemplate;
+// SCHNIPP
 import org.springframework.web.util.UriComponentsBuilder;
-
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+// SCHNAPP
 
 // SCHNIPP
-@RequiredArgsConstructor
 @Slf4j
 // SCHNAPP
+@RequiredArgsConstructor
 public class OrderServiceClientImpl implements OrderServiceClient {
 
-// SCHNIPP
     private final RestTemplate restTemplate;
 
     private final URI baseUri;
-// SCHNAPP    public OrderServiceClientImpl(RestTemplate restTemplate, URI baseUri) {}
 
     @Override
 // SCHNIPP
@@ -51,7 +55,7 @@ public class OrderServiceClientImpl implements OrderServiceClient {
                 uri,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<PagedResources<Order>>() {}).getBody();
+                new ParametrizedReturnType()).getBody();
 // SCHNAPP        throw new UnsupportedOperationException();
     }
 
@@ -61,5 +65,8 @@ public class OrderServiceClientImpl implements OrderServiceClient {
         return new PagedResources<>(Collections.emptyList(), new PageMetadata(0, 0, 0));
     }
 // SCHNAPP
+
+    // That's for avoiding generics type erasure.
+    private static final class ParametrizedReturnType extends ParameterizedTypeReference<PagedResources<Order>> {}
 
 }
