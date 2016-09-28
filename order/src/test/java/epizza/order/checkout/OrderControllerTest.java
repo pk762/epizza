@@ -112,7 +112,11 @@ public class OrderControllerTest {
                                 fieldWithPath("deliveryAddress.postalCode").description("Your postal code"), //
                                 fieldWithPath("deliveryAddress.telephone").description("Your telephone"), //
                                 fieldWithPath("deliveryAddress.email").description("Your email address").optional() //
-                        )))
+                        )
+// SCHNIPP
+                        , wiremockJson()
+// SCHNAPP
+                    ))
         ;
 
         verify(orderEventPublisher).sendOrderCreatedEvent(order);
@@ -152,7 +156,9 @@ public class OrderControllerTest {
                                 fieldWithPath("deliveryAddress").description("Delivery address as POSTed when <<resources-order-create,creating an Order>>"),
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
                         )
+// SCHNIPP
                         , wiremockJson()
+// SCHNAPP
                 )) //
         ;
     }
@@ -172,7 +178,9 @@ public class OrderControllerTest {
                                 fieldWithPath("page").description("<<paging,Paging>> information"),
                                 fieldWithPath("_links").description("<<links,Links>> to other resources")
                         )
+// SCHNIPP
                         , wiremockJson()
+// SCHNAPP
                 )) //
         ;
     }
