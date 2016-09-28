@@ -32,10 +32,12 @@ dependencyManagement.imports {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-remote-shell')
     compile('org.springframework.hateoas:spring-hateoas')
-    runtime('org.springframework.plugin:spring-plugin-core')
     compile('org.springframework.cloud:spring-cloud-starter-hystrix')
+    runtime('org.springframework.plugin:spring-plugin-core')
     runtime('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
     runtime("com.jayway.jsonpath:json-path")
+    runtime('org.springframework.retry:spring-retry')
+    runtime('org.springframework.boot:spring-boot-starter-aop')
 
     compileOnly('org.projectlombok:lombok')
     testCompile('org.projectlombok:lombok')
