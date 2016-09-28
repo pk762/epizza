@@ -50,7 +50,7 @@ public class OrderService {
         return orderRepository.findAll(pageable);
     }
 
-    public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
+    public Order assignDelivery(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
 // SCHNIPP
         if (order.getDeliveryBoy() != null) {
             throw new OrderAssignedException(String.format("Order '%d' is already assigned to '%s'", order.getId(), order.getDeliveryBoy()));

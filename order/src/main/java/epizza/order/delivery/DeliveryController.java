@@ -28,7 +28,7 @@ public class DeliveryController {
     @RequestMapping(path = "", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> assignDelivery(@PathVariable("id") Order order, @RequestBody @Valid DeliveryJob deliveryJob) {
 // SCHNIPP
-        orderService.assignOrder(order, deliveryJob);
+        orderService.assignDelivery(order, deliveryJob);
 // SCHNAPP
         return ResponseEntity.noContent().build();
     }
