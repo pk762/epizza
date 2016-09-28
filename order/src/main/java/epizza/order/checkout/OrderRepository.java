@@ -6,9 +6,9 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 public interface OrderRepository extends
         OrderRepositoryWithNamedQuery
+        , JpaRepository<Order, Long>
 // SCHNIPP
         , OrderRepositoryExtension
-        , JpaRepository<Order, Long>
         , QueryDslPredicateExecutor<Order>
         , OrderRepositoryWithCriteraQuery
         , JpaSpecificationExecutor<Order>

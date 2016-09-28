@@ -33,13 +33,19 @@ public class OrderRepositoryImpl implements
     @Override
     public Page<Order> findByNamedQuery(String name, Pageable pageable) {
         TypedQuery<Order> query = entityManager.createNamedQuery(name, Order.class);
-        return readPage(query, pageable);
+        Long total = countByNamedQuery(name + ".count");
+        return readPage(query, pageable, total);
     }
 
-    private Page<Order> readPage(TypedQuery<Order> query, Pageable pageable) {
+    @Override
+    public Long countByNamedQuery(String name) {
+        TypedQuery<Long> query = entityManager.createNamedQuery(name, Long.class);
+        return query.getSingleResult();
+    }
+
+    private Page<Order> readPage(TypedQuery<Order> query, Pageable pageable, Long total) {
         query.setFirstResult(pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
-        Long total = countUnassigned();
         List<Order> content = total > pageable.getOffset() ? query.getResultList() : emptyList();
         return new PageImpl<>(content, pageable, total);
     }
@@ -54,7 +60,8 @@ public class OrderRepositoryImpl implements
         criteria.select(orders).where(isNull(deliveryBoy));
 
         TypedQuery<Order> query = entityManager.createQuery(criteria);
-        return readPage(query, pageable);
+        Long total = countUnassigned();
+        return readPage(query, pageable, total);
     }
 
     @Override

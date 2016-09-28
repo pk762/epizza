@@ -35,7 +35,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA_ORDER")
-@NamedQueries(@NamedQuery(name = OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, query = OrderRepositoryWithNamedQuery.UNASSIGNED_QUERY))
+@NamedQueries({
+        @NamedQuery(name = OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, query = OrderRepositoryWithNamedQuery.UNASSIGNED_QUERY),
+        @NamedQuery(name = OrderRepositoryWithNamedQuery.COUNT_UNASSIGNED_NAME, query = OrderRepositoryWithNamedQuery.COUNT_UNASSIGNED_QUERY)
+})
 public class Order implements Identifiable<Long> {
 
     private static final Money DEFAULT_PRICE = Money.of(0.0, "EUR");

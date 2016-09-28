@@ -28,11 +28,6 @@ import java.net.URI;
 import epizza.order.DbCleanupRule;
 import epizza.order.OrderApplicationTest;
 import epizza.order.catalog.Pizza;
-import epizza.order.checkout.Address;
-import epizza.order.checkout.Order;
-import epizza.order.checkout.OrderEventPublisher;
-import epizza.order.checkout.OrderItem;
-import epizza.order.checkout.OrderService;
 import lombok.SneakyThrows;
 
 import static com.epages.restdocs.WireMockDocumentation.wiremockJson;
@@ -145,9 +140,11 @@ public class OrderControllerTest {
                                 fieldWithPath("status").description("Order status"),
                                 fieldWithPath("orderedAt").description("Order creation timestamp"),
                                 fieldWithPath("totalPrice").description("Total order amount"),
-                                fieldWithPath("estimatedTimeOfDelivery").description("Estimated time of delivery"),
                                 fieldWithPath("estimatedTimeOfBakingCompletion").description("Estimated time of baking completion"),
+// SCHNIPP
+                                fieldWithPath("estimatedTimeOfDelivery").description("Estimated time of delivery"),
                                 fieldWithPath("deliveryBoy").description("Delivery boy"),
+// SCHNAPP
                                 fieldWithPath("comment").description("Customer's comment"),
                                 fieldWithPath("orderItems[]._links.pizza").description("Link to ordered pizza"),
                                 fieldWithPath("orderItems[].quantity").description("Number of pizzas"),
