@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import epizza.delivery.order.OrderServiceClient;
+import epizza.delivery.order.OrderServiceClientImpl;
 
 @SpringBootApplication(exclude = { EmbeddedServletContainerAutoConfiguration.class, WebMvcAutoConfiguration.class })
 @EnableCircuitBreaker
@@ -29,7 +30,7 @@ public class DeliveryApplication {
 
     @Bean
     public OrderServiceClient orderClient(RestTemplate restTemplate, @Value("${orders.baseUri}") URI ordersUri) {
-        return new OrderServiceClient(restTemplate, ordersUri);
+        return new OrderServiceClientImpl(restTemplate, ordersUri);
     }
 
 }

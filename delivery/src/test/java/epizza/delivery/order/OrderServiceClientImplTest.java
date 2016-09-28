@@ -24,7 +24,7 @@ import static org.assertj.core.api.BDDAssertions.then;
         "hystrix.command.getOrders.execution.timeout.enabled=true",
         "hystrix.command.getOrders.execution.isolation.thread.timeoutInMilliseconds=2000"
 })
-public class OrderServiceClientTest {
+public class OrderServiceClientImplTest {
 
     @Autowired
     private OrderServiceClient client;
