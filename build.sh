@@ -55,7 +55,7 @@ echo -e "${RED}+-------------------------------------------+${NC}"
 ./delivery/gradlew -p delivery build
 fi
 
-if echo ${COMPONENT} | grep -q 'all\|ui'; then
+if echo ${COMPONENT} | grep -q 'all\|ui\|web'; then
 echo
 echo -e "${RED}+-------------------------------------------+${NC}"
 echo -e "${RED}| building 'order-ui'                       |${NC}"
