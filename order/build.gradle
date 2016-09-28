@@ -45,6 +45,8 @@ dependencies {
 
     runtime("org.springframework.cloud:spring-cloud-starter-config")
     runtime("com.h2database:h2")
+    runtime('org.springframework.retry:spring-retry')
+    runtime('org.springframework.boot:spring-boot-starter-aop')
 
     compile("epizza:messaging-boot-starter:0.+")
     compile("org.hibernate:hibernate-java8")

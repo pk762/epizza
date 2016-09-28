@@ -3,3 +3,6 @@ spring:
     name: order
   jmx:
     enabled: false
+  cloud:
+    config:
+      fail-fast: true
