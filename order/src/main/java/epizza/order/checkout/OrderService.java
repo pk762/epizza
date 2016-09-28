@@ -54,7 +54,6 @@ public class OrderService {
         return orderRepository.findAll(pageable);
     }
 
-
     public Page<Order> findUnassigned(Pageable pageable) {
         return findUnassigned(pageable, OrderRepositoryQueryImplementation.NAMED_QUERY);
     }
@@ -64,6 +63,7 @@ public class OrderService {
         switch (implementation) {
             case NAMED_QUERY:
                 return orderRepository.findByNamedQuery(OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, pageable);
+            // SCHNIPP
             case CRITERIA_QUERY:
                 return orderRepository.findUnassigned(pageable);
             case QUERY_BY_SPECIFICATION:
@@ -76,24 +76,28 @@ public class OrderService {
                 return orderRepository.findByMissingDeliveryBoy(pageable);
             case NAMING_CONVENTION:
                 return orderRepository.findByDeliveryBoyIsNull(pageable);
+            // SCHNAPP
             default:
                 throw new IllegalStateException(String.format("Unknown query implementation '%s'", implementation));
         }
     }
 
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
+        // SCHNIPP
         if (order.getDeliveryBoy() != null) {
             throw new OrderAssignedException(String.format("Order '%d' is already assigned to '%s'", order.getId(), order.getDeliveryBoy()));
         }
         log.info("Assigning delivery job '{}' to order number {}", deliveryJob, order.getId());
         order.setDeliveryBoy(deliveryJob.getDeliveryBoy());
         order.setEstimatedTimeOfDelivery(deliveryJob.getEstimatedTimeOfDelivery());
-        return update(order);
+        update(order);
+        // SCHNAPP
+        return order;
     }
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Order Items is empty.")
     public static class OrderItemsEmptyException extends RuntimeException {
-      private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
         public OrderItemsEmptyException(String message) {
             super(message);
@@ -102,7 +106,7 @@ public class OrderService {
 
     @ResponseStatus(code = HttpStatus.CONFLICT, reason = "Order already assigned.")
     public static class OrderAssignedException extends RuntimeException {
-      private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
         public OrderAssignedException(String message) {
             super(message);

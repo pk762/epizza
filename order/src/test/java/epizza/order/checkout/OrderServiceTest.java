@@ -30,7 +30,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 @Transactional
 @OrderApplicationTest(properties = {
-        "spring.jpa.properties.hibernate.show_sql=true",
+        "spring.jpa.properties.hibernate.show_sql=false",
         "spring.jpa.properties.hibernate.format_sql=true",
         "spring.jpa.properties.hibernate.use_sql_comments=false"
 })
@@ -87,7 +87,9 @@ public class OrderServiceTest {
         Page<Order> unassignedOrders = orderService.findUnassigned(new PageRequest(0, 20), implementation);
 
         // THEN
+// SCHNIPP
         then(unassignedOrders.getContent()).extracting(Order::getDeliveryBoy).filteredOn(Objects::nonNull).isEmpty();
+// SCHNAPP
         then(unassignedOrders.getContent()).extracting(Order::getId).containsOnly(order.getId());
     }
 

@@ -7,10 +7,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import java.beans.ConstructorProperties;
 import java.time.LocalDateTime;
 
-// FIXME introduce lombok
-// FIXME introduce validation
 public class DeliveryJob {
-
+// SCHNIPP
     private final String deliveryBoy;
 
     private final LocalDateTime estimatedTimeOfDelivery;
@@ -37,4 +35,5 @@ public class DeliveryJob {
                 .add("estimatedTimeOfDelivery", estimatedTimeOfDelivery)
                 .toString();
     }
+// SCHNAPP
 }

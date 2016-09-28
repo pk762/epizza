@@ -21,7 +21,12 @@ import static java.util.Collections.emptyList;
 
 @Repository
 @RequiredArgsConstructor
-public class OrderRepositoryImpl implements OrderRepositoryWithNamedQuery, OrderRepositoryWithCriteraQuery {
+public class OrderRepositoryImpl implements
+        OrderRepositoryWithNamedQuery
+// SCHNIPP
+        , OrderRepositoryWithCriteraQuery
+// SCHNAPP
+{
 
     private final EntityManager entityManager;
 
@@ -31,6 +36,15 @@ public class OrderRepositoryImpl implements OrderRepositoryWithNamedQuery, Order
         return readPage(query, pageable);
     }
 
+    private Page<Order> readPage(TypedQuery<Order> query, Pageable pageable) {
+        query.setFirstResult(pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
+        Long total = countUnassigned();
+        List<Order> content = total > pageable.getOffset() ? query.getResultList() : emptyList();
+        return new PageImpl<>(content, pageable, total);
+    }
+
+// SCHNIPP
     @Override
     public Page<Order> findUnassigned(Pageable pageable) {
         CriteriaQuery<Order> criteria = entityManager.getCriteriaBuilder().createQuery(Order.class);
@@ -55,14 +69,6 @@ public class OrderRepositoryImpl implements OrderRepositoryWithNamedQuery, Order
         return query.getSingleResult();
     }
 
-    private Page<Order> readPage(TypedQuery<Order> query, Pageable pageable) {
-        query.setFirstResult(pageable.getOffset());
-        query.setMaxResults(pageable.getPageSize());
-        Long total = countUnassigned();
-        List<Order> content = total > pageable.getOffset() ? query.getResultList() : emptyList();
-        return new PageImpl<>(content, pageable, total);
-    }
-
     private Predicate isNull(Path<?> path) {
         return entityManager.getCriteriaBuilder().isNull(path);
     }
@@ -70,4 +76,5 @@ public class OrderRepositoryImpl implements OrderRepositoryWithNamedQuery, Order
     private Expression<Long> count(Root<?> root) {
         return entityManager.getCriteriaBuilder().count(root);
     }
+// SCHNAPP
 }

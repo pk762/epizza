@@ -19,12 +19,15 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(path = "/orders/{id}/delivery")
 public class DeliveryController {
 
+// SCHNIPP
     private final OrderService orderService;
+// SCHNAPP
 
-    // FIXME introduce validation
     @RequestMapping(path = "", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> assignDelivery(@PathVariable("id") Order order, @RequestBody @Valid DeliveryJob deliveryJob) {
+// SCHNIPP
         orderService.assignOrder(order, deliveryJob);
+// SCHNAPP
         return ResponseEntity.noContent().build();
     }
 }

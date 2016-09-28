@@ -36,7 +36,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA_ORDER")
 @NamedQueries(@NamedQuery(name = OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, query = OrderRepositoryWithNamedQuery.UNASSIGNED_QUERY))
-// FIXME introduce lombok
 public class Order implements Identifiable<Long> {
 
     private static final Money DEFAULT_PRICE = Money.of(0.0, "EUR");
@@ -64,13 +63,15 @@ public class Order implements Identifiable<Long> {
     @Embedded
     private Address deliveryAddress;
 
-    private String deliveryBoy;
+// SCHNIPP
+    @Column(name = "ETBC")
+    private LocalDateTime estimatedTimeOfBakingCompletion;
 
     @Column(name = "ETD")
     private LocalDateTime estimatedTimeOfDelivery;
+// SCHNAPP
 
-    @Column(name = "ETBC")
-    private LocalDateTime estimatedTimeOfBakingCompletion;
+    private String deliveryBoy;
 
     public List<OrderItem> getOrderItems() {
         return ImmutableList.copyOf(orderItems);
@@ -136,6 +137,15 @@ public class Order implements Identifiable<Long> {
         this.deliveryAddress = deliveryAddress;
     }
 
+    public LocalDateTime getEstimatedTimeOfBakingCompletion() {
+        return estimatedTimeOfBakingCompletion;
+    }
+
+    public void setEstimatedTimeOfBakingCompletion(LocalDateTime estimatedTimeOfBakingCompletion) {
+        this.estimatedTimeOfBakingCompletion = estimatedTimeOfBakingCompletion;
+    }
+
+// SCHNIPP
     public String getDeliveryBoy() {
         return deliveryBoy;
     }
@@ -151,14 +161,7 @@ public class Order implements Identifiable<Long> {
     public void setEstimatedTimeOfDelivery(LocalDateTime estimatedTimeOfDelivery) {
         this.estimatedTimeOfDelivery = estimatedTimeOfDelivery;
     }
-
-    public LocalDateTime getEstimatedTimeOfBakingCompletion() {
-        return estimatedTimeOfBakingCompletion;
-    }
-
-    public void setEstimatedTimeOfBakingCompletion(LocalDateTime estimatedTimeOfBakingCompletion) {
-        this.estimatedTimeOfBakingCompletion = estimatedTimeOfBakingCompletion;
-    }
+// SCHNAPP
 
     @Override
     public boolean equals(Object o) {

@@ -143,7 +143,6 @@ public class DeliveryControllerTest {
                 .put("city", "Hamburg")
                 .put("telephone", "+49404321343")
                 .put("postalCode", "22305") //
-                .put("email", "your@email.address") //
                 .build();
 
         return new ObjectMapper().writeValueAsString(ImmutableMap.of(
