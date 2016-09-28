@@ -1,20 +1,20 @@
 package epizza.delivery.order;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import static java.time.temporal.ChronoUnit.MINUTES;
+
+import lombok.Value;
 
 import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
+@Value
 public class DeliveryJob {
 
-    private String deliveryBoy;
+    String deliveryBoy;
 
-    private LocalDateTime estimatedTimeOfDelivery;
+    LocalDateTime estimatedTimeOfDelivery;
 
     public static DeliveryJob create(String deliveryBoy, Integer deliveryTimeInMinutes) {
         return new DeliveryJob(deliveryBoy, LocalDateTime.now().plusMinutes(deliveryTimeInMinutes)
-                .truncatedTo(java.time.temporal.ChronoUnit.MINUTES));
+                .truncatedTo(MINUTES));
     }
 }

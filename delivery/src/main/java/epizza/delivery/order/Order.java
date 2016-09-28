@@ -1,19 +1,17 @@
 package epizza.delivery.order;
 
+import lombok.Value;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
+@Value
 public class Order {
 
     @JsonProperty("_id")
-    private String orderId;
+    String orderId;
 
-    private Address deliveryAddress;
+    Address deliveryAddress;
 
-    private String comment;
+    String comment;
 
 }
