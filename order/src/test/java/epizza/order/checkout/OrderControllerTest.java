@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
@@ -229,7 +230,7 @@ public class OrderControllerTest {
                 .content(jsonInput))
                 .andExpect(status().is2xxSuccessful());
 
-        order = orderService.getAll(null).iterator().next();
+        order = orderService.getAll(new PageRequest(0, 20)).iterator().next();
     }
 
     @SneakyThrows
