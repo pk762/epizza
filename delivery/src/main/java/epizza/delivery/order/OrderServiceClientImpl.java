@@ -19,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 // SCHNIPP
 import org.springframework.web.util.UriComponentsBuilder;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
+
 // SCHNAPP
 
 // SCHNIPP
