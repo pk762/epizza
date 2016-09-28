@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker-compose $@ orderui
+docker-compose $@ delivery orderui
