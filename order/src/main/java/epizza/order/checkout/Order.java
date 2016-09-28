@@ -24,8 +24,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import epizza.order.status.OrderStatus;
@@ -35,16 +33,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "PIZZA_ORDER")
-@NamedQueries({
-        @NamedQuery(
-                name = OrderRepositoryWithNamedQuery.UNASSIGNED_NAME,
-                query = OrderRepositoryWithNamedQuery.UNASSIGNED_QUERY
-        ),
-        @NamedQuery(
-                name = OrderRepositoryWithNamedQuery.COUNT_UNASSIGNED_NAME,
-                query = OrderRepositoryWithNamedQuery.COUNT_UNASSIGNED_QUERY
-        )
-})
 public class Order implements Identifiable<Long> {
 
     private static final Money DEFAULT_PRICE = Money.of(0.0, "EUR");

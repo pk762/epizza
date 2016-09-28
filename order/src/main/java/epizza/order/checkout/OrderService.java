@@ -47,7 +47,7 @@ public class OrderService {
     }
 
     public Page<Order> getAll(Pageable pageable) {
-        return orderRepository.findByNamedQuery(OrderRepositoryWithNamedQuery.UNASSIGNED_NAME, pageable);
+        return orderRepository.findAll(pageable);
     }
 
     public Order assignOrder(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {

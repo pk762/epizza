@@ -7,10 +7,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
@@ -34,9 +30,6 @@ import static org.assertj.core.api.BDDAssertions.then;
         "spring.jpa.properties.hibernate.format_sql=true",
         "spring.jpa.properties.hibernate.use_sql_comments=false"
 })
-// SCHNIPP
-@RunWith(Parameterized.class)
-// SCHNAPP
 public class OrderServiceTest {
 
     @ClassRule
@@ -44,16 +37,6 @@ public class OrderServiceTest {
 
     @Rule
     public final SpringMethodRule springMethodRule = new SpringMethodRule();
-
-// SCHNIPP
-    @Parameter
-    public OrderRepositoryQueryImplementation implementation;
-
-    @Parameters(name = "query implementation {0}")
-    public static OrderRepositoryQueryImplementation[] implementations() {
-        return OrderRepositoryQueryImplementation.values();
-    }
-// SCHNAPP
 
     @Autowired
     private OrderService orderService;
