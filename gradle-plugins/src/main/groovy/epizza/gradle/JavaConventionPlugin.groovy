@@ -18,7 +18,7 @@ class JavaConventionPlugin implements Plugin<Project> {
         project.apply(plugin: EclipsePlugin)
         project.apply(plugin: IdeaPlugin)
 
-        configureIntTest(project)
+//        configureIntTest(project)
         configureJavaCompiler(project)
     }
 
