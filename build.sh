@@ -2,59 +2,63 @@
 
 set -e
 
+COMPONENT=${@:-all}
 
-if echo $@ | grep -q 'all\|infra\|plugin\|gradle'; then
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+if echo ${COMPONENT} | grep -q 'all\|infra\|plugin\|gradle'; then
 echo
-echo "#############################################"
-echo "# building 'gradle-plugins'                 #"
-echo "#############################################"
+echo -e "${RED}+-------------------------------------------+${NC}"
+echo -e "${RED}| building 'gradle-plugins'                 |${NC}"
+echo -e "${RED}+-------------------------------------------+${NC}"
 ./gradle-plugins/gradlew -p gradle-plugins build pTML
 fi
 
-if echo $@ | grep -q 'all\|infra\|starter\|messag'; then
+if echo ${COMPONENT} | grep -q 'all\|infra\|starter\|messag'; then
 echo
-echo "#############################################"
-echo "# building 'messaging-boot-starter'         #"
-echo "#############################################"
+echo -e "${RED}+-------------------------------------------+${NC}"
+echo -e "${RED}| building 'messaging-boot-starter'         |${NC}"
+echo -e "${RED}+-------------------------------------------+${NC}"
 ./messaging-boot-starter/gradlew -p messaging-boot-starter build pTML
 fi
 
-if echo $@ | grep -q 'all\|infra\|config'; then
+if echo ${COMPONENT} | grep -q 'all\|infra\|config'; then
 echo
-echo "#############################################"
-echo "# building 'config-server'                  #"
-echo "#############################################"
+echo -e "${RED}+-------------------------------------------+${NC}"
+echo -e "${RED}| building 'config-server'                  |${NC}"
+echo -e "${RED}+-------------------------------------------+${NC}"
 ./config-server/gradlew -p config-server build
 fi
 
-if echo $@ | grep -q 'all\|service\|order'; then
+if echo ${COMPONENT} | grep -q 'all\|service\|order'; then
 echo
-echo "#############################################"
-echo "# building 'order'                          #"
-echo "#############################################"
+echo -e "${RED}+-------------------------------------------+${NC}"
+echo -e "${RED}| building 'order'                          |${NC}"
+echo -e "${RED}+-------------------------------------------+${NC}"
 ./order/gradlew -p order build pTML
 fi
 
-if echo $@ | grep -q 'all\|service\|bakery'; then
+if echo ${COMPONENT} | grep -q 'all\|service\|bakery'; then
 echo
-echo "#############################################"
-echo "# building 'bakery'                         #"
-echo "#############################################"
+echo -e "${RED}+-------------------------------------------+${NC}"
+echo -e "${RED}| building 'bakery'                         |${NC}"
+echo -e "${RED}+-------------------------------------------+${NC}"
 ./bakery/gradlew -p bakery build
 fi
 
-if echo $@ | grep -q 'all\|service\|delivery'; then
+if echo ${COMPONENT} | grep -q 'all\|ui\|delivery'; then
 echo
-echo "#############################################"
-echo "# building 'delivery'                       #"
-echo "#############################################"
+echo -e "${RED}+-------------------------------------------+${NC}"
+echo -e "${RED}| building 'delivery'                       |${NC}"
+echo -e "${RED}+-------------------------------------------+${NC}"
 ./delivery/gradlew -p delivery build
 fi
 
-if echo $@ | grep -q 'all\|ui'; then
+if echo ${COMPONENT} | grep -q 'all\|ui'; then
 echo
-echo "#############################################"
-echo "# building 'order-ui'                       #"
-echo "#############################################"
+echo -e "${RED}+-------------------------------------------+${NC}"
+echo -e "${RED}| building 'order-ui'                       |${NC}"
+echo -e "${RED}+-------------------------------------------+${NC}"
 ./order-ui/gradlew -p order-ui build
 fi
