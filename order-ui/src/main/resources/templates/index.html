@@ -143,7 +143,8 @@
       <div id="cart" class="panel panel-default col-xs-4 col-md-offset-1">
 
           <div class="alert ng-class:{'alert-warning': currentOrder.status==='NEW', 'alert-info': currentOrder.status==='BAKING', 'alert-success': currentOrder.status==='DELIVERING'}" style="margin-top: 10px;" role="alert" ng-show="currentOrder">
-            <b>Order Status: {{currentOrder.status}}</b> <br/>Estimated delivery: {{currentOrder.estimatedTimeOfDelivery}}
+            <b>Order Status: {{currentOrder.status}}</b>
+            <br/><span ng:show="{{currentOrder.estimatedTimeOfDelivery}}">Estimated delivery: {{currentOrder.estimatedTimeOfDelivery}}</span>
           </div>
           <div class="panel panel-default" style="margin-top: 10px;">
             <div class="panel-heading">Cart</div>
@@ -152,19 +153,19 @@
                     <tr>
                         <th>Pizza</th>
                         <th>Quantity</th>
-                        <th>Price</th>
+                        <th class="text-right">Price</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="lineItem in cart">
                         <td class="col-md-4">{{lineItem.pizza.name}}</td>
                         <td class="col-md-2">{{lineItem.quantity}}</td>
-                        <td class="col-md-2" nowrap="nowrap">{{lineItem.price.amount | number : 2}} {{lineItem.price.currency}}</td>
+                        <td class="col-md-2 text-right" nowrap="nowrap">{{lineItem.price.amount | number : 2}} {{lineItem.price.currency}}</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td>Total</td>
-                        <td>{{totalPrice.amount | number : 2}} {{totalPrice.currency}}</td>
+                        <td class="text-right">Total</td>
+                        <td class="text-right">{{totalPrice.amount | number : 2}} {{totalPrice.currency}}</td>
                     </tr>
                 </tbody>
             </table>
