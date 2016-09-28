@@ -8,19 +8,17 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URI;
 // SCHNIPP
 import java.util.Collections;
-// SCHNAPP
-import org.springframework.core.ParameterizedTypeReference;
+
 import org.springframework.hateoas.PagedResources;
 // SCHNIPP
 import org.springframework.hateoas.PagedResources.PageMetadata;
+import org.springframework.hateoas.mvc.TypeReferences;
 import org.springframework.http.HttpMethod;
 // SCHNAPP
 import org.springframework.web.client.RestTemplate;
 // SCHNIPP
 import org.springframework.web.util.UriComponentsBuilder;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-
-
 // SCHNAPP
 
 // SCHNIPP
@@ -69,6 +67,6 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 // SCHNAPP
 
     // That's for avoiding generics type erasure.
-    private static final class ParametrizedReturnType extends ParameterizedTypeReference<PagedResources<Order>> {}
+    private static final class ParametrizedReturnType extends TypeReferences.PagedResourcesType<Order> {}
 
 }

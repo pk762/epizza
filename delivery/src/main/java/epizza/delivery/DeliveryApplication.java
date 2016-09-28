@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
+import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.web.client.RestTemplate;
 
 import epizza.delivery.order.OrderServiceClient;
@@ -33,4 +34,8 @@ public class DeliveryApplication {
         return new OrderServiceClientImpl(restTemplate, ordersUri);
     }
 
+    @Bean
+    public Jackson2HalModule jackson2HalModule() {
+        return new Jackson2HalModule();
+    }
 }

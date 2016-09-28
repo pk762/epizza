@@ -41,6 +41,7 @@ public class OrderServiceClientImplTest {
 
         // THEN
         then(orders.getContent()).hasSize(1);
+        then(orders.getContent().iterator().next().getOrderId()).isEqualTo("1");
     }
 
     @Test
@@ -51,7 +52,7 @@ public class OrderServiceClientImplTest {
 
     @Test
     public void should_use_fallback_on_timeout() {
-        wiremockServer.setGlobalFixedDelay(2001);
+        wiremockServer.setGlobalFixedDelay(2005);
         PagedResources<Order> orders = client.getOrders();
         then(orders.getContent()).hasSize(0);
     }
