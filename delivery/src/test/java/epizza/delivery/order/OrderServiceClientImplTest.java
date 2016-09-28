@@ -44,9 +44,9 @@ public class OrderServiceClientImplTest {
     }
 
     @Test
-    public void should_assign_to_order() {
+    public void should_select_one_order() {
         // WHEN
-        client.assignMyselfToOrder(1, new DeliveryJob("Joe Slo", LocalDateTime.now().plusMinutes(120)));
+        client.selectOrder(1, new DeliveryJob("Joe Slo", LocalDateTime.now().plusMinutes(120)));
     }
 
     @Test

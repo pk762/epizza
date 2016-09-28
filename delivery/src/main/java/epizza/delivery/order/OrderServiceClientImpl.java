@@ -31,7 +31,7 @@ public class OrderServiceClientImpl implements OrderServiceClient {
 // SCHNIPP
     @HystrixCommand
 // SCHNAPP
-    public void assignMyselfToOrder(Integer orderId, DeliveryJob job) {
+    public void selectOrder(Integer orderId, DeliveryJob job) {
 // SCHNIPP
         String uri = UriComponentsBuilder.fromUri(baseUri).path("orders/" + orderId + "/delivery").toUriString();
         log.info("Assigning myself to order via Location: {}", uri);

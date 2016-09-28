@@ -4,7 +4,7 @@ import org.springframework.hateoas.PagedResources;
 
 public interface OrderServiceClient {
 
-    void assignMyselfToOrder(Integer orderId, DeliveryJob job);
+    void selectOrder(Integer orderId, DeliveryJob job);
 
     PagedResources<Order> getOrders();
 
