@@ -13,7 +13,7 @@ import java.util.Collections;
 import org.springframework.hateoas.PagedResources;
 // SCHNIPP
 import org.springframework.hateoas.PagedResources.PageMetadata;
-//SCHNAPP
+// SCHNAPP
 import org.springframework.hateoas.mvc.TypeReferences;
 // SCHNIPP
 import org.springframework.http.HttpMethod;
