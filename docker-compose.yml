@@ -31,7 +31,7 @@ rabbitmq:
 configserver:
   extends:
     service: springboot
-  image: epizza/config-server
+  image: epizza/config-server:${TAG}
   # mount /repo as volume from docker-compose.override.yml
   ports:
     - "8888:8888"
@@ -45,7 +45,7 @@ configserver:
 # ==============================================================================
 order:
   extends: configclient
-  image: epizza/order
+  image: epizza/order:${TAG}
   ports:
     - "8082:8082"
   links:
@@ -54,14 +54,14 @@ order:
 # ==============================================================================
 bakery:
   extends: configclient
-  image: epizza/bakery
+  image: epizza/bakery:${TAG}
   links:
     - rabbitmq
     - configserver
 # ==============================================================================
 delivery:
   extends: configclient
-  image: epizza/delivery
+  image: epizza/delivery:${TAG}
   links:
     - configserver
   ports:
@@ -69,7 +69,7 @@ delivery:
 # ==============================================================================
 orderui:
   extends: configclient
-  image: epizza/order-ui
+  image: epizza/order-ui:${TAG}
   links:
     - configserver
   ports:
