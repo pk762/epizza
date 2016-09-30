@@ -50,15 +50,25 @@ public class OrderServiceTest {
     @Autowired
     private PizzaRepository pizzaRepository;
 
-    private Order order;
-
+    private Order order1;
+// SCHNIPP
+    private Order order2;
+// SCHNAPP
     @Before
     public void createOrder() {
-        order = new Order();
-        order.setStatus(OrderStatus.NEW);
-        order.setDeliveryAddress(address());
-        order.setOrderItems(ImmutableList.of(orderItem()));
-        order = orderService.create(order);
+        order1 = new Order();
+        order1.setStatus(OrderStatus.NEW);
+        order1.setDeliveryAddress(address());
+        order1.setOrderItems(ImmutableList.of(orderItem()));
+        order1 = orderService.create(order1);
+// SCHNIPP
+        order2 = new Order();
+        order2.setStatus(OrderStatus.NEW);
+        order2.setDeliveryAddress(address());
+        order2.setOrderItems(ImmutableList.of(orderItem()));
+        order2.setDeliveryBoy("Guy XY");
+        order2 = orderService.create(order2);
+// SCHNAPP
     }
 
     @After
@@ -77,7 +87,7 @@ public class OrderServiceTest {
 // SCHNIPP
         then(unassignedOrders.getContent()).extracting(Order::getDeliveryBoy).filteredOn(Objects::nonNull).isEmpty();
 // SCHNAPP
-        then(unassignedOrders.getContent()).extracting(Order::getId).containsOnly(order.getId());
+        then(unassignedOrders.getContent()).extracting(Order::getId).containsOnly(order1.getId());
     }
 
     private OrderItem orderItem() {

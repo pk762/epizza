@@ -47,7 +47,9 @@ public class OrderService {
     }
 
     public Page<Order> getAll(Pageable pageable) {
-        return orderRepository.findAll(pageable);
+// SCHNIPP
+        return orderRepository.findByDeliveryBoyIsNull(pageable);
+// SCHNAPP         return orderRepository.findAll(pageable);
     }
 
     public Order assignDelivery(Order order, DeliveryJob deliveryJob) throws OrderAssignedException {
